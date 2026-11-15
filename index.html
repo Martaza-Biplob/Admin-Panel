@@ -1,921 +1,837 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tosrec Studios — Agency Workspace & Cashflow</title>
-
-      <!-- Favicon / Browser Tab Icon -->
-<link rel="icon" type="image/jpeg" href="thelogo.png">
-  
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #191919;
-      color: #EBEBEB;
-    }
-    .font-mono { font-family: 'JetBrains Mono', monospace; }
-    .notion-card {
-      background-color: #202020;
-      border: 1px solid #2F2F2F;
-    }
-    .notion-row:hover {
-      background-color: #252525;
-    }
-    .notion-border {
-      border-color: #2F2F2F;
-    }
-    .notion-input {
-      background-color: #191919;
-      border: 1px solid #373737;
-      color: #EBEBEB;
-    }
-    .notion-input:focus {
-      outline: none;
-      border-color: #529CCA;
-    }
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #191919; }
-    ::-webkit-scrollbar-thumb { background: #373737; border-radius: 3px; }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tosrec Studios — Agency Workspace & Cashflow</title>
+    <!-- Favicon / Browser Tab Icon -->
+    <link rel="icon" type="image/jpeg" href="thelogo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #191919; color: #EBEBEB; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .notion-card { background-color: #202020; border: 1px solid #2F2F2F; }
+        .notion-row:hover { background-color: #252525; }
+        .notion-border { border-color: #2F2F2F; }
+        .notion-input { background-color: #191919; border: 1px solid #373737; color: #EBEBEB; }
+        .notion-input:focus { outline: none; border-color: #529CCA; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #191919; }
+        ::-webkit-scrollbar-thumb { background: #373737; border-radius: 3px; }
+    </style>
 </head>
 <body class="min-h-screen flex flex-col">
-
-  <!-- Top Notion-Style Navigation -->
-<!-- Top Notion-Style Navigation -->
-<header class="max-w-7xl w-full mx-auto px-4 sm:px-6 py-4 flex items-center justify-between border-b notion-border">
-    <!-- লোগো এবং টাইটেল অংশ -->
-    <div class="flex items-center gap-3 cursor-pointer" onclick="switchView('home')">
-        <img src="thelogo.png" alt="Tosrec Studios Logo" class="w-7 h-7 rounded object-cover flex-shrink-0">
-        <span class="font-semibold tracking-tight text-white">Tosrec Studios</span>
-        <span class="text-xs px-2 py-0.5 rounded bg-[#2F2F2F] text-gray-400 hidden sm:inline">Workspace</span>
-    </div>
-
-    <!-- ডানপাশের বাটন ও ইউজার মেনু -->
-    <div class="flex items-center gap-3">
-        <button onclick="switchView('home')" id="nav-home-btn" class="text-sm px-3 py-1.5 rounded hover:bg-[#2F2F2F] text-gray-300 transition">
-            Live Timers
-        </button>
-        <button id="nav-dashboard-btn" onclick="switchView('dashboard')" class="hidden text-sm px-3 py-1.5 rounded bg-[#2F2F2F] text-white font-medium hover:bg-[#3A3A3A] transition">
-            Cashflow Dashboard
-        </button>
-        <button id="login-open-btn" onclick="openLoginModal()" class="text-sm px-3.5 py-1.5 rounded bg-[#2383E2] hover:bg-[#1B6EC2] text-white font-medium transition">
-            Editor / Admin Login
-        </button>
-        <div id="user-badge" class="hidden flex items-center gap-2">
-            <span id="logged-user-name" class="text-xs font-medium px-2.5 py-1 rounded bg-[#2A2A2A] border notion-border text-emerald-400"></span>
-            <button onclick="logout()" class="text-xs px-2.5 py-1 rounded bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/20">
-                Logout
-            </button>
+    <!-- Top Notion-Style Navigation -->
+    <header class="max-w-7xl w-full mx-auto px-4 sm:px-6 py-4 flex items-center justify-between border-b notion-border">
+        <div class="flex items-center gap-3 cursor-pointer" onclick="switchView('home')">
+            <img src="thelogo.png" alt="Tosrec Studios Logo" class="w-7 h-7 rounded object-cover flex-shrink-0">
+            <span class="font-semibold tracking-tight text-white">Tosrec Studios</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-[#2F2F2F] text-gray-400 hidden sm:inline">Workspace</span>
         </div>
-    </div>
-</header>
-
-  <!-- Main Content -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8">
-
-    <!-- ==================== VIEW 1: PUBLIC HOME PAGE (LIVE TIMERS) ==================== -->
-    <section id="view-home" class="space-y-8">
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b notion-border pb-6">
-        <div>
-          <div class="text-xs uppercase tracking-wider text-gray-400 mb-1">Production Tracker</div>
-          <h1 class="text-2xl sm:text-3xl font-bold text-white flex items-center gap-2.5">
-            <span>⏱️</span> Active Projects & Deadlines
-          </h1>
-          <p class="text-sm text-gray-400 mt-1">Real-time delivery countdown for currently running video editing projects.</p>
+        <div class="flex items-center gap-3">
+            <button onclick="switchView('home')" id="nav-home-btn" class="text-sm px-3 py-1.5 rounded hover:bg-[#2F2F2F] text-gray-300 transition"> Live Timers </button>
+            <button id="nav-dashboard-btn" onclick="switchView('dashboard')" class="hidden text-sm px-3 py-1.5 rounded bg-[#2F2F2F] text-white font-medium hover:bg-[#3A3A3A] transition"> Cashflow Dashboard </button>
+            <button id="login-open-btn" onclick="openLoginModal()" class="text-sm px-3.5 py-1.5 rounded bg-[#2383E2] hover:bg-[#1B6EC2] text-white font-medium transition"> Editor / Admin Login </button>
+            <div id="user-badge" class="hidden flex items-center gap-2">
+                <span id="logged-user-name" class="text-xs font-medium px-2.5 py-1 rounded bg-[#2A2A2A] border notion-border text-emerald-400"></span>
+                <button onclick="logout()" class="text-xs px-2.5 py-1 rounded bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/20"> Logout </button>
+            </div>
         </div>
+    </header>
 
-        <!-- Admin Only: Add New Timer Button -->
-        <div id="admin-timer-controls" class="hidden">
-          <button onclick="openTimerModal()" class="px-4 py-2 rounded bg-[#2383E2] hover:bg-[#1B6EC2] text-white text-sm font-medium flex items-center gap-2">
-            <span>+ Add Running Project</span>
-          </button>
-        </div>
-      </div>
+    <!-- Main Content -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8">
+        <!-- ==================== VIEW 1: PUBLIC HOME PAGE ==================== -->
+        <section id="view-home" class="space-y-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b notion-border pb-6">
+                <div>
+                    <div class="text-xs uppercase tracking-wider text-gray-400 mb-1">Production Tracker</div>
+                    <h1 class="text-2xl sm:text-3xl font-bold text-white flex items-center gap-2.5">
+                        <span>⏱️</span> Active Projects & Deadlines
+                    </h1>
+                    <p class="text-sm text-gray-400 mt-1">Real-time delivery countdown for currently running video editing projects.</p>
+                </div>
+                <div id="admin-timer-controls" class="hidden">
+                    <button onclick="openTimerModal()" class="px-4 py-2 rounded bg-[#2383E2] hover:bg-[#1B6EC2] text-white text-sm font-medium flex items-center gap-2">
+                        <span>+ Add Running Project</span>
+                    </button>
+                </div>
+            </div>
+            <div id="timers-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+            <div id="timers-empty" class="hidden notion-card rounded-lg p-12 text-center">
+                <p class="text-gray-400 text-sm">No active projects running right now.</p>
+            </div>
+        </section>
 
-      <!-- Active Timers Grid -->
-      <div id="timers-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-
-      <div id="timers-empty" class="hidden notion-card rounded-lg p-12 text-center">
-        <p class="text-gray-400 text-sm">No active projects running right now.</p>
-      </div>
-    </section>
-
-    <!-- ==================== VIEW 2: PRIVATE CASHFLOW DASHBOARD ==================== -->
-    <section id="view-dashboard" class="hidden space-y-6">
-      
-      <!-- Top Header & USD Rate -->
-      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b notion-border pb-5">
-        <div>
-          <h2 class="text-2xl font-bold text-white flex items-center gap-2">
-            <span>💰</span> <span id="dashboard-title">Editor Cashflow</span>
-          </h2>
-          <p class="text-xs text-gray-400 mt-1" id="dashboard-subtitle">Private ledger for BDT (৳) & USD ($) tracking</p>
-        </div>
-
-        <div class="flex flex-wrap items-center gap-3">
-          <div class="notion-card px-3 py-1.5 rounded-md flex items-center gap-2 text-xs">
-            <span class="text-gray-400">1 USD =</span>
-            <input type="number" id="usd-rate-input" value="120" class="w-16 notion-input px-2 py-0.5 rounded text-right font-mono" onchange="updateUsdRate()" />
-            <span class="text-gray-400">BDT</span>
-          </div>
-
-          <button id="btn-manage-editors" onclick="openEditorManagerModal()" class="hidden px-3 py-1.5 rounded notion-card hover:bg-[#2A2A2A] text-xs font-medium text-gray-200">
-            👥 Manage Editors & Passwords
-          </button>
-          <button id="btn-add-task" onclick="openTaskModal()" class="hidden px-3.5 py-1.5 rounded bg-[#2383E2] hover:bg-[#1B6EC2] text-white text-xs font-medium">
-            + New Cashflow Entry
-          </button>
-        </div>
-      </div>
-
-      <!-- Layout: Left Table (8 cols) + Right Auto-Total Summary (4 cols) -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        
-        <!-- LEFT: Notion-Style Task & Cashflow Table -->
-        <div class="lg:col-span-8 space-y-4">
-          
-          <div class="flex flex-wrap items-center justify-between gap-3">
-            <div class="flex items-center gap-1 bg-[#202020] p-1 rounded-lg border notion-border">
-              <button onclick="setTaskTab('uncomplete')" id="tab-uncomplete" class="px-3 py-1 rounded text-xs font-medium bg-[#2F2F2F] text-white flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-amber-400"></span> Uncomplete <span id="count-uncomplete" class="text-gray-400">(0)</span>
-              </button>
-              <button onclick="setTaskTab('completed')" id="tab-completed" class="px-3 py-1 rounded text-xs font-medium text-gray-400 hover:text-white flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-emerald-400"></span> Completed <span id="count-completed" class="text-gray-500">(0)</span>
-              </button>
-              <button onclick="setTaskTab('all')" id="tab-all" class="px-3 py-1 rounded text-xs font-medium text-gray-400 hover:text-white">
-                All Tasks <span id="count-all" class="text-gray-500">(0)</span>
-              </button>
+        <!-- ==================== VIEW 2: PRIVATE CASHFLOW DASHBOARD ==================== -->
+        <section id="view-dashboard" class="hidden space-y-6">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b notion-border pb-5">
+                <div>
+                    <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+                        <span>💰</span> <span id="dashboard-title">Editor Cashflow</span>
+                    </h2>
+                    <p class="text-xs text-gray-400 mt-1" id="dashboard-subtitle">Private ledger for BDT (৳) & USD ($) tracking</p>
+                </div>
+                <div class="flex flex-wrap items-center gap-3">
+                    <div class="notion-card px-3 py-1.5 rounded-md flex items-center gap-2 text-xs">
+                        <span class="text-gray-400">1 USD =</span>
+                        <input type="number" id="usd-rate-input" value="120" class="w-16 notion-input px-2 py-0.5 rounded text-right font-mono" onchange="updateUsdRate()" />
+                        <span class="text-gray-400">BDT</span>
+                    </div>
+                    <button id="btn-manage-editors" onclick="openEditorManagerModal()" class="hidden px-3 py-1.5 rounded notion-card hover:bg-[#2A2A2A] text-xs font-medium text-gray-200"> 👥 Manage Editors & Passwords </button>
+                    <button id="btn-add-task" onclick="openTaskModal()" class="hidden px-3.5 py-1.5 rounded bg-[#2383E2] hover:bg-[#1B6EC2] text-white text-xs font-medium"> + New Cashflow Entry </button>
+                </div>
             </div>
 
-            <div class="flex items-center gap-2">
-              <select id="admin-editor-filter" onchange="renderDashboard()" class="hidden notion-input text-xs px-2.5 py-1.5 rounded">
-                <option value="ALL">All Editors</option>
-              </select>
-              <input type="text" id="task-search" oninput="renderDashboard()" placeholder="Search task or note..." class="notion-input text-xs px-3 py-1.5 rounded w-44" />
+            <!-- Layout: Left Table + Right Summary -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                <div class="lg:col-span-8 space-y-4">
+                    <div class="flex flex-wrap items-center justify-between gap-3">
+                        <div class="flex items-center gap-1 bg-[#202020] p-1 rounded-lg border notion-border">
+                            <button onclick="setTaskTab('uncomplete')" id="tab-uncomplete" class="px-3 py-1 rounded text-xs font-medium bg-[#2F2F2F] text-white flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-amber-400"></span> Uncomplete <span id="count-uncomplete" class="text-gray-400">(0)</span>
+                            </button>
+                            <button onclick="setTaskTab('completed')" id="tab-completed" class="px-3 py-1 rounded text-xs font-medium text-gray-400 hover:text-white flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-emerald-400"></span> Completed <span id="count-completed" class="text-gray-500">(0)</span>
+                            </button>
+                            <button onclick="setTaskTab('all')" id="tab-all" class="px-3 py-1 rounded text-xs font-medium text-gray-400 hover:text-white"> All Tasks <span id="count-all" class="text-gray-500">(0)</span> </button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <select id="admin-editor-filter" onchange="renderDashboard()" class="hidden notion-input text-xs px-2.5 py-1.5 rounded">
+                                <option value="ALL">All Editors</option>
+                            </select>
+                            <input type="text" id="task-search" oninput="renderDashboard()" placeholder="Search task or note..." class="notion-input text-xs px-3 py-1.5 rounded w-44" />
+                        </div>
+                    </div>
+                    <div class="notion-card rounded-lg overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse text-xs">
+                                <thead>
+                                    <tr class="border-b notion-border text-gray-400 bg-[#1D1D1D]">
+                                        <th class="py-2.5 px-3 w-10 text-center">✓</th>
+                                        <th class="py-2.5 px-3 font-medium">Aa Name</th>
+                                        <th class="py-2.5 px-3 font-medium">👥 Assignee</th>
+                                        <th class="py-2.5 px-3 font-medium">🏷️ TK Status</th>
+                                        <th class="py-2.5 px-3 font-medium">💵 In Taka & USD</th>
+                                        <th class="py-2.5 px-3 font-medium">📝 NotePad</th>
+                                        <th class="py-2.5 px-3 font-medium text-center">Done?</th>
+                                        <th id="th-admin-actions" class="hidden py-2.5 px-3 font-medium text-right">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cashflow-tbody" class="divide-y notion-border"></tbody>
+                            </table>
+                        </div>
+                        <div id="tasks-empty" class="hidden p-8 text-center text-gray-500 text-xs"> No entries found in this view. </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT: Dynamic Summary Panel -->
+                <div class="lg:col-span-4 space-y-4">
+                    <div class="notion-card rounded-lg p-4 space-y-3">
+                        <div class="flex items-center justify-between border-b notion-border pb-2">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-gray-400" id="summary-header-title">Auto Summary (Uncomplete)</span>
+                            <span class="text-[11px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">Live Sync</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2.5">
+                            <div class="bg-[#191919] p-3 rounded border notion-border">
+                                <div class="text-[11px] text-gray-400">Total BDT (৳)</div>
+                                <div id="sum-total-bdt" class="text-base font-bold font-mono text-white mt-0.5">৳ 0</div>
+                            </div>
+                            <div class="bg-[#191919] p-3 rounded border notion-border">
+                                <div class="text-[11px] text-gray-400">Total USD ($)</div>
+                                <div id="sum-total-usd" class="text-base font-bold font-mono text-sky-400 mt-0.5">$ 0</div>
+                            </div>
+                        </div>
+                        <div class="bg-[#191919] p-3 rounded border notion-border space-y-2 text-xs">
+                            <div class="flex justify-between">
+                                <span class="text-rose-400 font-medium">● Total Due:</span>
+                                <span id="sum-due" class="font-mono text-gray-200">৳ 0 + $ 0</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-emerald-400 font-medium">● Total Paid:</span>
+                                <span id="sum-paid" class="font-mono text-gray-200">৳ 0 + $ 0</span>
+                            </div>
+                            <div class="border-t notion-border pt-2 flex justify-between items-center">
+                                <span class="text-gray-400">Est. Grand Total (BDT):</span>
+                                <span id="sum-grand-bdt" class="font-mono font-bold text-amber-400 text-sm">৳ 0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="notion-card rounded-lg p-4 space-y-3">
+                        <h3 class="text-xs font-semibold uppercase tracking-wider text-gray-400 border-b notion-border pb-2"> 📊 Editor-Wise Breakdown </h3>
+                        <div id="editor-breakdown-list" class="space-y-2.5"></div>
+                    </div>
+                </div>
             </div>
-          </div>
-
-          <div class="notion-card rounded-lg overflow-hidden">
-            <div class="overflow-x-auto">
-              <table class="w-full text-left border-collapse text-xs">
-                <thead>
-                  <tr class="border-b notion-border text-gray-400 bg-[#1D1D1D]">
-                    <th class="py-2.5 px-3 w-10 text-center">✓</th>
-                    <th class="py-2.5 px-3 font-medium">Aa Name</th>
-                    <th class="py-2.5 px-3 font-medium">👥 Assignee</th>
-                    <th class="py-2.5 px-3 font-medium">🏷️ TK Status</th>
-                    <th class="py-2.5 px-3 font-medium">💵 In Taka & USD</th>
-                    <th class="py-2.5 px-3 font-medium">📝 Note</th>
-                    <th class="py-2.5 px-3 font-medium text-center">Done?</th>
-                    <th id="th-admin-actions" class="hidden py-2.5 px-3 font-medium text-right">Action</th>
-                  </tr>
-                </thead>
-                <tbody id="cashflow-tbody" class="divide-y notion-border"></tbody>
-              </table>
-            </div>
-            <div id="tasks-empty" class="hidden p-8 text-center text-gray-500 text-xs">
-              No entries found in this view.
-            </div>
-          </div>
-        </div>
-
-        <!-- RIGHT: Auto-Calculation Summary Panel -->
-        <div class="lg:col-span-4 space-y-4">
-          <div class="notion-card rounded-lg p-4 space-y-3">
-            <div class="flex items-center justify-between border-b notion-border pb-2">
-              <span class="text-xs font-semibold uppercase tracking-wider text-gray-400">Auto Summary</span>
-              <span class="text-[11px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">Live Sync</span>
-            </div>
-
-            <div class="grid grid-cols-2 gap-2.5">
-              <div class="bg-[#191919] p-3 rounded border notion-border">
-                <div class="text-[11px] text-gray-400">Total BDT (৳)</div>
-                <div id="sum-total-bdt" class="text-base font-bold font-mono text-white mt-0.5">৳ 0</div>
-              </div>
-              <div class="bg-[#191919] p-3 rounded border notion-border">
-                <div class="text-[11px] text-gray-400">Total USD ($)</div>
-                <div id="sum-total-usd" class="text-base font-bold font-mono text-sky-400 mt-0.5">$ 0</div>
-              </div>
-            </div>
-
-            <div class="bg-[#191919] p-3 rounded border notion-border space-y-2 text-xs">
-              <div class="flex justify-between">
-                <span class="text-rose-400 font-medium">● Total Due:</span>
-                <span id="sum-due" class="font-mono text-gray-200">৳ 0 + $ 0</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-emerald-400 font-medium">● Total Paid:</span>
-                <span id="sum-paid" class="font-mono text-gray-200">৳ 0 + $ 0</span>
-              </div>
-              <div class="border-t notion-border pt-2 flex justify-between items-center">
-                <span class="text-gray-400">Est. Grand Total (BDT):</span>
-                <span id="sum-grand-bdt" class="font-mono font-bold text-amber-400 text-sm">৳ 0</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="notion-card rounded-lg p-4 space-y-3">
-            <h3 class="text-xs font-semibold uppercase tracking-wider text-gray-400 border-b notion-border pb-2">
-              📊 Editor-Wise Total Breakdown
-            </h3>
-            <div id="editor-breakdown-list" class="space-y-2.5"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- ==================== MODALS ==================== -->
-
-  <!-- 1. Login Modal -->
-  <div id="login-modal" class="hidden fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="notion-card w-full max-w-sm rounded-xl p-6 space-y-4">
-      <div class="flex justify-between items-center">
-        <h3 class="text-lg font-bold text-white">Workspace Login</h3>
-        <button onclick="closeModal('login-modal')" class="text-gray-400 hover:text-white">✕</button>
-      </div>
-      <p class="text-xs text-gray-400">Type your profile name and password to access your private cashflow.</p>
-      
-      <form onsubmit="handleLogin(event)" class="space-y-3">
-        <div>
-          <label class="block text-xs text-gray-400 mb-1">Profile / Editor Name</label>
-          <input type="text" id="login-username" required placeholder="e.g. admin or Mr Toolkit" class="w-full notion-input px-3 py-2 rounded text-sm" />
-        </div>
-        <div>
-          <label class="block text-xs text-gray-400 mb-1">Password</label>
-          <input type="password" id="login-password" required placeholder="••••••••" class="w-full notion-input px-3 py-2 rounded text-sm" />
-        </div>
-        <p id="login-error" class="hidden text-xs text-rose-400">Invalid name or password. Please try again.</p>
-        <button type="submit" class="w-full py-2 rounded bg-[#2383E2] hover:bg-[#1B6EC2] text-white text-sm font-medium">
-          Access Cashflow
-        </button>
-      </form>
-    </div>
-  </div>
-
-  <!-- 2. Add Active Timer Modal -->
-  <div id="timer-modal" class="hidden fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="notion-card w-full max-w-md rounded-xl p-6 space-y-4">
-      <div class="flex justify-between items-center">
-        <h3 class="text-lg font-bold text-white">Add Running Project Timer</h3>
-        <button onclick="closeModal('timer-modal')" class="text-gray-400 hover:text-white">✕</button>
-      </div>
-      <form onsubmit="saveTimer(event)" class="space-y-3">
-        <div>
-          <label class="block text-xs text-gray-400 mb-1">Project / Video Name</label>
-          <input type="text" id="timer-project-name" required placeholder="e.g. Travel Vlog Ep 04" class="w-full notion-input px-3 py-2 rounded text-sm" />
-        </div>
-        <div>
-          <label class="block text-xs text-gray-400 mb-1">Assign To Editor</label>
-          <input type="text" id="timer-editor-name" list="editors-datalist" required placeholder="Type or select editor name" class="w-full notion-input px-3 py-2 rounded text-sm" />
-        </div>
-        <div>
-          <label class="block text-xs text-gray-400 mb-1">Submission Deadline (Date & Time)</label>
-          <input type="datetime-local" id="timer-deadline" required class="w-full notion-input px-3 py-2 rounded text-sm" />
-        </div>
-        <button type="submit" class="w-full py-2 rounded bg-[#2383E2] hover:bg-[#1B6EC2] text-white text-sm font-medium">
-          Start Live Countdown
-        </button>
-      </form>
-    </div>
-  </div>
-
-  <!-- 3. Add / Edit Cashflow Entry Modal -->
-  <div id="task-modal" class="hidden fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="notion-card w-full max-w-md rounded-xl p-6 space-y-4">
-      <div class="flex justify-between items-center">
-        <h3 id="task-modal-title" class="text-lg font-bold text-white">New Cashflow Entry</h3>
-        <button onclick="closeModal('task-modal')" class="text-gray-400 hover:text-white">✕</button>
-      </div>
-      <form onsubmit="saveTask(event)" class="space-y-3">
-        <input type="hidden" id="edit-task-id" />
-        <div>
-          <label class="block text-xs text-gray-400 mb-1">Task / Client Name</label>
-          <input type="text" id="task-name" required placeholder="e.g. Brandominguez3" class="w-full notion-input px-3 py-2 rounded text-sm" />
-        </div>
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block text-xs text-gray-400 mb-1">Assignee (Editor)</label>
-            <input type="text" id="task-assignee" list="editors-datalist" required placeholder="Editor name" class="w-full notion-input px-3 py-2 rounded text-sm" />
-          </div>
-          <div>
-            <label class="block text-xs text-gray-400 mb-1">TK Status</label>
-            <select id="task-status" class="w-full notion-input px-3 py-2 rounded text-sm">
-              <option value="Due">Due</option>
-              <option value="Paid">Paid</option>
-              <option value="Partial">Partial</option>
-            </select>
-          </div>
-        </div>
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block text-xs text-gray-400 mb-1">Amount in Taka (৳)</label>
-            <input type="number" step="any" id="task-bdt" value="0" class="w-full notion-input px-3 py-2 rounded text-sm font-mono" />
-          </div>
-          <div>
-            <label class="block text-xs text-gray-400 mb-1">Amount in Dollar ($)</label>
-            <input type="number" step="any" id="task-usd" value="0" class="w-full notion-input px-3 py-2 rounded text-sm font-mono" />
-          </div>
-        </div>
-        <div class="grid grid-cols-3 gap-3">
-          <div class="col-span-2">
-            <label class="block text-xs text-gray-400 mb-1">Extra Note / Percentage</label>
-            <input type="text" id="task-note" placeholder="e.g. 16% or bus 500" class="w-full notion-input px-3 py-2 rounded text-sm" />
-          </div>
-          <div>
-            <label class="block text-xs text-gray-400 mb-1">Multi-select</label>
-            <select id="task-tag" class="w-full notion-input px-3 py-2 rounded text-sm">
-              <option value="Y">Y</option>
-              <option value="NO">NO</option>
-            </select>
-          </div>
-        </div>
-        <button type="submit" class="w-full py-2 rounded bg-[#2383E2] hover:bg-[#1B6EC2] text-white text-sm font-medium">
-          Save Entry
-        </button>
-      </form>
-    </div>
-  </div>
-
-  <!-- 4. Manage Editors & Passwords Modal -->
-  <div id="editors-modal" class="hidden fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="notion-card w-full max-w-md rounded-xl p-6 space-y-4">
-      <div class="flex justify-between items-center">
-        <h3 class="text-lg font-bold text-white">Manage Editors & Passwords</h3>
-        <button onclick="closeModal('editors-modal')" class="text-gray-400 hover:text-white">✕</button>
-      </div>
-      
-      <form onsubmit="addNewEditor(event)" class="flex gap-2">
-        <input type="text" id="new-editor-name" required placeholder="Editor Name" class="flex-1 notion-input px-3 py-1.5 rounded text-xs" />
-        <input type="text" id="new-editor-pass" required placeholder="Password" class="w-32 notion-input px-3 py-1.5 rounded text-xs" />
-        <button type="submit" class="px-3 py-1.5 rounded bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-medium">Add</button>
-      </form>
-
-      <div id="editors-manage-list" class="max-h-60 overflow-y-auto divide-y notion-border border notion-border rounded"></div>
-    </div>
-  </div>
-
-  <datalist id="editors-datalist"></datalist>
-
-  <script>
-    // ==================== SUPABASE CONFIGURATION ====================
-    const SUPABASE_URL = 'https://rozznqtbgddvmhyntpcx.supabase.co';
-    const SUPABASE_KEY = 'sb_publishable_cRkoqnJZ1XupMLgGHlp1Gg_hrhGcE0U';
-    const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-    const DEFAULT_ACCOUNTS = [
-      { id: 'def-admin', name: 'admin', password: 'Admin@654', role: 'admin' },
-      { id: 'def-manager', name: 'manager', password: 'Manager@654', role: 'manager' },
-      { id: 'def-ed1', name: 'Mr Toolkit', password: 'toolkit123', role: 'editor' },
-      { id: 'def-ed2', name: 'MD Muntasir Rahman', password: 'muntasir123', role: 'editor' },
-      { id: 'def-ed3', name: 'md biplob', password: 'biplob123', role: 'editor' }
-    ];
-
-    let currentUser = JSON.parse(localStorage.getItem('tosrec_user')) || null;
-    let editorsList = [...DEFAULT_ACCOUNTS];
-    let timersList = [];
-    let tasksList = [];
-    let currentTab = 'uncomplete';
-    let usdRate = 120;
-
-    async function init() {
-      await fetchAllData();
-      updateAuthUI();
-      if (currentUser) {
-        switchView('dashboard');
-      } else {
-        switchView('home');
-      }
-      setInterval(updateCountdownDisplays, 1000);
-    }
-
-    async function fetchAllData() {
-      try {
-        const [edRes, tmRes, tkRes, stRes] = await Promise.all([
-          db.from('editors').select('*').order('created_at', { ascending: true }),
-          db.from('active_timers').select('*').order('deadline', { ascending: true }),
-          db.from('cashflow_tasks').select('*').order('created_at', { ascending: false }),
-          db.from('app_settings').select('*').eq('id', 1).single()
-        ]);
-
-        if (edRes.data && edRes.data.length > 0) {
-          editorsList = edRes.data;
-        }
-        if (tmRes.data) timersList = tmRes.data;
-        if (tkRes.data) tasksList = tkRes.data;
-        if (stRes.data) {
-          usdRate = Number(stRes.data.usd_rate) || 120;
-          document.getElementById('usd-rate-input').value = usdRate;
-        }
-      } catch (err) {
-        console.warn('Using fallback accounts.', err);
-      }
-
-      populateSuggestions();
-      renderTimers();
-      if (currentUser) renderDashboard();
-    }
-
-    function populateSuggestions() {
-      const datalist = document.getElementById('editors-datalist');
-      const filterSel = document.getElementById('admin-editor-filter');
-      
-      const onlyEditors = editorsList.filter(e => e.role !== 'admin');
-      const uniqueNames = [...new Set(onlyEditors.map(e => e.name))];
-
-      datalist.innerHTML = uniqueNames.map(name => `<option value="${name}">`).join('');
-      filterSel.innerHTML = `<option value="ALL">All Editors</option>` + 
-        uniqueNames.map(name => `<option value="${name}">${name}</option>`).join('');
-    }
-
-    function openLoginModal() {
-      document.getElementById('login-error').classList.add('hidden');
-      document.getElementById('login-username').value = '';
-      document.getElementById('login-password').value = '';
-      document.getElementById('login-modal').classList.remove('hidden');
-      setTimeout(() => document.getElementById('login-username').focus(), 100);
-    }
-
-    function handleLogin(e) {
-      e.preventDefault();
-      const typedName = document.getElementById('login-username').value.trim().toLowerCase();
-      const enteredPass = document.getElementById('login-password').value;
-
-      const allAccounts = [...editorsList, ...DEFAULT_ACCOUNTS];
-      const matched = allAccounts.find(
-        ed => ed.name.trim().toLowerCase() === typedName && ed.password === enteredPass
-      );
-
-      if (!matched) {
-        document.getElementById('login-error').classList.remove('hidden');
-        return;
-      }
-
-      currentUser = { name: matched.name, role: matched.role };
-      localStorage.setItem('tosrec_user', JSON.stringify(currentUser));
-      closeModal('login-modal');
-      updateAuthUI();
-      switchView('dashboard');
-    }
-
-    function logout() {
-      currentUser = null;
-      localStorage.removeItem('tosrec_user');
-      updateAuthUI();
-      switchView('home');
-    }
-
-    function updateAuthUI() {
-      const isLoggedIn = !!currentUser;
-      const isAdmin = currentUser?.role === 'admin';
-      const isManager = currentUser?.role === 'manager';
-      const canManageEditorsAndTasks = isAdmin || isManager;
-
-      document.getElementById('login-open-btn').classList.toggle('hidden', isLoggedIn);
-      document.getElementById('user-badge').classList.toggle('hidden', !isLoggedIn);
-      document.getElementById('nav-dashboard-btn').classList.toggle('hidden', !isLoggedIn);
-      
-      document.getElementById('admin-timer-controls').classList.toggle('hidden', !canManageEditorsAndTasks);
-      document.getElementById('btn-manage-editors').classList.toggle('hidden', !canManageEditorsAndTasks);
-      document.getElementById('btn-add-task').classList.toggle('hidden', !canManageEditorsAndTasks);
-      document.getElementById('admin-editor-filter').classList.toggle('hidden', !canManageEditorsAndTasks);
-      document.getElementById('th-admin-actions').classList.toggle('hidden', !canManageEditorsAndTasks);
-      
-      // শুধুমাত্র অ্যাডমিন ডলার রেট পরিবর্তন করতে পারবে, ম্যানেজার পারবে না
-      document.getElementById('usd-rate-input').disabled = !isAdmin;
-
-      if (isLoggedIn) {
-        document.getElementById('logged-user-name').textContent = `${currentUser.name} (${currentUser.role.toUpperCase()})`;
-        document.getElementById('dashboard-title').textContent = isAdmin ? 'Master Agency Cashflow' : `${currentUser.name} — Cashflow`;
-      }
-      renderTimers();
-    }
-
-    function switchView(view) {
-      document.getElementById('view-home').classList.toggle('hidden', view !== 'home');
-      document.getElementById('view-dashboard').classList.toggle('hidden', view !== 'dashboard');
-      if (view === 'dashboard' && currentUser) renderDashboard();
-    }
-
-    function closeModal(id) {
-      document.getElementById(id).classList.add('hidden');
-    }
-
-    function renderTimers() {
-      const grid = document.getElementById('timers-grid');
-      const empty = document.getElementById('timers-empty');
-      const canManage = currentUser?.role === 'admin' || currentUser?.role === 'manager';
-
-      if (timersList.length === 0) {
-        grid.innerHTML = '';
-        empty.classList.remove('hidden');
-        return;
-      }
-      empty.classList.add('hidden');
-
-      grid.innerHTML = timersList.map(t => `
-        <div class="notion-card rounded-xl p-5 flex flex-col justify-between gap-4 relative group">
-          <div>
-            <div class="flex items-start justify-between gap-2">
-              <span class="text-xs px-2.5 py-0.5 rounded-full bg-[#2F2F2F] text-gray-300 font-medium">
-                👤 ${t.editor_name}
-              </span>
-              ${canManage ? `
-                <button onclick="deleteTimer('${t.id}')" title="Mark Complete & Remove Timer" class="text-xs px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 border border-emerald-500/20">
-                  ✓ Done
-                </button>
-              ` : ''}
-            </div>
-            <h3 class="text-base font-semibold text-white mt-3">${t.project_name}</h3>
-            <p class="text-[11px] text-gray-500 mt-0.5">Due: ${new Date(t.deadline).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })}</p>
-          </div>
-
-          <div class="bg-[#191919] border notion-border rounded-lg p-3">
-            <div class="text-[10px] uppercase tracking-wider text-gray-500 mb-1">Time Remaining</div>
-            <div class="countdown-display font-mono text-lg font-bold text-emerald-400" data-deadline="${t.deadline}">
-              Calculating...
-            </div>
-          </div>
-        </div>
-      `).join('');
-
-      updateCountdownDisplays();
-    }
-
-    function updateCountdownDisplays() {
-      const now = new Date().getTime();
-      document.querySelectorAll('.countdown-display').forEach(el => {
-        const target = new Date(el.dataset.deadline).getTime();
-        const diff = target - now;
-
-        if (diff <= 0) {
-          el.textContent = '00d : 00h : 00m : 00s (OVERDUE)';
-          el.className = 'countdown-display font-mono text-sm font-bold text-rose-500';
-          return;
-        }
-
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const secs = Math.floor((diff % (1000 * 60)) / 1000);
-
-        const pad = n => String(n).padStart(2, '0');
-        el.textContent = `${pad(days)}d : ${pad(hours)}h : ${pad(mins)}m : ${pad(secs)}s`;
-
-        if (diff < 1000 * 60 * 60 * 6) {
-          el.className = 'countdown-display font-mono text-lg font-bold text-amber-400';
-        } else {
-          el.className = 'countdown-display font-mono text-lg font-bold text-emerald-400';
-        }
-      });
-    }
-
-    function openTimerModal() {
-      document.getElementById('timer-project-name').value = '';
-      document.getElementById('timer-editor-name').value = '';
-      document.getElementById('timer-modal').classList.remove('hidden');
-    }
-
-    async function saveTimer(e) {
-      e.preventDefault();
-      const project_name = document.getElementById('timer-project-name').value.trim();
-      const editor_name = document.getElementById('timer-editor-name').value.trim();
-      const deadline = new Date(document.getElementById('timer-deadline').value).toISOString();
-
-      const { error } = await db.from('active_timers').insert([{ project_name, editor_name, deadline }]);
-      if (error) {
-        alert('Database Error:\n\n' + error.message);
-        return;
-      }
-      closeModal('timer-modal');
-      await fetchAllData();
-    }
-
-    async function deleteTimer(id) {
-      if (!confirm('Mark this timer project as completed and remove from homepage?')) return;
-      await db.from('active_timers').delete().eq('id', id);
-      await fetchAllData();
-    }
-
-    function setTaskTab(tab) {
-      currentTab = tab;
-      ['uncomplete', 'completed', 'all'].forEach(t => {
-        const btn = document.getElementById(`tab-${t}`);
-        if (t === tab) {
-          btn.className = 'px-3 py-1 rounded text-xs font-medium bg-[#2F2F2F] text-white flex items-center gap-1.5';
-        } else {
-          btn.className = 'px-3 py-1 rounded text-xs font-medium text-gray-400 hover:text-white flex items-center gap-1.5';
-        }
-      });
-      renderDashboard();
-    }
-
-    function renderDashboard() {
-      if (!currentUser) return;
-      const isAdminOrManager = currentUser.role === 'admin' || currentUser.role === 'manager';
-      const searchQuery = document.getElementById('task-search').value.toLowerCase();
-      const adminFilter = document.getElementById('admin-editor-filter').value;
-
-      let accessibleTasks = isAdminOrManager
-        ? tasksList
-        : tasksList.filter(t => t.assignee.trim().toLowerCase() === currentUser.name.trim().toLowerCase());
-
-      if (isAdminOrManager && adminFilter !== 'ALL') {
-        accessibleTasks = accessibleTasks.filter(t => t.assignee.trim().toLowerCase() === adminFilter.trim().toLowerCase());
-      }
-
-      const uncompleteCount = accessibleTasks.filter(t => !t.is_completed).length;
-      const completedCount = accessibleTasks.filter(t => t.is_completed).length;
-      document.getElementById('count-uncomplete').textContent = `(${uncompleteCount})`;
-      document.getElementById('count-completed').textContent = `(${completedCount})`;
-      document.getElementById('count-all').textContent = `(${accessibleTasks.length})`;
-
-      let visibleTasks = accessibleTasks.filter(t => {
-        if (currentTab === 'uncomplete' && t.is_completed) return false;
-        if (currentTab === 'completed' && !t.is_completed) return false;
-        if (searchQuery && !t.task_name.toLowerCase().includes(searchQuery) && !(t.note || '').toLowerCase().includes(searchQuery)) return false;
-        return true;
-      });
-
-      const tbody = document.getElementById('cashflow-tbody');
-      const emptyBox = document.getElementById('tasks-empty');
-
-      if (visibleTasks.length === 0) {
-        tbody.innerHTML = '';
-        emptyBox.classList.remove('hidden');
-      } else {
-        emptyBox.classList.add('hidden');
-        tbody.innerHTML = visibleTasks.map(t => {
-          const statusColor = t.tk_status === 'Paid'
-            ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30'
-            : t.tk_status === 'Partial'
-              ? 'bg-amber-500/15 text-amber-400 border-amber-500/30'
-              : 'bg-rose-500/15 text-rose-400 border-rose-500/30';
-
-          const tagColor = t.delivery_tag === 'Y'
-            ? 'bg-sky-500/20 text-sky-300'
-            : 'bg-[#2F2F2F] text-gray-400';
-
-          return `
-            <tr class="notion-row transition">
-              <td class="py-2.5 px-3 text-center">
-                <input type="checkbox" ${t.is_completed ? 'checked' : ''} 
-                  onchange="toggleTaskComplete('${t.id}', this.checked)"
-                  class="w-4 h-4 rounded accent-[#2383E2] cursor-pointer" />
-              </td>
-              <td class="py-2.5 px-3 font-medium ${t.is_completed ? 'line-through text-gray-500' : 'text-white'}">
-                ${t.task_name}
-              </td>
-              <td class="py-2.5 px-3">
-                <span class="inline-flex items-center gap-1.5 text-gray-300">
-                  <span class="w-4 h-4 rounded-full bg-[#373737] text-[10px] flex items-center justify-center font-bold">
-                    ${t.assignee.charAt(0).toUpperCase()}
-                  </span>
-                  ${t.assignee}
-                </span>
-              </td>
-              <td class="py-2.5 px-3">
-                <span class="px-2 py-0.5 rounded border text-[11px] font-medium ${statusColor}">
-                  ${t.tk_status}
-                </span>
-              </td>
-              <td class="py-2.5 px-3 font-mono">
-                ${Number(t.amount_bdt) > 0 ? `<span class="text-white">৳${Number(t.amount_bdt).toLocaleString()}</span>` : ''}
-                ${Number(t.amount_bdt) > 0 && Number(t.amount_usd) > 0 ? `<span class="text-gray-500"> + </span>` : ''}
-                ${Number(t.amount_usd) > 0 ? `<span class="text-sky-400">$${Number(t.amount_usd).toLocaleString()}</span>` : ''}
-                ${Number(t.amount_bdt) === 0 && Number(t.amount_usd) === 0 ? `<span class="text-gray-600">—</span>` : ''}
-              </td>
-              <td class="py-2.5 px-3 text-gray-400">${t.note || '—'}</td>
-              <td class="py-2.5 px-3 text-center">
-                <span class="px-2 py-0.5 rounded text-[11px] font-semibold ${tagColor}">${t.delivery_tag}</span>
-              </td>
-              ${isAdminOrManager ? `
-                <td class="py-2.5 px-3 text-right space-x-1">
-                  <button onclick='openEditTaskModal(${JSON.stringify(t)})' class="text-gray-400 hover:text-white px-1.5 py-0.5 rounded hover:bg-[#333]">Edit</button>
-                  <button onclick="deleteTask('${t.id}')" class="text-rose-400 hover:text-rose-300 px-1.5 py-0.5 rounded hover:bg-rose-500/10">Del</button>
-                </td>
-              ` : ''}
-            </tr>
-          `;
-        }).join('');
-      }
-
-      calculateSummaries(accessibleTasks);
-    }
-
-    function calculateSummaries(tasks) {
-      let totalBdt = 0, totalUsd = 0;
-      let dueBdt = 0, dueUsd = 0;
-      let paidBdt = 0, paidUsd = 0;
-
-      const perEditor = {};
-
-      tasks.forEach(t => {
-        const bdt = Number(t.amount_bdt) || 0;
-        const usd = Number(t.amount_usd) || 0;
-
-        totalBdt += bdt;
-        totalUsd += usd;
-
-        if (t.tk_status === 'Paid') {
-          paidBdt += bdt;
-          paidUsd += usd;
-        } else {
-          dueBdt += bdt;
-          dueUsd += usd;
-        }
-
-        if (!perEditor[t.assignee]) {
-          perEditor[t.assignee] = { bdt: 0, usd: 0, dueBdt: 0, dueUsd: 0 };
-        }
-        perEditor[t.assignee].bdt += bdt;
-        perEditor[t.assignee].usd += usd;
-        if (t.tk_status !== 'Paid') {
-          perEditor[t.assignee].dueBdt += bdt;
-          perEditor[t.assignee].dueUsd += usd;
-        }
-      });
-
-      const grandTotalBdt = totalBdt + (totalUsd * usdRate);
-
-      document.getElementById('sum-total-bdt').textContent = `৳ ${totalBdt.toLocaleString()}`;
-      document.getElementById('sum-total-usd').textContent = `$ ${totalUsd.toLocaleString()}`;
-      document.getElementById('sum-due').textContent = `৳ ${dueBdt.toLocaleString()} + $ ${dueUsd.toLocaleString()}`;
-      document.getElementById('sum-paid').textContent = `৳ ${paidBdt.toLocaleString()} + $ ${paidUsd.toLocaleString()}`;
-      document.getElementById('sum-grand-bdt').textContent = `৳ ${grandTotalBdt.toLocaleString()}`;
-
-      const breakdownBox = document.getElementById('editor-breakdown-list');
-      const editorNames = Object.keys(perEditor);
-
-      if (editorNames.length === 0) {
-        breakdownBox.innerHTML = `<p class="text-xs text-gray-500">No calculations yet.</p>`;
-        return;
-      }
-
-      breakdownBox.innerHTML = editorNames.map(name => {
-        const d = perEditor[name];
-        const estTotal = d.bdt + (d.usd * usdRate);
-        return `
-          <div class="bg-[#191919] p-3 rounded border notion-border space-y-1.5">
+        </section>
+    </main>
+
+    <!-- ==================== MODALS ==================== -->
+    <!-- 1. Login Modal -->
+    <div id="login-modal" class="hidden fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="notion-card w-full max-w-sm rounded-xl p-6 space-y-4">
             <div class="flex justify-between items-center">
-              <span class="text-xs font-semibold text-white">👤 ${name}</span>
-              <span class="text-xs font-mono font-bold text-emerald-400">≈ ৳${estTotal.toLocaleString()}</span>
+                <h3 class="text-lg font-bold text-white">Workspace Login</h3>
+                <button onclick="closeModal('login-modal')" class="text-gray-400 hover:text-white">✕</button>
             </div>
-            <div class="flex justify-between text-[11px] text-gray-400 font-mono">
-              <span>Total: ৳${d.bdt.toLocaleString()} + $${d.usd.toLocaleString()}</span>
-              <span class="text-rose-400">Due: ৳${d.dueBdt.toLocaleString()} + $${d.dueUsd.toLocaleString()}</span>
+            <form onsubmit="handleLogin(event)" class="space-y-3">
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">Profile / Editor Name</label>
+                    <input type="text" id="login-username" required placeholder="e.g. admin or Mr Toolkit" class="w-full notion-input px-3 py-2 rounded text-sm" />
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">Password</label>
+                    <input type="password" id="login-password" required placeholder="••••••••" class="w-full notion-input px-3 py-2 rounded text-sm" />
+                </div>
+                <p id="login-error" class="hidden text-xs text-rose-400">Invalid name or password. Please try again.</p>
+                <button type="submit" class="w-full py-2 rounded bg-[#2383E2] hover:bg-[#1B6EC2] text-white text-sm font-medium"> Access Cashflow </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 2. Add Active Timer Modal -->
+    <div id="timer-modal" class="hidden fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="notion-card w-full max-w-md rounded-xl p-6 space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="text-lg font-bold text-white">Add Running Project Timer</h3>
+                <button onclick="closeModal('timer-modal')" class="text-gray-400 hover:text-white">✕</button>
             </div>
-          </div>
-        `;
-      }).join('');
-    }
+            <form onsubmit="saveTimer(event)" class="space-y-3">
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">Project / Video Name</label>
+                    <input type="text" id="timer-project-name" required placeholder="e.g. Travel Vlog Ep 04" class="w-full notion-input px-3 py-2 rounded text-sm" />
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">Assign To Editor</label>
+                    <input type="text" id="timer-editor-name" list="editors-datalist" required placeholder="Type or select editor name" class="w-full notion-input px-3 py-2 rounded text-sm" />
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">Submission Deadline</label>
+                    <input type="datetime-local" id="timer-deadline" required class="w-full notion-input px-3 py-2 rounded text-sm" />
+                </div>
+                <button type="submit" class="w-full py-2 rounded bg-[#2383E2] hover:bg-[#1B6EC2] text-white text-sm font-medium"> Start Live Countdown </button>
+            </form>
+        </div>
+    </div>
 
-    async function toggleTaskComplete(id, isChecked) {
-      await db.from('cashflow_tasks').update({ is_completed: isChecked }).eq('id', id);
-      await fetchAllData();
-    }
-
-    function openTaskModal() {
-      document.getElementById('task-modal-title').textContent = 'New Cashflow Entry';
-      document.getElementById('edit-task-id').value = '';
-      document.getElementById('task-name').value = '';
-      document.getElementById('task-assignee').value = '';
-      document.getElementById('task-bdt').value = '0';
-      document.getElementById('task-usd').value = '0';
-      document.getElementById('task-note').value = '';
-      document.getElementById('task-status').value = 'Due';
-      document.getElementById('task-tag').value = 'Y';
-      document.getElementById('task-modal').classList.remove('hidden');
-    }
-
-    function openEditTaskModal(task) {
-      document.getElementById('task-modal-title').textContent = 'Edit Cashflow Entry';
-      document.getElementById('edit-task-id').value = task.id;
-      document.getElementById('task-name').value = task.task_name;
-      document.getElementById('task-assignee').value = task.assignee;
-      document.getElementById('task-status').value = task.tk_status;
-      document.getElementById('task-bdt').value = task.amount_bdt;
-      document.getElementById('task-usd').value = task.amount_usd;
-      document.getElementById('task-note').value = task.note || '';
-      document.getElementById('task-tag').value = task.delivery_tag;
-      document.getElementById('task-modal').classList.remove('hidden');
-    }
-
-    async function saveTask(e) {
-      e.preventDefault();
-      const id = document.getElementById('edit-task-id').value;
-      const payload = {
-        task_name: document.getElementById('task-name').value.trim(),
-        assignee: document.getElementById('task-assignee').value.trim(),
-        tk_status: document.getElementById('task-status').value,
-        amount_bdt: Number(document.getElementById('task-bdt').value) || 0,
-        amount_usd: Number(document.getElementById('task-usd').value) || 0,
-        note: document.getElementById('task-note').value.trim(),
-        delivery_tag: document.getElementById('task-tag').value
-      };
-
-      let res;
-      if (id) {
-        res = await db.from('cashflow_tasks').update(payload).eq('id', id);
-      } else {
-        res = await db.from('cashflow_tasks').insert([payload]);
-      }
-
-      if (res.error) {
-        alert('Database Error:\n\n' + res.error.message);
-        return;
-      }
-
-      closeModal('task-modal');
-      await fetchAllData();
-    }
-
-    async function deleteTask(id) {
-      if (!confirm('Delete this cashflow entry?')) return;
-      await db.from('cashflow_tasks').delete().eq('id', id);
-      await fetchAllData();
-    }
-
-    async function updateUsdRate() {
-      // শুধুমাত্র অ্যাডমিন ডলার রেট বদলাতে পারবে
-      if (currentUser?.role !== 'admin') {
-        alert('Only Admin can change the USD conversion rate!');
-        return;
-      }
-      usdRate = Number(document.getElementById('usd-rate-input').value) || 120;
-      await db.from('app_settings').update({ usd_rate: usdRate }).eq('id', 1);
-      renderDashboard();
-    }
-
-    // ==================== EDITOR & PASSWORD MANAGEMENT ====================
-    function openEditorManagerModal() {
-      if (currentUser?.role !== 'admin' && currentUser?.role !== 'manager') return;
-      renderEditorsManageList();
-      document.getElementById('editors-modal').classList.remove('hidden');
-    }
-
-    function renderEditorsManageList() {
-      const box = document.getElementById('editors-manage-list');
-      const isAdmin = currentUser?.role === 'admin';
-
-      box.innerHTML = editorsList.map(ed => {
-        const isTargetAdmin = ed.role === 'admin';
-        const showPassword = isAdmin || !isTargetAdmin;
-
-        // ম্যানেজার নিজেকে অথবা কোনো অ্যাডমিনকে রিমুভ করতে পারবে না
-        const isSelf = ed.name.trim().toLowerCase() === currentUser.name.trim().toLowerCase();
-        const canDeleteThis = (isAdmin || (currentUser?.role === 'manager' && ed.role === 'editor')) && !isSelf && !String(ed.id).startsWith('def-');
-
-        return `
-          <div class="p-2.5 flex items-center justify-between text-xs bg-[#191919]">
-            <div>
-              <span class="font-medium text-white">${ed.name}</span>
-              <span class="ml-2 text-gray-500 font-mono">
-                Pass: ${showPassword ? ed.password : '•••••••• (Hidden)'}
-              </span>
+    <!-- 3. Add / Edit Cashflow Entry Modal -->
+    <div id="task-modal" class="hidden fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="notion-card w-full max-w-md rounded-xl p-6 space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 id="task-modal-title" class="text-lg font-bold text-white">New Cashflow Entry</h3>
+                <button onclick="closeModal('task-modal')" class="text-gray-400 hover:text-white">✕</button>
             </div>
-            ${
-              canDeleteThis
-              ? `<button onclick="removeEditor('${ed.id}')" class="text-rose-400 hover:underline">Remove</button>`
-              : `<span class="text-[10px] text-amber-400">${ed.role.toUpperCase()}${isSelf ? ' (You)' : ''}</span>`
+            <form onsubmit="saveTask(event)" class="space-y-3">
+                <input type="hidden" id="edit-task-id" />
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">Task / Client Name</label>
+                    <input type="text" id="task-name" required placeholder="e.g. Brandominguez3" class="w-full notion-input px-3 py-2 rounded text-sm" />
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Assignee (Editor)</label>
+                        <input type="text" id="task-assignee" list="editors-datalist" required placeholder="Editor name" class="w-full notion-input px-3 py-2 rounded text-sm" />
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">TK Status</label>
+                        <select id="task-status" class="w-full notion-input px-3 py-2 rounded text-sm">
+                            <option value="Due">Due</option>
+                            <option value="Paid">Paid</option>
+                            <option value="Partial">Partial</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Amount in Taka (৳)</label>
+                        <input type="number" step="any" id="task-bdt" value="0" class="w-full notion-input px-3 py-2 rounded text-sm font-mono" />
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Amount in Dollar ($)</label>
+                        <input type="number" step="any" id="task-usd" value="0" class="w-full notion-input px-3 py-2 rounded text-sm font-mono" />
+                    </div>
+                </div>
+                <div class="grid grid-cols-3 gap-3">
+                    <div class="col-span-2">
+                        <label class="block text-xs text-gray-400 mb-1">Extra Note</label>
+                        <input type="text" id="task-note" placeholder="e.g. 16% or info" class="w-full notion-input px-3 py-2 rounded text-sm" />
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Multi-select</label>
+                        <select id="task-tag" class="w-full notion-input px-3 py-2 rounded text-sm">
+                            <option value="Y">Y</option>
+                            <option value="NO">NO</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="w-full py-2 rounded bg-[#2383E2] hover:bg-[#1B6EC2] text-white text-sm font-medium"> Save Entry </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 4. Manage Editors Modal -->
+    <div id="editors-modal" class="hidden fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="notion-card w-full max-w-md rounded-xl p-6 space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="text-lg font-bold text-white">Manage Editors & Passwords</h3>
+                <button onclick="closeModal('editors-modal')" class="text-gray-400 hover:text-white">✕</button>
+            </div>
+            <form onsubmit="addNewEditor(event)" class="flex gap-2">
+                <input type="text" id="new-editor-name" required placeholder="Editor Name" class="flex-1 notion-input px-3 py-1.5 rounded text-xs" />
+                <input type="text" id="new-editor-pass" required placeholder="Password" class="w-32 notion-input px-3 py-1.5 rounded text-xs" />
+                <button type="submit" class="px-3 py-1.5 rounded bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-medium">Add</button>
+            </form>
+            <div id="editors-manage-list" class="max-h-60 overflow-y-auto divide-y notion-border border notion-border rounded"></div>
+        </div>
+    </div>
+
+    <!-- 5. Floating Notepad Modal for Links/Images/Notes -->
+    <div id="notepad-modal" class="hidden fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="notion-card w-full max-w-lg rounded-xl p-6 space-y-4">
+            <div class="flex justify-between items-center border-b notion-border pb-3">
+                <h3 class="text-lg font-bold text-white flex items-center gap-2"><span>📝</span> Task NotePad & Media Hub</h3>
+                <button onclick="closeNotepadModal()" class="text-gray-400 hover:text-white">✕</button>
+            </div>
+            <input type="hidden" id="notepad-task-id" />
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">Links / References (URLs)</label>
+                    <input type="text" id="notepad-link" placeholder="https://example.com" class="w-full notion-input px-3 py-2 rounded text-sm font-mono" />
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">Image URL / File Link</label>
+                    <input type="text" id="notepad-image" placeholder="https://image-link.com/preview.png" class="w-full notion-input px-3 py-2 rounded text-sm font-mono" />
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">Detailed Notepad Description</label>
+                    <textarea id="notepad-text" rows="4" placeholder="Write detailed instructions, notes, or info here..." class="w-full notion-input p-3 rounded text-sm"></textarea>
+                </div>
+            </div>
+            <div class="flex justify-end gap-2 pt-2">
+                <button onclick="closeNotepadModal()" class="px-4 py-2 rounded notion-card text-xs text-gray-300">Cancel</button>
+                <button onclick="saveNotepadContent()" class="px-4 py-2 rounded bg-[#2383E2] hover:bg-[#1B6EC2] text-white text-xs font-medium">Save NotePad</button>
+            </div>
+        </div>
+    </div>
+
+    <datalist id="editors-datalist"></datalist>
+
+    <script>
+        const SUPABASE_URL = 'https://rozznqtbgddvmhyntpcx.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_cRkoqnJZ1XupMLgGHlp1Gg_hrhGcE0U';
+        const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        const DEFAULT_ACCOUNTS = [
+            { id: 'def-admin', name: 'admin', password: 'Admin@654', role: 'admin' },
+            { id: 'def-manager', name: 'manager', password: 'Manager@654', role: 'manager' },
+            { id: 'def-ed1', name: 'Mr Toolkit', password: 'toolkit123', role: 'editor' },
+            { id: 'def-ed2', name: 'MD Muntasir Rahman', password: 'muntasir123', role: 'editor' },
+            { id: 'def-ed3', name: 'md biplob', password: 'biplob123', role: 'editor' }
+        ];
+
+        let currentUser = JSON.parse(localStorage.getItem('tosrec_user')) || null;
+        let editorsList = [...DEFAULT_ACCOUNTS];
+        let timersList = [];
+        let tasksList = [];
+        let currentTab = 'uncomplete';
+        let usdRate = 120;
+
+        async function init() {
+            await fetchAllData();
+            updateAuthUI();
+            if (currentUser) {
+                switchView('dashboard');
+            } else {
+                switchView('home');
             }
-          </div>
-        `;
-      }).join('');
-    }
+            setInterval(updateCountdownDisplays, 1000);
+        }
 
-    async function addNewEditor(e) {
-      e.preventDefault();
-      if (currentUser?.role !== 'admin' && currentUser?.role !== 'manager') return;
+        async function fetchAllData() {
+            try {
+                const [edRes, tmRes, tkRes, stRes] = await Promise.all([
+                    db.from('editors').select('*').order('created_at', { ascending: true }),
+                    db.from('active_timers').select('*').order('deadline', { ascending: true }),
+                    db.from('cashflow_tasks').select('*').order('created_at', { ascending: false }),
+                    db.from('app_settings').select('*').eq('id', 1).single()
+                ]);
+                if (edRes.data && edRes.data.length > 0) editorsList = edRes.data;
+                if (tmRes.data) timersList = tmRes.data;
+                if (tkRes.data) tasksList = tkRes.data;
+                if (stRes.data) {
+                    usdRate = Number(stRes.data.usd_rate) || 120;
+                    document.getElementById('usd-rate-input').value = usdRate;
+                }
+            } catch (err) {
+                console.warn('Using fallback accounts.', err);
+            }
+            populateSuggestions();
+            renderTimers();
+            if (currentUser) renderDashboard();
+        }
 
-      const name = document.getElementById('new-editor-name').value.trim();
-      const password = document.getElementById('new-editor-pass').value.trim();
-      if (!name || !password) return;
+        function populateSuggestions() {
+            const datalist = document.getElementById('editors-datalist');
+            const filterSel = document.getElementById('admin-editor-filter');
+            const onlyEditors = editorsList.filter(e => e.role !== 'admin');
+            const uniqueNames = [...new Set(onlyEditors.map(e => e.name))];
+            datalist.innerHTML = uniqueNames.map(name => `<option value="${name}">`).join('');
+            filterSel.innerHTML = `<option value="ALL">All Editors</option>` + uniqueNames.map(name => `<option value="${name}">${name}</option>`).join('');
+        }
 
-      const { error } = await db.from('editors').insert([{ name, password, role: 'editor' }]);
-      if (error) {
-        alert('Database Error:\n\n' + error.message);
-        return;
-      }
-      document.getElementById('new-editor-name').value = '';
-      document.getElementById('new-editor-pass').value = '';
-      await fetchAllData();
-      renderEditorsManageList();
-    }
+        function openLoginModal() {
+            document.getElementById('login-error').classList.add('hidden');
+            document.getElementById('login-username').value = '';
+            document.getElementById('login-password').value = '';
+            document.getElementById('login-modal').classList.remove('hidden');
+        }
 
-    async function removeEditor(id) {
-      if (!confirm('Remove this editor profile?')) return;
-      await db.from('editors').delete().eq('id', id);
-      await fetchAllData();
-      renderEditorsManageList();
-    }
+        function handleLogin(e) {
+            e.preventDefault();
+            const typedName = document.getElementById('login-username').value.trim().toLowerCase();
+            const enteredPass = document.getElementById('login-password').value;
+            const allAccounts = [...editorsList, ...DEFAULT_ACCOUNTS];
+            const matched = allAccounts.find(ed => ed.name.trim().toLowerCase() === typedName && ed.password === enteredPass);
+            if (!matched) {
+                document.getElementById('login-error').classList.remove('hidden');
+                return;
+            }
+            currentUser = { name: matched.name, role: matched.role };
+            localStorage.setItem('tosrec_user', JSON.stringify(currentUser));
+            closeModal('login-modal');
+            updateAuthUI();
+            switchView('dashboard');
+        }
 
-    init();
-  </script>
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('tosrec_user');
+            updateAuthUI();
+            switchView('home');
+        }
+
+        function updateAuthUI() {
+            const isLoggedIn = !!currentUser;
+            const isAdmin = currentUser?.role === 'admin';
+            const isManager = currentUser?.role === 'manager';
+            const canManage = isAdmin || isManager;
+            document.getElementById('login-open-btn').classList.toggle('hidden', isLoggedIn);
+            document.getElementById('user-badge').classList.toggle('hidden', !isLoggedIn);
+            document.getElementById('nav-dashboard-btn').classList.toggle('hidden', !isLoggedIn);
+            document.getElementById('admin-timer-controls').classList.toggle('hidden', !canManage);
+            document.getElementById('btn-manage-editors').classList.toggle('hidden', !canManage);
+            document.getElementById('btn-add-task').classList.toggle('hidden', !canManage);
+            document.getElementById('admin-editor-filter').classList.toggle('hidden', !canManage);
+            document.getElementById('th-admin-actions').classList.toggle('hidden', !canManage);
+            document.getElementById('usd-rate-input').disabled = !isAdmin;
+            if (isLoggedIn) {
+                document.getElementById('logged-user-name').textContent = `${currentUser.name} (${currentUser.role.toUpperCase()})`;
+                document.getElementById('dashboard-title').textContent = isAdmin ? 'Master Agency Cashflow' : `${currentUser.name} — Cashflow`;
+            }
+            renderTimers();
+        }
+
+        function switchView(view) {
+            document.getElementById('view-home').classList.toggle('hidden', view !== 'home');
+            document.getElementById('view-dashboard').classList.toggle('hidden', view !== 'dashboard');
+            if (view === 'dashboard' && currentUser) renderDashboard();
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        function renderTimers() {
+            const grid = document.getElementById('timers-grid');
+            const empty = document.getElementById('timers-empty');
+            const canManage = currentUser?.role === 'admin' || currentUser?.role === 'manager';
+            if (timersList.length === 0) {
+                grid.innerHTML = '';
+                empty.classList.remove('hidden');
+                return;
+            }
+            empty.classList.add('hidden');
+            grid.innerHTML = timersList.map(t => `
+                <div class="notion-card rounded-xl p-5 flex flex-col justify-between gap-4 relative group">
+                    <div>
+                        <div class="flex items-start justify-between gap-2">
+                            <span class="text-xs px-2.5 py-0.5 rounded-full bg-[#2F2F2F] text-gray-300 font-medium"> 👤 ${t.editor_name} </span>
+                            ${canManage ? `<button onclick="deleteTimer('${t.id}')" class="text-xs px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 border border-emerald-500/20"> ✓ Done </button>` : ''}
+                        </div>
+                        <h3 class="text-base font-semibold text-white mt-3">${t.project_name}</h3>
+                        <p class="text-[11px] text-gray-500 mt-0.5">Due: ${new Date(t.deadline).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })}</p>
+                    </div>
+                    <div class="bg-[#191919] border notion-border rounded-lg p-3">
+                        <div class="text-[10px] uppercase tracking-wider text-gray-500 mb-1">Time Remaining</div>
+                        <div class="countdown-display font-mono text-lg font-bold text-emerald-400" data-deadline="${t.deadline}"> Calculating... </div>
+                    </div>
+                </div>
+            `).join('');
+            updateCountdownDisplays();
+        }
+
+        function updateCountdownDisplays() {
+            const now = new Date().getTime();
+            document.querySelectorAll('.countdown-display').forEach(el => {
+                const target = new Date(el.dataset.deadline).getTime();
+                const diff = target - now;
+                if (diff <= 0) {
+                    el.textContent = '00d : 00h : 00m : 00s (OVERDUE)';
+                    el.className = 'countdown-display font-mono text-sm font-bold text-rose-500';
+                    return;
+                }
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const secs = Math.floor((diff % (1000 * 60)) / 1000);
+                const pad = n => String(n).padStart(2, '0');
+                el.textContent = `${pad(days)}d : ${pad(hours)}h : ${pad(mins)}m : ${pad(secs)}s`;
+            });
+        }
+
+        function openTimerModal() {
+            document.getElementById('timer-project-name').value = '';
+            document.getElementById('timer-editor-name').value = '';
+            document.getElementById('timer-modal').classList.remove('hidden');
+        }
+
+        async function saveTimer(e) {
+            e.preventDefault();
+            const project_name = document.getElementById('timer-project-name').value.trim();
+            const editor_name = document.getElementById('timer-editor-name').value.trim();
+            const deadline = new Date(document.getElementById('timer-deadline').value).toISOString();
+            const { error } = await db.from('active_timers').insert([{ project_name, editor_name, deadline }]);
+            if (error) { alert('Error: ' + error.message); return; }
+            closeModal('timer-modal');
+            await fetchAllData();
+        }
+
+        async function deleteTimer(id) {
+            if (!confirm('Mark completed and remove?')) return;
+            await db.from('active_timers').delete().eq('id', id);
+            await fetchAllData();
+        }
+
+        function setTaskTab(tab) {
+            currentTab = tab;
+            ['uncomplete', 'completed', 'all'].forEach(t => {
+                const btn = document.getElementById(`tab-${t}`);
+                if (t === tab) {
+                    btn.className = 'px-3 py-1 rounded text-xs font-medium bg-[#2F2F2F] text-white flex items-center gap-1.5';
+                } else {
+                    btn.className = 'px-3 py-1 rounded text-xs font-medium text-gray-400 hover:text-white flex items-center gap-1.5';
+                }
+            });
+            renderDashboard();
+        }
+
+        function renderDashboard() {
+            if (!currentUser) return;
+            const isAdminOrManager = currentUser.role === 'admin' || currentUser.role === 'manager';
+            const searchQuery = document.getElementById('task-search').value.toLowerCase();
+            const adminFilter = document.getElementById('admin-editor-filter').value;
+            
+            let accessibleTasks = isAdminOrManager ? tasksList : tasksList.filter(t => t.assignee.trim().toLowerCase() === currentUser.name.trim().toLowerCase());
+            if (isAdminOrManager && adminFilter !== 'ALL') {
+                accessibleTasks = accessibleTasks.filter(t => t.assignee.trim().toLowerCase() === adminFilter.trim().toLowerCase());
+            }
+
+            const uncompleteCount = accessibleTasks.filter(t => !t.is_completed).length;
+            const completedCount = accessibleTasks.filter(t => t.is_completed).length;
+            document.getElementById('count-uncomplete').textContent = `(${uncompleteCount})`;
+            document.getElementById('count-completed').textContent = `(${completedCount})`;
+            document.getElementById('count-all').textContent = `(${accessibleTasks.length})`;
+
+            let visibleTasks = accessibleTasks.filter(t => {
+                if (currentTab === 'uncomplete' && t.is_completed) return false;
+                if (currentTab === 'completed' && !t.is_completed) return false;
+                if (searchQuery && !t.task_name.toLowerCase().includes(searchQuery) && !(t.note || '').toLowerCase().includes(searchQuery)) return false;
+                return true;
+            });
+
+            const tbody = document.getElementById('cashflow-tbody');
+            const emptyBox = document.getElementById('tasks-empty');
+            if (visibleTasks.length === 0) {
+                tbody.innerHTML = '';
+                emptyBox.classList.remove('hidden');
+            } else {
+                emptyBox.classList.add('hidden');
+                tbody.innerHTML = visibleTasks.map(t => {
+                    const statusColor = t.tk_status === 'Paid' ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30' : t.tk_status === 'Partial' ? 'bg-amber-500/15 text-amber-400 border-amber-500/30' : 'bg-rose-500/15 text-rose-400 border-rose-500/30';
+                    const tagColor = t.delivery_tag === 'Y' ? 'bg-sky-500/20 text-sky-300' : 'bg-[#2F2F2F] text-gray-400';
+                    
+                    // Parse note field safely as JSON or string
+                    let hasNoteData = t.note && t.note.trim().length > 0;
+                    return `
+                        <tr class="notion-row transition">
+                            <td class="py-2.5 px-3 text-center">
+                                <input type="checkbox" ${t.is_completed ? 'checked' : ''} onchange="toggleTaskComplete('${t.id}', this.checked)" class="w-4 h-4 rounded accent-[#2383E2] cursor-pointer" />
+                            </td>
+                            <td class="py-2.5 px-3 font-medium ${t.is_completed ? 'line-through text-gray-500' : 'text-white'}"> ${t.task_name} </td>
+                            <td class="py-2.5 px-3">
+                                <span class="inline-flex items-center gap-1.5 text-gray-300">
+                                    <span class="w-4 h-4 rounded-full bg-[#373737] text-[10px] flex items-center justify-center font-bold"> ${t.assignee.charAt(0).toUpperCase()} </span> ${t.assignee}
+                                </span>
+                            </td>
+                            <td class="py-2.5 px-3">
+                                <span class="px-2 py-0.5 rounded border text-[11px] font-medium ${statusColor}"> ${t.tk_status} </span>
+                            </td>
+                            <td class="py-2.5 px-3 font-mono">
+                                ${Number(t.amount_bdt) > 0 ? `<span class="text-white">৳${Number(t.amount_bdt).toLocaleString()}</span>` : ''}
+                                ${Number(t.amount_bdt) > 0 && Number(t.amount_usd) > 0 ? `<span class="text-gray-500"> + </span>` : ''}
+                                ${Number(t.amount_usd) > 0 ? `<span class="text-sky-400">$${Number(t.amount_usd).toLocaleString()}</span>` : ''}
+                                ${Number(t.amount_bdt) === 0 && Number(t.amount_usd) === 0 ? `<span class="text-gray-600">—</span>` : ''}
+                            </td>
+                            <td class="py-2.5 px-3">
+                                <button onclick='openNotepadModal(${JSON.stringify(t)})' class="px-2.5 py-1 rounded bg-[#2F2F2F] hover:bg-[#3A3A3A] text-xs text-sky-400 flex items-center gap-1.5 transition">
+                                    <span>📝</span> <span>${hasNoteData ? 'View Note' : 'Add Note'}</span>
+                                </button>
+                            </td>
+                            <td class="py-2.5 px-3 text-center">
+                                <span class="px-2 py-0.5 rounded text-[11px] font-semibold ${tagColor}">${t.delivery_tag}</span>
+                            </td>
+                            ${isAdminOrManager ? `
+                                <td class="py-2.5 px-3 text-right space-x-1">
+                                    <button onclick='openEditTaskModal(${JSON.stringify(t)})' class="text-gray-400 hover:text-white px-1.5 py-0.5 rounded hover:bg-[#333]">Edit</button>
+                                    <button onclick="deleteTask('${t.id}')" class="text-rose-400 hover:text-rose-300 px-1.5 py-0.5 rounded hover:bg-rose-500/10">Del</button>
+                                </td>
+                            ` : ''}
+                        </tr>
+                    `;
+                }).join('');
+            }
+
+            // Calculate summaries strictly based on current active Tab
+            let tabFilteredTasks = accessibleTasks.filter(t => {
+                if (currentTab === 'uncomplete') return !t.is_completed;
+                if (currentTab === 'completed') return t.is_completed;
+                return true;
+            });
+            calculateSummaries(tabFilteredTasks, currentTab);
+        }
+
+        function calculateSummaries(tasks, tabName) {
+            let totalBdt = 0, totalUsd = 0;
+            let dueBdt = 0, dueUsd = 0;
+            let paidBdt = 0, paidUsd = 0;
+            const perEditor = {};
+
+            tasks.forEach(t => {
+                const bdt = Number(t.amount_bdt) || 0;
+                const usd = Number(t.amount_usd) || 0;
+                totalBdt += bdt;
+                totalUsd += usd;
+                if (t.tk_status === 'Paid') {
+                    paidBdt += bdt;
+                    paidUsd += usd;
+                } else {
+                    dueBdt += bdt;
+                    dueUsd += usd;
+                }
+                if (!perEditor[t.assignee]) {
+                    perEditor[t.assignee] = { bdt: 0, usd: 0, dueBdt: 0, dueUsd: 0 };
+                }
+                perEditor[t.assignee].bdt += bdt;
+                perEditor[t.assignee].usd += usd;
+                if (t.tk_status !== 'Paid') {
+                    perEditor[t.assignee].dueBdt += bdt;
+                    perEditor[t.assignee].dueUsd += usd;
+                }
+            });
+
+            const grandTotalBdt = totalBdt + (totalUsd * usdRate);
+            document.getElementById('summary-header-title').textContent = `Auto Summary (${tabName.toUpperCase()})`;
+            document.getElementById('sum-total-bdt').textContent = `৳ ${totalBdt.toLocaleString()}`;
+            document.getElementById('sum-total-usd').textContent = `$ ${totalUsd.toLocaleString()}`;
+            document.getElementById('sum-due').textContent = `৳ ${dueBdt.toLocaleString()} + $ ${dueUsd.toLocaleString()}`;
+            document.getElementById('sum-paid').textContent = `৳ ${paidBdt.toLocaleString()} + $ ${paidUsd.toLocaleString()}`;
+            document.getElementById('sum-grand-bdt').textContent = `৳ ${grandTotalBdt.toLocaleString()}`;
+
+            const breakdownBox = document.getElementById('editor-breakdown-list');
+            const editorNames = Object.keys(perEditor);
+            if (editorNames.length === 0) {
+                breakdownBox.innerHTML = `<p class="text-xs text-gray-500">No calculations for this tab.</p>`;
+                return;
+            }
+            breakdownBox.innerHTML = editorNames.map(name => {
+                const d = perEditor[name];
+                const estTotal = d.bdt + (d.usd * usdRate);
+                return `
+                    <div class="bg-[#191919] p-3 rounded border notion-border space-y-1.5">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-semibold text-white">👤 ${name}</span>
+                            <span class="text-xs font-mono font-bold text-emerald-400">≈ ৳${estTotal.toLocaleString()}</span>
+                        </div>
+                        <div class="flex justify-between text-[11px] text-gray-400 font-mono">
+                            <span>Total: ৳${d.bdt.toLocaleString()} + $${d.usd.toLocaleString()}</span>
+                            <span class="text-rose-400">Due: ৳${d.dueBdt.toLocaleString()} + $${d.dueUsd.toLocaleString()}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Notepad Modal Handlers
+        function openNotepadModal(task) {
+            document.getElementById('notepad-task-id').value = task.id;
+            let noteData = { link: '', image: '', text: task.note || '' };
+            try {
+                if (task.note && task.note.startsWith('{')) {
+                    noteData = JSON.parse(task.note);
+                }
+            } catch (e) {
+                noteData.text = task.note;
+            }
+            document.getElementById('notepad-link').value = noteData.link || '';
+            document.getElementById('notepad-image').value = noteData.image || '';
+            document.getElementById('notepad-text').value = noteData.text || '';
+            document.getElementById('notepad-modal').classList.remove('hidden');
+        }
+
+        function closeNotepadModal() {
+            document.getElementById('notepad-modal').classList.add('hidden');
+        }
+
+        async function saveNotepadContent() {
+            const taskId = document.getElementById('notepad-task-id').value;
+            const link = document.getElementById('notepad-link').value.trim();
+            const image = document.getElementById('notepad-image').value.trim();
+            const text = document.getElementById('notepad-text').value.trim();
+
+            const notePayload = JSON.stringify({ link, image, text });
+            const { error } = await db.from('cashflow_tasks').update({ note: notePayload }).eq('id', taskId);
+            if (error) { alert('Error: ' + error.message); return; }
+            closeNotepadModal();
+            await fetchAllData();
+        }
+
+        async function toggleTaskComplete(id, isChecked) {
+            await db.from('cashflow_tasks').update({ is_completed: isChecked }).eq('id', id);
+            await fetchAllData();
+        }
+
+        function openTaskModal() {
+            document.getElementById('task-modal-title').textContent = 'New Cashflow Entry';
+            document.getElementById('edit-task-id').value = '';
+            document.getElementById('task-name').value = '';
+            document.getElementById('task-assignee').value = '';
+            document.getElementById('task-bdt').value = '0';
+            document.getElementById('task-usd').value = '0';
+            document.getElementById('task-note').value = '';
+            document.getElementById('task-status').value = 'Due';
+            document.getElementById('task-tag').value = 'Y';
+            document.getElementById('task-modal').classList.remove('hidden');
+        }
+
+        function openEditTaskModal(task) {
+            document.getElementById('task-modal-title').textContent = 'Edit Cashflow Entry';
+            document.getElementById('edit-task-id').value = task.id;
+            document.getElementById('task-name').value = task.task_name;
+            document.getElementById('task-assignee').value = task.assignee;
+            document.getElementById('task-status').value = task.tk_status;
+            document.getElementById('task-bdt').value = task.amount_bdt;
+            document.getElementById('task-usd').value = task.amount_usd;
+            
+            let rawNote = task.note || '';
+            try {
+                if (rawNote.startsWith('{')) {
+                    let parsed = JSON.parse(rawNote);
+                    rawNote = parsed.text || '';
+                }
+            } catch(e) {}
+
+            document.getElementById('task-note').value = rawNote;
+            document.getElementById('task-tag').value = task.delivery_tag;
+            document.getElementById('task-modal').classList.remove('hidden');
+        }
+
+        async function saveTask(e) {
+            e.preventDefault();
+            const id = document.getElementById('edit-task-id').value;
+            const payload = {
+                task_name: document.getElementById('task-name').value.trim(),
+                assignee: document.getElementById('task-assignee').value.trim(),
+                tk_status: document.getElementById('task-status').value,
+                amount_bdt: Number(document.getElementById('task-bdt').value) || 0,
+                amount_usd: Number(document.getElementById('task-usd').value) || 0,
+                note: document.getElementById('task-note').value.trim(),
+                delivery_tag: document.getElementById('task-tag').value
+            };
+            let res;
+            if (id) {
+                res = await db.from('cashflow_tasks').update(payload).eq('id', id);
+            } else {
+                res = await db.from('cashflow_tasks').insert([payload]);
+            }
+            if (res.error) { alert('Error: ' + res.error.message); return; }
+            closeModal('task-modal');
+            await fetchAllData();
+        }
+
+        async function deleteTask(id) {
+            if (!confirm('Delete entry?')) return;
+            await db.from('cashflow_tasks').delete().eq('id', id);
+            await fetchAllData();
+        }
+
+        async function updateUsdRate() {
+            if (currentUser?.role !== 'admin') {
+                alert('Only Admin can change rate!');
+                return;
+            }
+            usdRate = Number(document.getElementById('usd-rate-input').value) || 120;
+            await db.from('app_settings').update({ usd_rate: usdRate }).eq('id', 1);
+            renderDashboard();
+        }
+
+        function openEditorManagerModal() {
+            if (currentUser?.role !== 'admin' && currentUser?.role !== 'manager') return;
+            renderEditorsManageList();
+            document.getElementById('editors-modal').classList.remove('hidden');
+        }
+
+        function renderEditorsManageList() {
+            const box = document.getElementById('editors-manage-list');
+            const isAdmin = currentUser?.role === 'admin';
+            box.innerHTML = editorsList.map(ed => {
+                const showPassword = isAdmin || ed.role !== 'admin';
+                const isSelf = ed.name.trim().toLowerCase() === currentUser.name.trim().toLowerCase();
+                const canDeleteThis = (isAdmin || (currentUser?.role === 'manager' && ed.role === 'editor')) && !isSelf && !String(ed.id).startsWith('def-');
+                return `
+                    <div class="p-2.5 flex items-center justify-between text-xs bg-[#191919]">
+                        <div>
+                            <span class="font-medium text-white">${ed.name}</span>
+                            <span class="ml-2 text-gray-500 font-mono"> Pass: ${showPassword ? ed.password : '••••••••'} </span>
+                        </div>
+                        ${canDeleteThis ? `<button onclick="removeEditor('${ed.id}')" class="text-rose-400 hover:underline">Remove</button>` : `<span class="text-[10px] text-amber-400">${ed.role.toUpperCase()}${isSelf ? ' (You)' : ''}</span>`}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        async function addNewEditor(e) {
+            e.preventDefault();
+            const name = document.getElementById('new-editor-name').value.trim();
+            const password = document.getElementById('new-editor-pass').value.trim();
+            if (!name || !password) return;
+            const { error } = await db.from('editors').insert([{ name, password, role: 'editor' }]);
+            if (error) { alert('Error: ' + error.message); return; }
+            document.getElementById('new-editor-name').value = '';
+            document.getElementById('new-editor-pass').value = '';
+            await fetchAllData();
+            renderEditorsManageList();
+        }
+
+        async function removeEditor(id) {
+            if (!confirm('Remove editor?')) return;
+            await db.from('editors').delete().eq('id', id);
+            await fetchAllData();
+            renderEditorsManageList();
+        }
+
+        init();
+    </script>
 </body>
 </html>
