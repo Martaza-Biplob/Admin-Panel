@@ -72,7 +72,7 @@
                     <h2 class="text-2xl font-bold text-white flex items-center gap-2">
                         <span>💰</span> <span id="dashboard-title">Editor Cashflow</span>
                     </h2>
-                    <p class="text-xs text-gray-400 mt-1" id="dashboard-subtitle">Private ledger for BDT (৳) & USD ($) tracking</p>
+                    <p class="text-xs text-gray-400 mt-1" id="dashboard-subtitle">Private ledger for 16% BDT & Tips USD tracking</p>
                 </div>
                 <div class="flex flex-wrap items-center gap-3">
                     <div class="notion-card px-3 py-1.5 rounded-md flex items-center gap-2 text-xs">
@@ -102,7 +102,7 @@
                             <select id="admin-editor-filter" onchange="renderDashboard()" class="hidden notion-input text-xs px-2.5 py-1.5 rounded">
                                 <option value="ALL">All Editors</option>
                             </select>
-                            <input type="text" id="task-search" oninput="renderDashboard()" placeholder="Search task or note..." class="notion-input text-xs px-3 py-1.5 rounded w-44" />
+                            <input type="text" id="task-search" oninput="renderDashboard()" placeholder="Search task..." class="notion-input text-xs px-3 py-1.5 rounded w-44" />
                         </div>
                     </div>
                     <div class="notion-card rounded-lg overflow-hidden">
@@ -114,8 +114,7 @@
                                         <th class="py-2.5 px-3 font-medium">Aa Name</th>
                                         <th class="py-2.5 px-3 font-medium">👥 Assignee</th>
                                         <th class="py-2.5 px-3 font-medium">🏷️ TK Status</th>
-                                        <th class="py-2.5 px-3 font-medium">💵 In Taka & USD</th>
-                                        <th class="py-2.5 px-3 font-medium">📝 NotePad</th>
+                                        <th class="py-2.5 px-3 font-medium">💵 16% BDT & Tips ($)</th>
                                         <th class="py-2.5 px-3 font-medium text-center">Done?</th>
                                         <th id="th-admin-actions" class="hidden py-2.5 px-3 font-medium text-right">Action</th>
                                     </tr>
@@ -136,21 +135,21 @@
                         </div>
                         <div class="grid grid-cols-2 gap-2.5">
                             <div class="bg-[#191919] p-3 rounded border notion-border">
-                                <div class="text-[11px] text-gray-400">Total BDT (৳)</div>
+                                <div class="text-[11px] text-gray-400">16% Total BDT (৳)</div>
                                 <div id="sum-total-bdt" class="text-base font-bold font-mono text-white mt-0.5">৳ 0</div>
                             </div>
                             <div class="bg-[#191919] p-3 rounded border notion-border">
-                                <div class="text-[11px] text-gray-400">Total USD ($)</div>
+                                <div class="text-[11px] text-gray-400">Total Tips ($)</div>
                                 <div id="sum-total-usd" class="text-base font-bold font-mono text-sky-400 mt-0.5">$ 0</div>
                             </div>
                         </div>
                         <div class="bg-[#191919] p-3 rounded border notion-border space-y-2 text-xs">
                             <div class="flex justify-between">
-                                <span class="text-rose-400 font-medium">● Total Due:</span>
+                                <span class="text-rose-400 font-medium">● Section Due:</span>
                                 <span id="sum-due" class="font-mono text-gray-200">৳ 0 + $ 0</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-emerald-400 font-medium">● Total Paid:</span>
+                                <span class="text-emerald-400 font-medium">● Section Paid:</span>
                                 <span id="sum-paid" class="font-mono text-gray-200">৳ 0 + $ 0</span>
                             </div>
                             <div class="border-t notion-border pt-2 flex justify-between items-center">
@@ -249,17 +248,13 @@
                         <input type="number" step="any" id="task-bdt" value="0" class="w-full notion-input px-3 py-2 rounded text-sm font-mono" />
                     </div>
                     <div>
-                        <label class="block text-xs text-gray-400 mb-1">Amount in Dollar ($)</label>
+                        <label class="block text-xs text-gray-400 mb-1">Tips in Dollar ($)</label>
                         <input type="number" step="any" id="task-usd" value="0" class="w-full notion-input px-3 py-2 rounded text-sm font-mono" />
                     </div>
                 </div>
-                <div class="grid grid-cols-3 gap-3">
-                    <div class="col-span-2">
-                        <label class="block text-xs text-gray-400 mb-1">Extra Note</label>
-                        <input type="text" id="task-note" placeholder="e.g. 16% or info" class="w-full notion-input px-3 py-2 rounded text-sm" />
-                    </div>
+                <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-xs text-gray-400 mb-1">Multi-select</label>
+                        <label class="block text-xs text-gray-400 mb-1">Multi-select Tag</label>
                         <select id="task-tag" class="w-full notion-input px-3 py-2 rounded text-sm">
                             <option value="Y">Y</option>
                             <option value="NO">NO</option>
@@ -284,35 +279,6 @@
                 <button type="submit" class="px-3 py-1.5 rounded bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-medium">Add</button>
             </form>
             <div id="editors-manage-list" class="max-h-60 overflow-y-auto divide-y notion-border border notion-border rounded"></div>
-        </div>
-    </div>
-
-    <!-- 5. Floating Notepad Modal for Links/Images/Notes -->
-    <div id="notepad-modal" class="hidden fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="notion-card w-full max-w-lg rounded-xl p-6 space-y-4">
-            <div class="flex justify-between items-center border-b notion-border pb-3">
-                <h3 class="text-lg font-bold text-white flex items-center gap-2"><span>📝</span> Task NotePad & Media Hub</h3>
-                <button onclick="closeNotepadModal()" class="text-gray-400 hover:text-white">✕</button>
-            </div>
-            <input type="hidden" id="notepad-task-id" />
-            <div class="space-y-3">
-                <div>
-                    <label class="block text-xs text-gray-400 mb-1">Links / References (URLs)</label>
-                    <input type="text" id="notepad-link" placeholder="https://example.com" class="w-full notion-input px-3 py-2 rounded text-sm font-mono" />
-                </div>
-                <div>
-                    <label class="block text-xs text-gray-400 mb-1">Image URL / File Link</label>
-                    <input type="text" id="notepad-image" placeholder="https://image-link.com/preview.png" class="w-full notion-input px-3 py-2 rounded text-sm font-mono" />
-                </div>
-                <div>
-                    <label class="block text-xs text-gray-400 mb-1">Detailed Notepad Description</label>
-                    <textarea id="notepad-text" rows="4" placeholder="Write detailed instructions, notes, or info here..." class="w-full notion-input p-3 rounded text-sm"></textarea>
-                </div>
-            </div>
-            <div class="flex justify-end gap-2 pt-2">
-                <button onclick="closeNotepadModal()" class="px-4 py-2 rounded notion-card text-xs text-gray-300">Cancel</button>
-                <button onclick="saveNotepadContent()" class="px-4 py-2 rounded bg-[#2383E2] hover:bg-[#1B6EC2] text-white text-xs font-medium">Save NotePad</button>
-            </div>
         </div>
     </div>
 
@@ -547,7 +513,7 @@
             let visibleTasks = accessibleTasks.filter(t => {
                 if (currentTab === 'uncomplete' && t.is_completed) return false;
                 if (currentTab === 'completed' && !t.is_completed) return false;
-                if (searchQuery && !t.task_name.toLowerCase().includes(searchQuery) && !(t.note || '').toLowerCase().includes(searchQuery)) return false;
+                if (searchQuery && !t.task_name.toLowerCase().includes(searchQuery)) return false;
                 return true;
             });
 
@@ -562,8 +528,9 @@
                     const statusColor = t.tk_status === 'Paid' ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30' : t.tk_status === 'Partial' ? 'bg-amber-500/15 text-amber-400 border-amber-500/30' : 'bg-rose-500/15 text-rose-400 border-rose-500/30';
                     const tagColor = t.delivery_tag === 'Y' ? 'bg-sky-500/20 text-sky-300' : 'bg-[#2F2F2F] text-gray-400';
                     
-                    // Parse note field safely as JSON or string
-                    let hasNoteData = t.note && t.note.trim().length > 0;
+                    const calculatedBdt = (Number(t.amount_bdt) || 0) * 0.16;
+                    const tipsUsd = Number(t.amount_usd) || 0;
+
                     return `
                         <tr class="notion-row transition">
                             <td class="py-2.5 px-3 text-center">
@@ -579,15 +546,10 @@
                                 <span class="px-2 py-0.5 rounded border text-[11px] font-medium ${statusColor}"> ${t.tk_status} </span>
                             </td>
                             <td class="py-2.5 px-3 font-mono">
-                                ${Number(t.amount_bdt) > 0 ? `<span class="text-white">৳${Number(t.amount_bdt).toLocaleString()}</span>` : ''}
-                                ${Number(t.amount_bdt) > 0 && Number(t.amount_usd) > 0 ? `<span class="text-gray-500"> + </span>` : ''}
-                                ${Number(t.amount_usd) > 0 ? `<span class="text-sky-400">$${Number(t.amount_usd).toLocaleString()}</span>` : ''}
-                                ${Number(t.amount_bdt) === 0 && Number(t.amount_usd) === 0 ? `<span class="text-gray-600">—</span>` : ''}
-                            </td>
-                            <td class="py-2.5 px-3">
-                                <button onclick='openNotepadModal(${JSON.stringify(t)})' class="px-2.5 py-1 rounded bg-[#2F2F2F] hover:bg-[#3A3A3A] text-xs text-sky-400 flex items-center gap-1.5 transition">
-                                    <span>📝</span> <span>${hasNoteData ? 'View Note' : 'Add Note'}</span>
-                                </button>
+                                ${calculatedBdt > 0 ? `<span class="text-white">৳${calculatedBdt.toLocaleString(undefined, {maximumFractionDigits: 2})}</span>` : ''}
+                                ${calculatedBdt > 0 && tipsUsd > 0 ? `<span class="text-gray-500"> + </span>` : ''}
+                                ${tipsUsd > 0 ? `<span class="text-sky-400">$${tipsUsd.toLocaleString()} (Tips)</span>` : ''}
+                                ${calculatedBdt === 0 && tipsUsd === 0 ? `<span class="text-gray-600">—</span>` : ''}
                             </td>
                             <td class="py-2.5 px-3 text-center">
                                 <span class="px-2 py-0.5 rounded text-[11px] font-semibold ${tagColor}">${t.delivery_tag}</span>
@@ -613,41 +575,44 @@
         }
 
         function calculateSummaries(tasks, tabName) {
-            let totalBdt = 0, totalUsd = 0;
-            let dueBdt = 0, dueUsd = 0;
-            let paidBdt = 0, paidUsd = 0;
+            let totalBdt16 = 0, totalTipsUsd = 0;
+            let dueBdt16 = 0, dueTipsUsd = 0;
+            let paidBdt16 = 0, paidTipsUsd = 0;
             const perEditor = {};
 
             tasks.forEach(t => {
-                const bdt = Number(t.amount_bdt) || 0;
-                const usd = Number(t.amount_usd) || 0;
-                totalBdt += bdt;
-                totalUsd += usd;
+                const bdt16 = ((Number(t.amount_bdt) || 0) * 0.16);
+                const usdTips = Number(t.amount_usd) || 0;
+
+                totalBdt16 += bdt16;
+                totalTipsUsd += usdTips;
+
                 if (t.tk_status === 'Paid') {
-                    paidBdt += bdt;
-                    paidUsd += usd;
+                    paidBdt16 += bdt16;
+                    paidTipsUsd += usdTips;
                 } else {
-                    dueBdt += bdt;
-                    dueUsd += usd;
+                    dueBdt16 += bdt16;
+                    dueTipsUsd += usdTips;
                 }
+
                 if (!perEditor[t.assignee]) {
                     perEditor[t.assignee] = { bdt: 0, usd: 0, dueBdt: 0, dueUsd: 0 };
                 }
-                perEditor[t.assignee].bdt += bdt;
-                perEditor[t.assignee].usd += usd;
+                perEditor[t.assignee].bdt += bdt16;
+                perEditor[t.assignee].usd += usdTips;
                 if (t.tk_status !== 'Paid') {
-                    perEditor[t.assignee].dueBdt += bdt;
-                    perEditor[t.assignee].dueUsd += usd;
+                    perEditor[t.assignee].dueBdt += bdt16;
+                    perEditor[t.assignee].dueUsd += usdTips;
                 }
             });
 
-            const grandTotalBdt = totalBdt + (totalUsd * usdRate);
+            const grandTotalBdt = totalBdt16 + (totalTipsUsd * usdRate);
             document.getElementById('summary-header-title').textContent = `Auto Summary (${tabName.toUpperCase()})`;
-            document.getElementById('sum-total-bdt').textContent = `৳ ${totalBdt.toLocaleString()}`;
-            document.getElementById('sum-total-usd').textContent = `$ ${totalUsd.toLocaleString()}`;
-            document.getElementById('sum-due').textContent = `৳ ${dueBdt.toLocaleString()} + $ ${dueUsd.toLocaleString()}`;
-            document.getElementById('sum-paid').textContent = `৳ ${paidBdt.toLocaleString()} + $ ${paidUsd.toLocaleString()}`;
-            document.getElementById('sum-grand-bdt').textContent = `৳ ${grandTotalBdt.toLocaleString()}`;
+            document.getElementById('sum-total-bdt').textContent = `৳ ${totalBdt16.toLocaleString(undefined, {maximumFractionDigits: 2})}`;
+            document.getElementById('sum-total-usd').textContent = `$ ${totalTipsUsd.toLocaleString()}`;
+            document.getElementById('sum-due').textContent = `৳ ${dueBdt16.toLocaleString(undefined, {maximumFractionDigits: 2})} + $ ${dueTipsUsd.toLocaleString()}`;
+            document.getElementById('sum-paid').textContent = `৳ ${paidBdt16.toLocaleString(undefined, {maximumFractionDigits: 2})} + $ ${paidTipsUsd.toLocaleString()}`;
+            document.getElementById('sum-grand-bdt').textContent = `৳ ${grandTotalBdt.toLocaleString(undefined, {maximumFractionDigits: 2})}`;
 
             const breakdownBox = document.getElementById('editor-breakdown-list');
             const editorNames = Object.keys(perEditor);
@@ -662,49 +627,15 @@
                     <div class="bg-[#191919] p-3 rounded border notion-border space-y-1.5">
                         <div class="flex justify-between items-center">
                             <span class="text-xs font-semibold text-white">👤 ${name}</span>
-                            <span class="text-xs font-mono font-bold text-emerald-400">≈ ৳${estTotal.toLocaleString()}</span>
+                            <span class="text-xs font-mono font-bold text-emerald-400">≈ ৳${estTotal.toLocaleString(undefined, {maximumFractionDigits: 2})}</span>
                         </div>
                         <div class="flex justify-between text-[11px] text-gray-400 font-mono">
-                            <span>Total: ৳${d.bdt.toLocaleString()} + $${d.usd.toLocaleString()}</span>
-                            <span class="text-rose-400">Due: ৳${d.dueBdt.toLocaleString()} + $${d.dueUsd.toLocaleString()}</span>
+                            <span>16% + Tips: ৳${d.bdt.toLocaleString(undefined, {maximumFractionDigits: 2})} + $${d.usd.toLocaleString()}</span>
+                            <span class="text-rose-400">Due: ৳${d.dueBdt.toLocaleString(undefined, {maximumFractionDigits: 2})} + $${d.dueUsd.toLocaleString()}</span>
                         </div>
                     </div>
                 `;
             }).join('');
-        }
-
-        // Notepad Modal Handlers
-        function openNotepadModal(task) {
-            document.getElementById('notepad-task-id').value = task.id;
-            let noteData = { link: '', image: '', text: task.note || '' };
-            try {
-                if (task.note && task.note.startsWith('{')) {
-                    noteData = JSON.parse(task.note);
-                }
-            } catch (e) {
-                noteData.text = task.note;
-            }
-            document.getElementById('notepad-link').value = noteData.link || '';
-            document.getElementById('notepad-image').value = noteData.image || '';
-            document.getElementById('notepad-text').value = noteData.text || '';
-            document.getElementById('notepad-modal').classList.remove('hidden');
-        }
-
-        function closeNotepadModal() {
-            document.getElementById('notepad-modal').classList.add('hidden');
-        }
-
-        async function saveNotepadContent() {
-            const taskId = document.getElementById('notepad-task-id').value;
-            const link = document.getElementById('notepad-link').value.trim();
-            const image = document.getElementById('notepad-image').value.trim();
-            const text = document.getElementById('notepad-text').value.trim();
-
-            const notePayload = JSON.stringify({ link, image, text });
-            const { error } = await db.from('cashflow_tasks').update({ note: notePayload }).eq('id', taskId);
-            if (error) { alert('Error: ' + error.message); return; }
-            closeNotepadModal();
-            await fetchAllData();
         }
 
         async function toggleTaskComplete(id, isChecked) {
@@ -719,7 +650,6 @@
             document.getElementById('task-assignee').value = '';
             document.getElementById('task-bdt').value = '0';
             document.getElementById('task-usd').value = '0';
-            document.getElementById('task-note').value = '';
             document.getElementById('task-status').value = 'Due';
             document.getElementById('task-tag').value = 'Y';
             document.getElementById('task-modal').classList.remove('hidden');
@@ -733,16 +663,6 @@
             document.getElementById('task-status').value = task.tk_status;
             document.getElementById('task-bdt').value = task.amount_bdt;
             document.getElementById('task-usd').value = task.amount_usd;
-            
-            let rawNote = task.note || '';
-            try {
-                if (rawNote.startsWith('{')) {
-                    let parsed = JSON.parse(rawNote);
-                    rawNote = parsed.text || '';
-                }
-            } catch(e) {}
-
-            document.getElementById('task-note').value = rawNote;
             document.getElementById('task-tag').value = task.delivery_tag;
             document.getElementById('task-modal').classList.remove('hidden');
         }
@@ -756,7 +676,6 @@
                 tk_status: document.getElementById('task-status').value,
                 amount_bdt: Number(document.getElementById('task-bdt').value) || 0,
                 amount_usd: Number(document.getElementById('task-usd').value) || 0,
-                note: document.getElementById('task-note').value.trim(),
                 delivery_tag: document.getElementById('task-tag').value
             };
             let res;
