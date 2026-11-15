@@ -368,16 +368,13 @@
     const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     // Fallback default accounts (works even before SQL tables are created)
-    const DEFAULT_ACCOUNTS = [
-      { id: 'def-admin', name: 'admin', password: 'Admin@654', role: 'admin' },
-      { id: 'def-admin2', name: 'admin', password: 'Admin@654', role: 'admin' },
-      { id: 'def-admin', name: 'admin', password: 'Admin@654', role: 'admin' },
-  { id: 'def-manager', name: 'manager', password: 'Manager@654', role: 'admin' }, // এখানে name এ 'manager' এবং role এ 'admin' দেওয়া হলো যাতে সে অ্যাডমিনের মতো সেইম পাওয়ার পায়
-      
-      { id: 'def-ed1', name: 'Mr Toolkit', password: 'toolkit123', role: 'editor' },
-      { id: 'def-ed2', name: 'MD Muntasir Rahman', password: 'muntasir123', role: 'editor' },
-      { id: 'def-ed3', name: 'md biplob', password: 'biplob123', role: 'editor' }
-    ];
+  const DEFAULT_ACCOUNTS = [
+  { id: 'def-admin', name: 'admin', password: 'Admin@654', role: 'admin' },
+  { id: 'def-manager', name: 'manager', password: 'Manager@654', role: 'admin' },
+  { id: 'def-ed1', name: 'Mr Toolkit', password: 'toolkit123', role: 'editor' },
+  { id: 'def-ed2', name: 'MD Muntasir Rahman', password: 'muntasir123', role: 'editor' },
+  { id: 'def-ed3', name: 'md biplob', password: 'biplob123', role: 'editor' }
+];
 
     // ==================== STATE ====================
     let currentUser = JSON.parse(localStorage.getItem('tosrec_user')) || null;
