@@ -45,13 +45,11 @@
 <body class="min-h-screen flex flex-col">
 
   <!-- Top Notion-Style Navigation -->
-<header class="border-b notion-border bg-[#191919]/90 backdrop-blur sticky top-0 z-40">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
-      <div class="flex items-center gap-3 cursor-pointer" onclick="switchView('home')">
-        <div class="w-7 h-7 rounded bg-white text-black font-bold flex items-center justify-center text-sm">T</div>
-        <span class="font-semibold tracking-tight text-white">Tosrec Studios</span>
-        <span class="text-xs px-2 py-0.5 rounded bg-[#2F2F2F] text-gray-400 hidden sm:inline">Workspace</span>
-      </div>
+<div class="flex items-center gap-3 cursor-pointer" onclick="switchView('home')">
+    <img src="thelogo.png" alt="Tosrec Studios Logo" class="w-7 h-7 rounded object-cover">
+    <span class="font-semibold tracking-tight text-white">Tosrec Studios</span>
+    <span class="text-xs px-2 py-0.5 rounded bg-[#2F2F2F] text-gray-400 hidden sm:inline">Workspace</span>
+</div>
 
       <div class="flex items-center gap-3">
         <button onclick="switchView('home')" id="nav-home-btn" class="text-sm px-3 py-1.5 rounded hover:bg-[#2F2F2F] text-gray-300 transition">
