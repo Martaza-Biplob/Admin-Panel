@@ -340,7 +340,7 @@
     </div>
   </div>
 
-  <!-- 4. Manage Editors & Passwords Modal (Admin Only) -->
+  <!-- 4. Manage Editors & Passwords Modal -->
   <div id="editors-modal" class="hidden fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4">
     <div class="notion-card w-full max-w-md rounded-xl p-6 space-y-4">
       <div class="flex justify-between items-center">
@@ -367,14 +367,14 @@
     const SUPABASE_KEY = 'sb_publishable_cRkoqnJZ1XupMLgGHlp1Gg_hrhGcE0U';
     const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    // Fallback default accounts (works even before SQL tables are created)
-  const DEFAULT_ACCOUNTS = [
-  { id: 'def-admin', name: 'admin', password: 'Admin@654', role: 'admin' },
-  { id: 'def-manager', name: 'manager', password: 'Manager@654', role: 'admin' },
-  { id: 'def-ed1', name: 'Mr Toolkit', password: 'toolkit123', role: 'editor' },
-  { id: 'def-ed2', name: 'MD Muntasir Rahman', password: 'muntasir123', role: 'editor' },
-  { id: 'def-ed3', name: 'md biplob', password: 'biplob123', role: 'editor' }
-];
+    // Fallback default accounts
+    const DEFAULT_ACCOUNTS = [
+      { id: 'def-admin', name: 'admin', password: 'Admin@654', role: 'admin' },
+      { id: 'def-manager', name: 'manager', password: 'Manager@654', role: 'manager' },
+      { id: 'def-ed1', name: 'Mr Toolkit', password: 'toolkit123', role: 'editor' },
+      { id: 'def-ed2', name: 'MD Muntasir Rahman', password: 'muntasir123', role: 'editor' },
+      { id: 'def-ed3', name: 'md biplob', password: 'biplob123', role: 'editor' }
+    ];
 
     // ==================== STATE ====================
     let currentUser = JSON.parse(localStorage.getItem('tosrec_user')) || null;
@@ -449,7 +449,6 @@
       const typedName = document.getElementById('login-username').value.trim().toLowerCase();
       const enteredPass = document.getElementById('login-password').value;
 
-      // Match against Supabase editors list OR default fallback accounts
       const allAccounts = [...editorsList, ...DEFAULT_ACCOUNTS];
       const matched = allAccounts.find(
         ed => ed.name.trim().toLowerCase() === typedName && ed.password === enteredPass
@@ -477,13 +476,15 @@
     function updateAuthUI() {
       const isLoggedIn = !!currentUser;
       const isAdmin = currentUser?.role === 'admin';
+      const isManager = currentUser?.role === 'manager';
+      const canManage = isAdmin || isManager;
 
       document.getElementById('login-open-btn').classList.toggle('hidden', isLoggedIn);
       document.getElementById('user-badge').classList.toggle('hidden', !isLoggedIn);
       document.getElementById('nav-dashboard-btn').classList.toggle('hidden', !isLoggedIn);
       
       document.getElementById('admin-timer-controls').classList.toggle('hidden', !isAdmin);
-      document.getElementById('btn-manage-editors').classList.toggle('hidden', !isAdmin);
+      document.getElementById('btn-manage-editors').classList.toggle('hidden', !canManage);
       document.getElementById('btn-add-task').classList.toggle('hidden', !isAdmin);
       document.getElementById('admin-editor-filter').classList.toggle('hidden', !isAdmin);
       document.getElementById('th-admin-actions').classList.toggle('hidden', !isAdmin);
@@ -850,36 +851,50 @@
       renderDashboard();
     }
 
-    // ==================== EDITOR & PASSWORD MANAGEMENT (ADMIN) ====================
+    // ==================== EDITOR & PASSWORD MANAGEMENT (ADMIN & MANAGER) ====================
     function openEditorManagerModal() {
+      if (currentUser?.role !== 'admin' && currentUser?.role !== 'manager') return;
       renderEditorsManageList();
       document.getElementById('editors-modal').classList.remove('hidden');
     }
 
     function renderEditorsManageList() {
       const box = document.getElementById('editors-manage-list');
-      box.innerHTML = editorsList.map(ed => `
-        <div class="p-2.5 flex items-center justify-between text-xs bg-[#191919]">
-          <div>
-            <span class="font-medium text-white">${ed.name}</span>
-            <span class="ml-2 text-gray-500 font-mono">Pass: ${ed.password}</span>
+      const isAdmin = currentUser?.role === 'admin';
+
+      box.innerHTML = editorsList.map(ed => {
+        const isTargetAdmin = ed.role === 'admin';
+        const showPassword = isAdmin || !isTargetAdmin;
+
+        return `
+          <div class="p-2.5 flex items-center justify-between text-xs bg-[#191919]">
+            <div>
+              <span class="font-medium text-white">${ed.name}</span>
+              <span class="ml-2 text-gray-500 font-mono">
+                Pass: ${showPassword ? ed.password : '•••••••• (Hidden)'}
+              </span>
+            </div>
+            ${
+              (isAdmin || (currentUser?.role === 'manager' && ed.role === 'editor')) && !String(ed.id).startsWith('def-')
+              ? `<button onclick="removeEditor('${ed.id}')" class="text-rose-400 hover:underline">Remove</button>`
+              : `<span class="text-[10px] text-amber-400">${ed.role.toUpperCase()}</span>`
+            }
           </div>
-          ${ed.role !== 'admin' && !String(ed.id).startsWith('def-') ? `
-            <button onclick="removeEditor('${ed.id}')" class="text-rose-400 hover:underline">Remove</button>
-          ` : `<span class="text-[10px] text-amber-400">${ed.role.toUpperCase()}</span>`}
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
     async function addNewEditor(e) {
       e.preventDefault();
+      if (currentUser?.role !== 'admin' && currentUser?.role !== 'manager') return;
+
       const name = document.getElementById('new-editor-name').value.trim();
       const password = document.getElementById('new-editor-pass').value.trim();
       if (!name || !password) return;
 
       const { error } = await db.from('editors').insert([{ name, password, role: 'editor' }]);
       if (error) {
-        alert('Database Error: Please run the SQL setup script in Supabase SQL Editor first!\n\n' + error.message);
+        alert('Database Error:\n\n' + error.message);
         return;
       }
       document.getElementById('new-editor-name').value = '';
