@@ -45,34 +45,34 @@
 <body class="min-h-screen flex flex-col">
 
   <!-- Top Notion-Style Navigation -->
-<div class="flex items-center gap-3 cursor-pointer" onclick="switchView('home')">
-    <img src="thelogo.png" alt="Tosrec Studios Logo" class="w-7 h-7 rounded object-cover">
-    <span class="font-semibold tracking-tight text-white">Tosrec Studios</span>
-    <span class="text-xs px-2 py-0.5 rounded bg-[#2F2F2F] text-gray-400 hidden sm:inline">Workspace</span>
-</div>
-
-      <div class="flex items-center gap-3">
-        <button onclick="switchView('home')" id="nav-home-btn" class="text-sm px-3 py-1.5 rounded hover:bg-[#2F2F2F] text-gray-300 transition">
-          Live Timers
-        </button>
-
-        <button id="nav-dashboard-btn" onclick="switchView('dashboard')" class="hidden text-sm px-3 py-1.5 rounded bg-[#2F2F2F] text-white font-medium hover:bg-[#3A3A3A] transition">
-          Cashflow Dashboard
-        </button>
-
-        <button id="login-open-btn" onclick="openLoginModal()" class="text-sm px-3.5 py-1.5 rounded bg-[#2383E2] hover:bg-[#1B6EC2] text-white font-medium transition">
-          Editor / Admin Login
-        </button>
-
-        <div id="user-badge" class="hidden flex items-center gap-2">
-          <span id="logged-user-name" class="text-xs font-medium px-2.5 py-1 rounded bg-[#2A2A2A] border notion-border text-emerald-400"></span>
-          <button onclick="logout()" class="text-xs px-2.5 py-1 rounded bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/20">
-            Logout
-          </button>
-        </div>
-      </div>
+<!-- Top Notion-Style Navigation -->
+<header class="max-w-7xl w-full mx-auto px-4 sm:px-6 py-4 flex items-center justify-between border-b notion-border">
+    <!-- লোগো এবং টাইটেল অংশ -->
+    <div class="flex items-center gap-3 cursor-pointer" onclick="switchView('home')">
+        <img src="thelogo.png" alt="Tosrec Studios Logo" class="w-7 h-7 rounded object-cover flex-shrink-0">
+        <span class="font-semibold tracking-tight text-white">Tosrec Studios</span>
+        <span class="text-xs px-2 py-0.5 rounded bg-[#2F2F2F] text-gray-400 hidden sm:inline">Workspace</span>
     </div>
-  </header>
+
+    <!-- ডানপাশের বাটন ও ইউজার মেনু -->
+    <div class="flex items-center gap-3">
+        <button onclick="switchView('home')" id="nav-home-btn" class="text-sm px-3 py-1.5 rounded hover:bg-[#2F2F2F] text-gray-300 transition">
+            Live Timers
+        </button>
+        <button id="nav-dashboard-btn" onclick="switchView('dashboard')" class="hidden text-sm px-3 py-1.5 rounded bg-[#2F2F2F] text-white font-medium hover:bg-[#3A3A3A] transition">
+            Cashflow Dashboard
+        </button>
+        <button id="login-open-btn" onclick="openLoginModal()" class="text-sm px-3.5 py-1.5 rounded bg-[#2383E2] hover:bg-[#1B6EC2] text-white font-medium transition">
+            Editor / Admin Login
+        </button>
+        <div id="user-badge" class="hidden flex items-center gap-2">
+            <span id="logged-user-name" class="text-xs font-medium px-2.5 py-1 rounded bg-[#2A2A2A] border notion-border text-emerald-400"></span>
+            <button onclick="logout()" class="text-xs px-2.5 py-1 rounded bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/20">
+                Logout
+            </button>
+        </div>
+    </div>
+</header>
 
   <!-- Main Content -->
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8">
