@@ -661,7 +661,6 @@
                                     const readersList = c.read_by ? JSON.parse(c.read_by) : [];
                                     const isSelf = c.author_name.trim().toLowerCase() === currentUser.name.trim().toLowerCase();
                                     
-                                    // Parse links in message text automatically
                                     let formattedMsg = escapeHtml(c.message);
                                     const urlRegex = /(https?:\/\/[^\s]+)/g;
                                     formattedMsg = formattedMsg.replace(urlRegex, (url) => `<a href="${url}" target="_blank" class="text-sky-400 underline break-all">${url}</a>`);
