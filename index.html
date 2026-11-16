@@ -19,17 +19,14 @@
         .notion-input:focus { outline: none; border-color: #529CCA; }
         input[type="datetime-local"]::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; }
         /* Messenger Style Chat Background */
-        .messenger-chat-bg {
-            background-color: #0b141a;
-            background-image: radial-gradient(#1f2c34 1px, transparent 1px);
-            background-size: 20px 20px;
-        }
+        .messenger-chat-bg { background-color: #0b141a; background-image: radial-gradient(#1f2c34 1px, transparent 1px); background-size: 20px 20px; }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: #191919; }
         ::-webkit-scrollbar-thumb { background: #373737; border-radius: 3px; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
+
     <!-- Top Notion-Style Navigation -->
     <header class="max-w-7xl w-full mx-auto px-4 sm:px-6 py-4 flex items-center justify-between border-b notion-border">
         <div class="flex items-center gap-3 cursor-pointer" onclick="switchView('home')">
@@ -38,19 +35,30 @@
             <span class="text-xs px-2 py-0.5 rounded bg-[#2F2F2F] text-gray-400 hidden sm:inline">Workspace</span>
         </div>
         <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
-            <button onclick="switchView('home')" id="nav-home-btn" class="text-xs sm:text-sm px-3 py-1.5 rounded hover:bg-[#2F2F2F] text-gray-300 transition"> Live Timers </button>
-            <button onclick="switchView('workdetails')" id="nav-workdetails-btn" class="hidden text-xs sm:text-sm px-3 py-1.5 rounded hover:bg-[#2F2F2F] text-gray-300 transition"> Work Details </button>
-            <button id="nav-dashboard-btn" onclick="switchView('dashboard')" class="hidden text-xs sm:text-sm px-3 py-1.5 rounded bg-[#2F2F2F] text-white font-medium hover:bg-[#3A3A3A] transition"> Cashflow Dashboard </button>
-            <button id="login-open-btn" onclick="openLoginModal()" class="text-xs sm:text-sm px-3.5 py-1.5 rounded bg-[#2383E2] hover:bg-[#1B6EC2] text-white font-medium transition"> Editor / Admin Login </button>
+            <button onclick="switchView('home')" id="nav-home-btn" class="text-xs sm:text-sm px-3 py-1.5 rounded hover:bg-[#2F2F2F] text-gray-300 transition">
+                Live Timers
+            </button>
+            <button onclick="switchView('workdetails')" id="nav-workdetails-btn" class="hidden text-xs sm:text-sm px-3 py-1.5 rounded hover:bg-[#2F2F2F] text-gray-300 transition">
+                Work Details
+            </button>
+            <button id="nav-dashboard-btn" onclick="switchView('dashboard')" class="hidden text-xs sm:text-sm px-3 py-1.5 rounded bg-[#2F2F2F] text-white font-medium hover:bg-[#3A3A3A] transition">
+                Cashflow Dashboard
+            </button>
+            <button id="login-open-btn" onclick="openLoginModal()" class="text-xs sm:text-sm px-3.5 py-1.5 rounded bg-[#2383E2] hover:bg-[#1B6EC2] text-white font-medium transition">
+                Editor / Admin Login
+            </button>
             <div id="user-badge" class="hidden flex items-center gap-2">
                 <span id="logged-user-name" class="text-xs font-medium px-2.5 py-1 rounded bg-[#2A2A2A] border notion-border text-emerald-400"></span>
-                <button onclick="logout()" class="text-xs px-2.5 py-1 rounded bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/20"> Logout </button>
+                <button onclick="logout()" class="text-xs px-2.5 py-1 rounded bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/20">
+                    Logout
+                </button>
             </div>
         </div>
     </header>
 
     <!-- Main Content -->
     <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8">
+
         <!-- ==================== VIEW 1: PUBLIC HOME PAGE & TIMERS ==================== -->
         <section id="view-home" class="space-y-8">
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b notion-border pb-6">
@@ -67,6 +75,7 @@
                     </button>
                 </div>
             </div>
+
             <div id="timers-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
             <div id="timers-empty" class="hidden notion-card rounded-lg p-12 text-center">
                 <p class="text-gray-400 text-sm">No active projects running right now.</p>
@@ -99,12 +108,13 @@
                     <h2 class="text-2xl font-bold text-white flex items-center gap-2">
                         <span>📋</span> Work Details & Floating Chat Hub
                     </h2>
-                    <p class="text-xs text-gray-400 mt-1">Project collaboration chat & direct link sharing styled like messenger.</p>
+                    <p class="text-xs text-gray-400 mt-1">Project collaboration chat & direct link sharing styled like messenger. You can pop out chat boxes as floating windows or expand them to full screen.</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <input type="text" id="work-search" oninput="renderWorkDetails()" placeholder="Search work item..." class="notion-input text-xs px-3 py-2 rounded w-48" />
                 </div>
             </div>
+
             <div id="workdetails-list" class="space-y-6"></div>
             <div id="workdetails-empty" class="hidden notion-card rounded-lg p-12 text-center">
                 <p class="text-gray-400 text-sm">No work items found. Add an active timer to generate work controls.</p>
@@ -126,10 +136,15 @@
                         <input type="number" id="usd-rate-input" value="120" class="w-16 notion-input px-2 py-0.5 rounded text-right font-mono" onchange="updateUsdRate()" />
                         <span class="text-gray-400">BDT</span>
                     </div>
-                    <button id="btn-manage-editors" onclick="openEditorManagerModal()" class="hidden px-3 py-1.5 rounded notion-card hover:bg-[#2A2A2A] text-xs font-medium text-gray-200"> 👥 Manage Editors & Passwords </button>
-                    <button id="btn-add-task" onclick="openTaskModal()" class="hidden px-3.5 py-1.5 rounded bg-[#2383E2] hover:bg-[#1B6EC2] text-white text-xs font-medium"> + New Cashflow Entry </button>
+                    <button id="btn-manage-editors" onclick="openEditorManagerModal()" class="hidden px-3 py-1.5 rounded notion-card hover:bg-[#2A2A2A] text-xs font-medium text-gray-200">
+                        👥 Manage Editors & Passwords
+                    </button>
+                    <button id="btn-add-task" onclick="openTaskModal()" class="hidden px-3.5 py-1.5 rounded bg-[#2383E2] hover:bg-[#1B6EC2] text-white text-xs font-medium">
+                        + New Cashflow Entry
+                    </button>
                 </div>
             </div>
+
             <!-- Layout: Left Table + Right Summary -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
                 <div class="lg:col-span-8 space-y-4">
@@ -141,7 +156,9 @@
                             <button onclick="setTaskTab('completed')" id="tab-completed" class="px-3 py-1 rounded text-xs font-medium text-gray-400 hover:text-white flex items-center gap-1.5">
                                 <span class="w-2 h-2 rounded-full bg-emerald-400"></span> Completed <span id="count-completed" class="text-gray-500">(0)</span>
                             </button>
-                            <button onclick="setTaskTab('all')" id="tab-all" class="px-3 py-1 rounded text-xs font-medium text-gray-400 hover:text-white"> All Tasks <span id="count-all" class="text-gray-500">(0)</span> </button>
+                            <button onclick="setTaskTab('all')" id="tab-all" class="px-3 py-1 rounded text-xs font-medium text-gray-400 hover:text-white">
+                                All Tasks <span id="count-all" class="text-gray-500">(0)</span>
+                            </button>
                         </div>
                         <div class="flex items-center gap-2">
                             <select id="admin-editor-filter" onchange="renderDashboard()" class="hidden notion-input text-xs px-2.5 py-1.5 rounded">
@@ -150,6 +167,7 @@
                             <input type="text" id="task-search" oninput="renderDashboard()" placeholder="Search task..." class="notion-input text-xs px-3 py-1.5 rounded w-44" />
                         </div>
                     </div>
+
                     <div class="notion-card rounded-lg overflow-hidden">
                         <div class="overflow-x-auto">
                             <table class="w-full text-left border-collapse text-xs">
@@ -167,9 +185,12 @@
                                 <tbody id="cashflow-tbody" class="divide-y notion-border"></tbody>
                             </table>
                         </div>
-                        <div id="tasks-empty" class="hidden p-8 text-center text-gray-500 text-xs"> No entries found in this view. </div>
+                        <div id="tasks-empty" class="hidden p-8 text-center text-gray-500 text-xs">
+                            No entries found in this view.
+                        </div>
                     </div>
                 </div>
+
                 <!-- RIGHT: Dynamic Summary Panel -->
                 <div class="lg:col-span-4 space-y-4">
                     <div class="notion-card rounded-lg p-4 space-y-3">
@@ -202,16 +223,21 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="notion-card rounded-lg p-4 space-y-3">
-                        <h3 class="text-xs font-semibold uppercase tracking-wider text-gray-400 border-b notion-border pb-2"> 📊 Editor-Wise Breakdown (BDT) </h3>
+                        <h3 class="text-xs font-semibold uppercase tracking-wider text-gray-400 border-b notion-border pb-2">
+                            📊 Editor-Wise Breakdown (BDT)
+                        </h3>
                         <div id="editor-breakdown-list" class="space-y-2.5"></div>
                     </div>
                 </div>
             </div>
         </section>
+
     </main>
 
     <!-- ==================== MODALS ==================== -->
+
     <!-- 1. Login Modal -->
     <div id="login-modal" class="hidden fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="notion-card w-full max-w-sm rounded-xl p-6 space-y-4">
@@ -229,7 +255,9 @@
                     <input type="password" id="login-password" required placeholder="••••••••" class="w-full notion-input px-3 py-2 rounded text-sm" />
                 </div>
                 <p id="login-error" class="hidden text-xs text-rose-400">Invalid name or password. Please try again.</p>
-                <button type="submit" class="w-full py-2 rounded bg-[#2383E2] hover:bg-[#1B6EC2] text-white text-sm font-medium"> Access Cashflow </button>
+                <button type="submit" class="w-full py-2 rounded bg-[#2383E2] hover:bg-[#1B6EC2] text-white text-sm font-medium">
+                    Access Cashflow
+                </button>
             </form>
         </div>
     </div>
@@ -255,7 +283,9 @@
                     <label class="block text-xs text-gray-400 mb-1">Submission Deadline</label>
                     <input type="datetime-local" id="timer-deadline" required class="w-full notion-input px-3 py-2 rounded text-sm" />
                 </div>
-                <button type="submit" class="w-full py-2 rounded bg-[#2383E2] hover:bg-[#1B6EC2] text-white text-sm font-medium"> Save Project Timer </button>
+                <button type="submit" class="w-full py-2 rounded bg-[#2383E2] hover:bg-[#1B6EC2] text-white text-sm font-medium">
+                    Save Project Timer
+                </button>
             </form>
         </div>
     </div>
@@ -304,7 +334,9 @@
                         <option value="Bank">Bank</option>
                     </select>
                 </div>
-                <button type="submit" class="w-full py-2 rounded bg-[#2383E2] hover:bg-[#1B6EC2] text-white text-sm font-medium"> Save Entry </button>
+                <button type="submit" class="w-full py-2 rounded bg-[#2383E2] hover:bg-[#1B6EC2] text-white text-sm font-medium">
+                    Save Entry
+                </button>
             </form>
         </div>
     </div>
@@ -364,6 +396,7 @@
                     db.from('work_comments').select('*').order('created_at', { ascending: true }),
                     db.from('app_settings').select('*').eq('id', 1).single()
                 ]);
+
                 if (edRes.data && edRes.data.length > 0) editorsList = edRes.data;
                 if (tmRes.data) timersList = tmRes.data;
                 if (tkRes.data) tasksList = tkRes.data;
@@ -386,9 +419,10 @@
             const filterSel = document.getElementById('admin-editor-filter');
             const onlyEditors = editorsList.filter(e => e.role !== 'admin');
             const uniqueNames = [...new Set(onlyEditors.map(e => e.name))];
+            
             datalist.innerHTML = uniqueNames.map(name => `<option value="${name}">`).join('');
             filterSel.innerHTML = `<option value="ALL">All Editors</option>` + uniqueNames.map(name => `<option value="${name}">${name}</option>`).join('');
-            
+
             const chkContainer = document.getElementById('timer-editors-checkboxes');
             if (chkContainer) {
                 chkContainer.innerHTML = uniqueNames.map(name => `
@@ -411,12 +445,15 @@
             e.preventDefault();
             const typedName = document.getElementById('login-username').value.trim().toLowerCase();
             const enteredPass = document.getElementById('login-password').value;
+
             const allAccounts = [...editorsList, ...DEFAULT_ACCOUNTS];
             const matched = allAccounts.find(ed => ed.name.trim().toLowerCase() === typedName && ed.password === enteredPass);
+
             if (!matched) {
                 document.getElementById('login-error').classList.remove('hidden');
                 return;
             }
+
             currentUser = { name: matched.name, role: matched.role };
             localStorage.setItem('tosrec_user', JSON.stringify(currentUser));
             closeModal('login-modal');
@@ -436,7 +473,7 @@
             const isAdmin = currentUser?.role === 'admin';
             const isManager = currentUser?.role === 'manager';
             const canManage = isAdmin || isManager;
-            
+
             document.getElementById('login-open-btn').classList.toggle('hidden', isLoggedIn);
             document.getElementById('user-badge').classList.toggle('hidden', !isLoggedIn);
             document.getElementById('nav-dashboard-btn').classList.toggle('hidden', !isLoggedIn);
@@ -460,8 +497,9 @@
             document.getElementById('view-home').classList.toggle('hidden', view !== 'home');
             document.getElementById('view-workdetails').classList.toggle('hidden', view !== 'workdetails');
             document.getElementById('view-dashboard').classList.toggle('hidden', view !== 'dashboard');
-            
+
             document.getElementById('nav-home-btn').className = view === 'home' ? 'text-xs sm:text-sm px-3 py-1.5 rounded bg-[#2F2F2F] text-white font-medium transition' : 'text-xs sm:text-sm px-3 py-1.5 rounded hover:bg-[#2F2F2F] text-gray-300 transition';
+            
             const workBtn = document.getElementById('nav-workdetails-btn');
             if (workBtn && !workBtn.classList.contains('hidden')) {
                 workBtn.className = view === 'workdetails' ? 'text-xs sm:text-sm px-3 py-1.5 rounded bg-[#2F2F2F] text-white font-medium transition' : 'text-xs sm:text-sm px-3 py-1.5 rounded hover:bg-[#2F2F2F] text-gray-300 transition';
@@ -483,18 +521,21 @@
             const grid = document.getElementById('timers-grid');
             const empty = document.getElementById('timers-empty');
             const canManage = currentUser?.role === 'admin' || currentUser?.role === 'manager';
-            
+
             if (timersList.length === 0) {
                 grid.innerHTML = '';
                 empty.classList.remove('hidden');
                 return;
             }
             empty.classList.add('hidden');
+
             grid.innerHTML = timersList.map(t => `
                 <div class="notion-card rounded-xl p-5 flex flex-col justify-between gap-4 relative group">
                     <div>
                         <div class="flex items-start justify-between gap-2">
-                            <span class="text-xs px-2.5 py-0.5 rounded-full bg-[#2F2F2F] text-gray-300 font-medium"> 👥 ${t.editor_name} </span>
+                            <span class="text-xs px-2.5 py-0.5 rounded-full bg-[#2F2F2F] text-gray-300 font-medium">
+                                👥 ${t.editor_name}
+                            </span>
                             <div class="flex items-center gap-1.5">
                                 ${canManage ? `<button onclick="openEditTimerModal('${t.id}')" class="text-xs px-2 py-0.5 rounded bg-[#2F2F2F] hover:bg-[#3A3A3A] text-gray-300 border notion-border"> Edit </button>` : ''}
                                 ${canManage ? `<button onclick="deleteTimer('${t.id}')" class="text-xs px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 border border-emerald-500/20"> ✓ Done </button>` : ''}
@@ -505,7 +546,9 @@
                     </div>
                     <div class="bg-[#191919] border notion-border rounded-lg p-3">
                         <div class="text-[10px] uppercase tracking-wider text-gray-500 mb-1">Time Remaining</div>
-                        <div class="countdown-display font-mono text-lg font-bold text-emerald-400" data-deadline="${t.deadline}"> Calculating... </div>
+                        <div class="countdown-display font-mono text-lg font-bold text-emerald-400" data-deadline="${t.deadline}">
+                            Calculating...
+                        </div>
                     </div>
                 </div>
             `).join('');
@@ -546,19 +589,16 @@
             document.getElementById('timer-modal-title').textContent = 'Edit Project Timer';
             document.getElementById('edit-timer-id').value = t.id;
             document.getElementById('timer-project-name').value = t.project_name;
-            
             if (t.deadline) {
                 const dt = new Date(t.deadline);
                 const tzOffset = dt.getTimezoneOffset() * 60000;
                 const localISOTime = (new Date(dt - tzOffset)).toISOString().slice(0, 16);
                 document.getElementById('timer-deadline').value = localISOTime;
             }
-
             const assignedArr = t.editor_name.split(',').map(s => s.trim());
             document.querySelectorAll('input[name="timer-editor-chk"]').forEach(chk => {
                 chk.checked = assignedArr.includes(chk.value);
             });
-
             document.getElementById('timer-modal').classList.remove('hidden');
         }
 
@@ -567,7 +607,6 @@
             const id = document.getElementById('edit-timer-id').value;
             const project_name = document.getElementById('timer-project-name').value.trim();
             const deadline = new Date(document.getElementById('timer-deadline').value).toISOString();
-            
             const selectedEditors = [];
             document.querySelectorAll('input[name="timer-editor-chk"]:checked').forEach(chk => {
                 selectedEditors.push(chk.value);
@@ -608,6 +647,7 @@
                 document.getElementById('workdetails-list').innerHTML = `<div class="notion-card rounded-lg p-8 text-center text-gray-400 text-xs">Please login to view Work Details & Floating Chat Hub.</div>`;
                 return;
             }
+
             const container = document.getElementById('workdetails-list');
             const emptyBox = document.getElementById('workdetails-empty');
             const searchQuery = document.getElementById('work-search') ? document.getElementById('work-search').value.toLowerCase() : '';
@@ -627,7 +667,7 @@
             container.innerHTML = filteredTimers.map(t => {
                 const timerComments = commentsList.filter(c => c.timer_id === t.id);
                 return `
-                    <div class="notion-card rounded-xl p-5 space-y-4 shadow-xl">
+                    <div id="chat-card-${t.id}" class="notion-card rounded-xl p-5 space-y-4 shadow-xl transition-all duration-300">
                         <!-- Project Header Info -->
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b notion-border pb-3">
                             <div>
@@ -635,20 +675,28 @@
                                 <h3 class="text-base font-bold text-white mt-1">${t.project_name}</h3>
                                 <p class="text-[11px] text-gray-400">Deadline: ${new Date(t.deadline).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })}</p>
                             </div>
-                            <div class="flex items-center gap-3">
+                            <div class="flex items-center gap-3 flex-wrap">
                                 <span class="countdown-display font-mono text-xs font-bold text-emerald-400" data-deadline="${t.deadline}">Live</span>
+                                <div class="flex items-center gap-1.5">
+                                    <button onclick="toggleFloating('${t.id}')" id="float-btn-${t.id}" class="text-[11px] px-2.5 py-1 rounded bg-[#2F2F2F] hover:bg-[#3A3A3A] text-gray-300 border notion-border transition">
+                                        🪟 Pop Out Floating
+                                    </button>
+                                    <button onclick="toggleFullscreen('${t.id}')" id="fullscreen-btn-${t.id}" class="text-[11px] px-2.5 py-1 rounded bg-[#2F2F2F] hover:bg-[#3A3A3A] text-gray-300 border notion-border transition">
+                                        ⛶ Fullscreen
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
                         <!-- Floating Messenger Chat Window -->
-                        <div class="messenger-chat-bg rounded-xl border notion-border overflow-hidden flex flex-col h-96 shadow-inner">
+                        <div id="chat-box-container-${t.id}" class="messenger-chat-bg rounded-xl border notion-border overflow-hidden flex flex-col h-96 shadow-inner transition-all duration-300">
                             <!-- Chat Header Bar -->
                             <div class="bg-[#202020] px-4 py-2.5 border-b notion-border flex items-center justify-between text-xs">
                                 <div class="flex items-center gap-2">
                                     <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
                                     <span class="font-semibold text-white">Live Discussion Window (${timerComments.length} messages)</span>
                                 </div>
-                                <span class="text-[10px] text-gray-400">Links can be pasted directly in chat</span>
+                                <span class="text-[10px] text-gray-400">Links or photos can be sent without text</span>
                             </div>
 
                             <!-- Messages Area -->
@@ -660,19 +708,24 @@
                                 ` : timerComments.map(c => {
                                     const readersList = c.read_by ? JSON.parse(c.read_by) : [];
                                     const isSelf = c.author_name.trim().toLowerCase() === currentUser.name.trim().toLowerCase();
-                                    
+                                    const isAdminOrManager = currentUser.role === 'admin' || currentUser.role === 'manager';
+                                    const canDelete = isSelf || isAdminOrManager;
+
                                     let formattedMsg = escapeHtml(c.message);
                                     const urlRegex = /(https?:\/\/[^\s]+)/g;
                                     formattedMsg = formattedMsg.replace(urlRegex, (url) => `<a href="${url}" target="_blank" class="text-sky-400 underline break-all">${url}</a>`);
 
                                     return `
-                                        <div class="flex flex-col ${isSelf ? 'items-end' : 'items-start'} space-y-1">
-                                            <div class="max-w-[85%] sm:max-w-[70%] rounded-2xl px-4 py-2.5 text-xs shadow-md ${isSelf ? 'bg-[#005c4b] text-white rounded-br-none' : 'bg-[#202020] text-gray-200 border notion-border rounded-bl-none'}">
+                                        <div class="flex flex-col ${isSelf ? 'items-end' : 'items-start'} space-y-1 group/msg">
+                                            <div class="max-w-[85%] sm:max-w-[70%] rounded-2xl px-4 py-2.5 text-xs shadow-md relative ${isSelf ? 'bg-[#005c4b] text-white rounded-br-none' : 'bg-[#202020] text-gray-200 border notion-border rounded-bl-none'}">
                                                 <div class="flex items-center justify-between gap-4 mb-1 text-[10px] opacity-75">
                                                     <span class="font-semibold ${isSelf ? 'text-emerald-300' : 'text-emerald-400'}">${c.author_name}</span>
-                                                    <span>${new Date(c.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                                                    <div class="flex items-center gap-2">
+                                                        <span>${new Date(c.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                                                        ${canDelete ? `<button onclick="deleteComment('${c.id}')" class="text-rose-300 hover:text-rose-100 opacity-80 hover:opacity-100 font-bold" title="Delete Message">✕</button>` : ''}
+                                                    </div>
                                                 </div>
-                                                <p class="leading-relaxed whitespace-pre-wrap">${formattedMsg}</p>
+                                                ${c.message ? `<p class="leading-relaxed whitespace-pre-wrap">${formattedMsg}</p>` : ''}
                                                 ${c.image_url ? `<img src="${c.image_url}" class="max-h-52 rounded-lg mt-2 border notion-border object-cover cursor-pointer" onclick="window.open('${c.image_url}', '_blank')" />` : ''}
                                             </div>
                                             <!-- Read Status & Action Bar -->
@@ -685,13 +738,13 @@
                                 }).join('')}
                             </div>
 
-                            <!-- Chat Input Box -->
+                            <!-- Chat Input Box (No text required if image attached) -->
                             <form onsubmit="postComment(event, '${t.id}')" class="bg-[#202020] p-3 border-t notion-border flex items-center gap-2">
                                 <input type="file" id="comment-file-${t.id}" accept="image/*" class="hidden" onchange="previewImageName(this, '${t.id}')" />
                                 <label for="comment-file-${t.id}" class="cursor-pointer p-2 rounded-lg notion-card hover:bg-[#2A2A2A] text-gray-300 transition text-sm flex items-center justify-center" title="Attach Image">
                                     <span>📷</span>
                                 </label>
-                                <input type="text" id="comment-input-${t.id}" required placeholder="Type a message, reply or paste link..." class="flex-1 notion-input px-3 py-2 rounded-lg text-xs" />
+                                <input type="text" id="comment-input-${t.id}" placeholder="Type a message, reply or paste link..." class="flex-1 notion-input px-3 py-2 rounded-lg text-xs" />
                                 <span id="file-label-${t.id}" class="hidden text-[10px] text-emerald-400 bg-[#191919] px-2 py-1 rounded truncate max-w-[100px]"></span>
                                 <button type="submit" class="px-4 py-2 rounded-lg bg-[#2383E2] hover:bg-[#1B6EC2] text-white text-xs font-medium transition flex items-center gap-1">
                                     <span>Send</span> ✈️
@@ -702,6 +755,72 @@
                 `;
             }).join('');
             updateCountdownDisplays();
+        }
+
+        function toggleFloating(timerId) {
+            const card = document.getElementById(`chat-card-${timerId}`);
+            const chatBox = document.getElementById(`chat-box-container-${timerId}`);
+            const btn = document.getElementById(`float-btn-${timerId}`);
+
+            if (!card.classList.contains('is-floating')) {
+                card.classList.add('is-floating');
+                card.style.position = 'fixed';
+                card.style.bottom = '20px';
+                card.style.right = '20px';
+                card.style.width = '420px';
+                card.style.maxHeight = '85vh';
+                card.style.zIndex = '9999';
+                card.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.7)';
+                chatBox.style.height = '320px';
+                btn.textContent = '📌 Dock Back';
+                btn.className = 'text-[11px] px-2.5 py-1 rounded bg-[#2383E2] text-white font-medium transition';
+            } else {
+                card.classList.remove('is-floating');
+                card.style.position = '';
+                card.style.bottom = '';
+                card.style.right = '';
+                card.style.width = '';
+                card.style.maxHeight = '';
+                card.style.zIndex = '';
+                card.style.boxShadow = '';
+                chatBox.style.height = '384px';
+                btn.textContent = '🪟 Pop Out Floating';
+                btn.className = 'text-[11px] px-2.5 py-1 rounded bg-[#2F2F2F] hover:bg-[#3A3A3A] text-gray-300 border notion-border transition';
+            }
+        }
+
+        function toggleFullscreen(timerId) {
+            const card = document.getElementById(`chat-card-${timerId}`);
+            const chatBox = document.getElementById(`chat-box-container-${timerId}`);
+            const btn = document.getElementById(`fullscreen-btn-${timerId}`);
+
+            if (!card.classList.contains('is-fullscreen')) {
+                card.classList.add('is-fullscreen');
+                card.style.position = 'fixed';
+                card.style.inset = '20px';
+                card.style.width = 'calc(100vw - 40px)';
+                card.style.height = 'calc(100vh - 40px)';
+                card.style.zIndex = '99999';
+                card.style.display = 'flex';
+                card.style.flexDirection = 'column';
+                chatBox.style.flex = '1';
+                chatBox.style.height = 'auto';
+                btn.textContent = '✕ Exit Fullscreen';
+                btn.className = 'text-[11px] px-2.5 py-1 rounded bg-rose-600 text-white font-medium transition';
+            } else {
+                card.classList.remove('is-fullscreen');
+                card.style.position = '';
+                card.style.inset = '';
+                card.style.width = '';
+                card.style.height = '';
+                card.style.zIndex = '';
+                card.style.display = '';
+                card.style.flexDirection = '';
+                chatBox.style.flex = '';
+                chatBox.style.height = '384px';
+                btn.textContent = '⛶ Fullscreen';
+                btn.className = 'text-[11px] px-2.5 py-1 rounded bg-[#2F2F2F] hover:bg-[#3A3A3A] text-gray-300 border notion-border transition';
+            }
         }
 
         function escapeHtml(text) {
@@ -723,8 +842,8 @@
             const msgInput = document.getElementById(`comment-input-${timerId}`);
             const fileInput = document.getElementById(`comment-file-${timerId}`);
             const message = msgInput.value.trim();
+            
             let imageUrl = '';
-
             if (fileInput.files && fileInput.files[0]) {
                 const file = fileInput.files[0];
                 const reader = new FileReader();
@@ -732,6 +851,12 @@
                     reader.onload = (e) => resolve(e.target.result);
                     reader.readAsDataURL(file);
                 });
+            }
+
+            // Ensure either message or image is present
+            if (!message && !imageUrl) {
+                alert('Please type a message or attach an image.');
+                return;
             }
 
             const { error } = await db.from('work_comments').insert([{
@@ -746,10 +871,22 @@
                 alert('Error posting comment: ' + error.message);
                 return;
             }
+
             msgInput.value = '';
             fileInput.value = '';
             const fileLbl = document.getElementById(`file-label-${timerId}`);
-            if(fileLbl) fileLbl.classList.add('hidden');
+            if (fileLbl) fileLbl.classList.add('hidden');
+
+            await fetchAllData();
+        }
+
+        async function deleteComment(commentId) {
+            if (!confirm('Delete this message?')) return;
+            const { error } = await db.from('work_comments').delete().eq('id', commentId);
+            if (error) {
+                alert('Error deleting comment: ' + error.message);
+                return;
+            }
             await fetchAllData();
         }
 
@@ -784,7 +921,7 @@
             const isAdminOrManager = currentUser.role === 'admin' || currentUser.role === 'manager';
             const searchQuery = document.getElementById('task-search').value.toLowerCase();
             const adminFilter = document.getElementById('admin-editor-filter').value;
-            
+
             let accessibleTasks = isAdminOrManager ? tasksList : tasksList.filter(t => t.assignee.toLowerCase().includes(currentUser.name.toLowerCase()));
             if (isAdminOrManager && adminFilter !== 'ALL') {
                 accessibleTasks = accessibleTasks.filter(t => t.assignee.toLowerCase().includes(adminFilter.toLowerCase()));
@@ -792,6 +929,7 @@
 
             const uncompleteCount = accessibleTasks.filter(t => !t.is_completed).length;
             const completedCount = accessibleTasks.filter(t => t.is_completed).length;
+
             document.getElementById('count-uncomplete').textContent = `(${uncompleteCount})`;
             document.getElementById('count-completed').textContent = `(${completedCount})`;
             document.getElementById('count-all').textContent = `(${accessibleTasks.length})`;
@@ -816,10 +954,12 @@
                     const inputUsd = Number(t.amount_bdt) || 0;
                     const calc16Usd = inputUsd * 0.16;
                     const tipsUsd = Number(t.amount_usd) || 0;
+
                     let dollarDisplay = `<span class="text-sky-400">$${calc16Usd.toFixed(2)}</span>`;
                     if (tipsUsd > 0) {
                         dollarDisplay += ` + <span class="text-amber-400">$${tipsUsd.toFixed(2)}</span>`;
                     }
+
                     const paidByBadge = t.tk_status === 'Paid' && t.delivery_tag ? `<span class="px-2 py-0.5 rounded text-[11px] font-medium bg-[#2F2F2F] text-emerald-400 border border-emerald-500/20">${t.delivery_tag}</span>` : `<span class="text-gray-600">—</span>`;
 
                     return `
@@ -827,18 +967,28 @@
                             <td class="py-2.5 px-3 text-center">
                                 <input type="checkbox" ${t.is_completed ? 'checked' : ''} onchange="toggleTaskComplete('${t.id}', this.checked)" class="w-4 h-4 rounded accent-[#2383E2] cursor-pointer" />
                             </td>
-                            <td class="py-2.5 px-3 font-medium ${t.is_completed ? 'line-through text-gray-500' : 'text-white'}"> ${t.task_name} </td>
+                            <td class="py-2.5 px-3 font-medium ${t.is_completed ? 'line-through text-gray-500' : 'text-white'}">
+                                ${t.task_name}
+                            </td>
                             <td class="py-2.5 px-3">
                                 <span class="inline-flex items-center gap-1.5 text-gray-300">
-                                    <span class="w-4 h-4 rounded-full bg-[#373737] text-[10px] flex items-center justify-center font-bold"> ${t.assignee.charAt(0).toUpperCase()} </span>
+                                    <span class="w-4 h-4 rounded-full bg-[#373737] text-[10px] flex items-center justify-center font-bold">
+                                        ${t.assignee.charAt(0).toUpperCase()}
+                                    </span>
                                     ${t.assignee}
                                 </span>
                             </td>
                             <td class="py-2.5 px-3">
-                                <span class="px-2 py-0.5 rounded border text-[11px] font-medium ${statusColor}"> ${t.tk_status} </span>
+                                <span class="px-2 py-0.5 rounded border text-[11px] font-medium ${statusColor}">
+                                    ${t.tk_status}
+                                </span>
                             </td>
-                            <td class="py-2.5 px-3 font-mono"> ${dollarDisplay} </td>
-                            <td class="py-2.5 px-3 text-center"> ${paidByBadge} </td>
+                            <td class="py-2.5 px-3 font-mono">
+                                ${dollarDisplay}
+                            </td>
+                            <td class="py-2.5 px-3 text-center">
+                                ${paidByBadge}
+                            </td>
                             ${isAdminOrManager ? `
                                 <td class="py-2.5 px-3 text-right space-x-1">
                                     <button onclick='openEditTaskModal(${JSON.stringify(t)})' class="text-gray-400 hover:text-white px-1.5 py-0.5 rounded hover:bg-[#333]">Edit</button>
@@ -907,6 +1057,7 @@
                 breakdownBox.innerHTML = `<p class="text-xs text-gray-500">No calculations for this tab.</p>`;
                 return;
             }
+
             breakdownBox.innerHTML = editorNames.map(name => {
                 const d = perEditor[name];
                 return `
@@ -975,6 +1126,7 @@
             const id = document.getElementById('edit-task-id').value;
             const status = document.getElementById('task-status').value;
             const paidByVal = status === 'Paid' ? document.getElementById('task-paid-by').value : '';
+
             const payload = {
                 task_name: document.getElementById('task-name').value.trim(),
                 assignee: document.getElementById('task-assignee').value.trim(),
@@ -983,12 +1135,14 @@
                 amount_usd: Number(document.getElementById('task-usd').value) || 0,
                 delivery_tag: paidByVal
             };
+
             let res;
             if (id) {
                 res = await db.from('cashflow_tasks').update(payload).eq('id', id);
             } else {
                 res = await db.from('cashflow_tasks').insert([payload]);
             }
+
             if (res.error) {
                 alert('Error: ' + res.error.message);
                 return;
@@ -1030,7 +1184,9 @@
                     <div class="p-2.5 flex items-center justify-between text-xs bg-[#191919]">
                         <div>
                             <span class="font-medium text-white">${ed.name}</span>
-                            <span class="ml-2 text-gray-500 font-mono"> Pass: ${showPassword ? ed.password : '••••••••'} </span>
+                            <span class="ml-2 text-gray-500 font-mono">
+                                Pass: ${showPassword ? ed.password : '••••••••'}
+                            </span>
                         </div>
                         ${canDeleteThis ? `<button onclick="removeEditor('${ed.id}')" class="text-rose-400 hover:underline">Remove</button>` : `<span class="text-[10px] text-amber-400">${ed.role.toUpperCase()}${isSelf ? ' (You)' : ''}</span>`}
                     </div>
@@ -1043,6 +1199,7 @@
             const name = document.getElementById('new-editor-name').value.trim();
             const password = document.getElementById('new-editor-pass').value.trim();
             if (!name || !password) return;
+
             const { error } = await db.from('editors').insert([{ name, password, role: 'editor' }]);
             if (error) {
                 alert('Error: ' + error.message);
