@@ -86,7 +86,7 @@
             </div>
         </section>
 
-        <!-- ==================== VIEW 2: WORK DETAILS PAGE (NEW) ==================== -->
+        <!-- ==================== VIEW 2: WORK DETAILS PAGE ==================== -->
         <section id="view-workdetails" class="hidden space-y-6">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b notion-border pb-5">
                 <div>
@@ -228,14 +228,15 @@
         </div>
     </div>
 
-    <!-- 2. Add Active Timer Modal -->
+    <!-- 2. Add / Edit Active Timer Modal -->
     <div id="timer-modal" class="hidden fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="notion-card w-full max-w-md rounded-xl p-6 space-y-4">
             <div class="flex justify-between items-center">
-                <h3 class="text-lg font-bold text-white">Add Running Project Timer</h3>
+                <h3 id="timer-modal-title" class="text-lg font-bold text-white">Add Running Project Timer</h3>
                 <button onclick="closeModal('timer-modal')" class="text-gray-400 hover:text-white">✕</button>
             </div>
             <form onsubmit="saveTimer(event)" class="space-y-3">
+                <input type="hidden" id="edit-timer-id" />
                 <div>
                     <label class="block text-xs text-gray-400 mb-1">Project / Video Name</label>
                     <input type="text" id="timer-project-name" required placeholder="e.g. Travel Vlog Ep 04" class="w-full notion-input px-3 py-2 rounded text-sm" />
@@ -248,11 +249,7 @@
                     <label class="block text-xs text-gray-400 mb-1">Submission Deadline</label>
                     <input type="datetime-local" id="timer-deadline" required class="w-full notion-input px-3 py-2 rounded text-sm" />
                 </div>
-                <div>
-                    <label class="block text-xs text-gray-400 mb-1">File Link (Optional Drive / Asset URL)</label>
-                    <input type="url" id="timer-file-link" placeholder="https://drive.google.com/..." class="w-full notion-input px-3 py-2 rounded text-sm" />
-                </div>
-                <button type="submit" class="w-full py-2 rounded bg-[#2383E2] hover:bg-[#1B6EC2] text-white text-sm font-medium"> Start Live Countdown </button>
+                <button type="submit" class="w-full py-2 rounded bg-[#2383E2] hover:bg-[#1B6EC2] text-white text-sm font-medium"> Save Project Timer </button>
             </form>
         </div>
     </div>
@@ -322,6 +319,24 @@
         </div>
     </div>
 
+    <!-- 5. Edit File Link Modal (For Work Details) -->
+    <div id="filelink-modal" class="hidden fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="notion-card w-full max-w-sm rounded-xl p-6 space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="text-lg font-bold text-white">Set / Update File Link</h3>
+                <button onclick="closeModal('filelink-modal')" class="text-gray-400 hover:text-white">✕</button>
+            </div>
+            <form onsubmit="saveFileLink(event)" class="space-y-3">
+                <input type="hidden" id="link-timer-id" />
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">Asset / Drive URL</label>
+                    <input type="url" id="modal-file-link-input" required placeholder="https://drive.google.com/..." class="w-full notion-input px-3 py-2 rounded text-sm" />
+                </div>
+                <button type="submit" class="w-full py-2 rounded bg-[#2383E2] hover:bg-[#1B6EC2] text-white text-sm font-medium"> Save Link </button>
+            </form>
+        </div>
+    </div>
+
     <datalist id="editors-datalist"></datalist>
 
     <script>
@@ -348,11 +363,7 @@
         async function init() {
             await fetchAllData();
             updateAuthUI();
-            if (currentUser) {
-                switchView('home');
-            } else {
-                switchView('home');
-            }
+            switchView('home');
             setInterval(updateCountdownDisplays, 1000);
         }
 
@@ -390,7 +401,6 @@
             datalist.innerHTML = uniqueNames.map(name => `<option value="${name}">`).join('');
             filterSel.innerHTML = `<option value="ALL">All Editors</option>` + uniqueNames.map(name => `<option value="${name}">${name}</option>`).join('');
             
-            // Populate checkbox list for timer creation
             const chkContainer = document.getElementById('timer-editors-checkboxes');
             if (chkContainer) {
                 chkContainer.innerHTML = uniqueNames.map(name => `
@@ -463,7 +473,6 @@
             document.getElementById('view-workdetails').classList.toggle('hidden', view !== 'workdetails');
             document.getElementById('view-dashboard').classList.toggle('hidden', view !== 'dashboard');
             
-            // Highlight nav buttons
             document.getElementById('nav-home-btn').className = view === 'home' ? 'text-xs sm:text-sm px-3 py-1.5 rounded bg-[#2F2F2F] text-white font-medium transition' : 'text-xs sm:text-sm px-3 py-1.5 rounded hover:bg-[#2F2F2F] text-gray-300 transition';
             const workBtn = document.getElementById('nav-workdetails-btn');
             if (workBtn && !workBtn.classList.contains('hidden')) {
@@ -498,11 +507,13 @@
                     <div>
                         <div class="flex items-start justify-between gap-2">
                             <span class="text-xs px-2.5 py-0.5 rounded-full bg-[#2F2F2F] text-gray-300 font-medium"> 👥 ${t.editor_name} </span>
-                            ${canManage ? `<button onclick="deleteTimer('${t.id}')" class="text-xs px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 border border-emerald-500/20"> ✓ Done </button>` : ''}
+                            <div class="flex items-center gap-1.5">
+                                ${canManage ? `<button onclick="openEditTimerModal('${t.id}')" class="text-xs px-2 py-0.5 rounded bg-[#2F2F2F] hover:bg-[#3A3A3A] text-gray-300 border notion-border"> Edit </button>` : ''}
+                                ${canManage ? `<button onclick="deleteTimer('${t.id}')" class="text-xs px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 border border-emerald-500/20"> ✓ Done </button>` : ''}
+                            </div>
                         </div>
                         <h3 class="text-base font-semibold text-white mt-3">${t.project_name}</h3>
                         <p class="text-[11px] text-gray-500 mt-0.5">Due: ${new Date(t.deadline).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })}</p>
-                        ${t.file_link ? `<a href="${t.file_link}" target="_blank" class="text-xs text-sky-400 hover:underline block mt-2">📎 Open Asset File Link</a>` : ''}
                     </div>
                     <div class="bg-[#191919] border notion-border rounded-lg p-3">
                         <div class="text-[10px] uppercase tracking-wider text-gray-500 mb-1">Time Remaining</div>
@@ -533,17 +544,42 @@
         }
 
         function openTimerModal() {
+            document.getElementById('timer-modal-title').textContent = 'Add Running Project Timer';
+            document.getElementById('edit-timer-id').value = '';
             document.getElementById('timer-project-name').value = '';
-            document.getElementById('timer-file-link').value = '';
             document.getElementById('timer-deadline').value = '';
             document.querySelectorAll('input[name="timer-editor-chk"]').forEach(chk => chk.checked = false);
             document.getElementById('timer-modal').classList.remove('hidden');
         }
 
+        function openEditTimerModal(timerId) {
+            const t = timersList.find(x => x.id === timerId);
+            if (!t) return;
+            document.getElementById('timer-modal-title').textContent = 'Edit Project Timer';
+            document.getElementById('edit-timer-id').value = t.id;
+            document.getElementById('timer-project-name').value = t.project_name;
+            
+            // Format deadline for datetime-local input
+            if (t.deadline) {
+                const dt = new Date(t.deadline);
+                const tzOffset = dt.getTimezoneOffset() * 60000;
+                const localISOTime = (new Date(dt - tzOffset)).toISOString().slice(0, 16);
+                document.getElementById('timer-deadline').value = localISOTime;
+            }
+
+            // Check matching editors
+            const assignedArr = t.editor_name.split(',').map(s => s.trim());
+            document.querySelectorAll('input[name="timer-editor-chk"]').forEach(chk => {
+                chk.checked = assignedArr.includes(chk.value);
+            });
+
+            document.getElementById('timer-modal').classList.remove('hidden');
+        }
+
         async function saveTimer(e) {
             e.preventDefault();
+            const id = document.getElementById('edit-timer-id').value;
             const project_name = document.getElementById('timer-project-name').value.trim();
-            const file_link = document.getElementById('timer-file-link').value.trim();
             const deadline = new Date(document.getElementById('timer-deadline').value).toISOString();
             
             const selectedEditors = [];
@@ -552,9 +588,15 @@
             });
             const editor_name = selectedEditors.length > 0 ? selectedEditors.join(', ') : 'Common Team';
 
-            const { error } = await db.from('active_timers').insert([{ project_name, editor_name, deadline, file_link }]);
-            if (error) {
-                alert('Error: ' + error.message);
+            let res;
+            if (id) {
+                res = await db.from('active_timers').update({ project_name, editor_name, deadline }).eq('id', id);
+            } else {
+                res = await db.from('active_timers').insert([{ project_name, editor_name, deadline, file_link: '' }]);
+            }
+
+            if (res.error) {
+                alert('Error: ' + res.error.message);
                 return;
             }
             closeModal('timer-modal');
@@ -563,7 +605,6 @@
 
         async function deleteTimer(id) {
             if (!confirm('Mark completed and remove? This will also complete corresponding tasks.')) return;
-            // Also find matching tasks and complete them
             const timerObj = timersList.find(t => t.id === id);
             if (timerObj) {
                 const matchingTasks = tasksList.filter(t => t.task_name.toLowerCase() === timerObj.project_name.toLowerCase());
@@ -575,7 +616,7 @@
             await fetchAllData();
         }
 
-        // ==================== WORK DETAILS & MESSENGER COMMENTS ====================
+        // ==================== WORK DETAILS & FILE LINK & COMMENTS ====================
         function renderWorkDetails() {
             if (!currentUser) {
                 document.getElementById('workdetails-list').innerHTML = `<div class="notion-card rounded-lg p-8 text-center text-gray-400 text-xs">Please login to view Work Details & Chat Hub.</div>`;
@@ -607,8 +648,9 @@
                                 <h3 class="text-base font-bold text-white mt-1">${t.project_name}</h3>
                                 <p class="text-[11px] text-gray-400">Deadline: ${new Date(t.deadline).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })}</p>
                             </div>
-                            <div class="flex items-center gap-3">
-                                ${t.file_link ? `<a href="${t.file_link}" target="_blank" class="text-xs px-3 py-1.5 rounded bg-[#2383E2]/10 text-sky-400 hover:bg-[#2383E2]/20 border border-sky-500/20">📎 File Link</a>` : ''}
+                            <div class="flex items-center gap-3 flex-wrap">
+                                ${t.file_link ? `<a href="${t.file_link}" target="_blank" class="text-xs px-3 py-1.5 rounded bg-[#2383E2]/10 text-sky-400 hover:bg-[#2383E2]/20 border border-sky-500/20">📎 Open File Link</a>` : `<span class="text-xs text-gray-500 italic">No file link added</span>`}
+                                <button onclick="openFileLinkModal('${t.id}', '${t.file_link || ''}')" class="text-xs px-2.5 py-1.5 rounded notion-card hover:bg-[#2A2A2A] text-gray-300 border notion-border"> 🔗 ${t.file_link ? 'Edit Link' : 'Add Link'} </button>
                                 <span class="countdown-display font-mono text-xs font-bold text-emerald-400" data-deadline="${t.deadline}">Live</span>
                             </div>
                         </div>
@@ -653,6 +695,25 @@
                 `;
             }).join('');
             updateCountdownDisplays();
+        }
+
+        function openFileLinkModal(timerId, currentLink) {
+            document.getElementById('link-timer-id').value = timerId;
+            document.getElementById('modal-file-link-input').value = currentLink === 'null' ? '' : currentLink;
+            document.getElementById('filelink-modal').classList.remove('hidden');
+        }
+
+        async function saveFileLink(e) {
+            e.preventDefault();
+            const id = document.getElementById('link-timer-id').value;
+            const file_link = document.getElementById('modal-file-link-input').value.trim();
+            const { error } = await db.from('active_timers').update({ file_link }).eq('id', id);
+            if (error) {
+                alert('Error updating file link: ' + error.message);
+                return;
+            }
+            closeModal('filelink-modal');
+            await fetchAllData();
         }
 
         function previewImageName(input, timerId) {
