@@ -18,6 +18,12 @@
         .notion-input { background-color: #191919; border: 1px solid #373737; color: #EBEBEB; }
         .notion-input:focus { outline: none; border-color: #529CCA; }
         input[type="datetime-local"]::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; }
+        /* Messenger Style Chat Background */
+        .messenger-chat-bg {
+            background-color: #0b141a;
+            background-image: radial-gradient(#1f2c34 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: #191919; }
         ::-webkit-scrollbar-thumb { background: #373737; border-radius: 3px; }
@@ -86,14 +92,14 @@
             </div>
         </section>
 
-        <!-- ==================== VIEW 2: WORK DETAILS PAGE ==================== -->
+        <!-- ==================== VIEW 2: WORK DETAILS PAGE (FLOATING CHAT WINDOW) ==================== -->
         <section id="view-workdetails" class="hidden space-y-6">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b notion-border pb-5">
                 <div>
                     <h2 class="text-2xl font-bold text-white flex items-center gap-2">
-                        <span>📋</span> Work Details & Collaboration Hub
+                        <span>📋</span> Work Details & Floating Chat Hub
                     </h2>
-                    <p class="text-xs text-gray-400 mt-1">Live tasks mapped from active timers with file links, messenger chat, and image sharing.</p>
+                    <p class="text-xs text-gray-400 mt-1">Project collaboration chat & direct link sharing styled like messenger.</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <input type="text" id="work-search" oninput="renderWorkDetails()" placeholder="Search work item..." class="notion-input text-xs px-3 py-2 rounded w-48" />
@@ -319,24 +325,6 @@
         </div>
     </div>
 
-    <!-- 5. Edit File Link Modal (For Work Details) -->
-    <div id="filelink-modal" class="hidden fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="notion-card w-full max-w-sm rounded-xl p-6 space-y-4">
-            <div class="flex justify-between items-center">
-                <h3 class="text-lg font-bold text-white">Set / Update File Link</h3>
-                <button onclick="closeModal('filelink-modal')" class="text-gray-400 hover:text-white">✕</button>
-            </div>
-            <form onsubmit="saveFileLink(event)" class="space-y-3">
-                <input type="hidden" id="link-timer-id" />
-                <div>
-                    <label class="block text-xs text-gray-400 mb-1">Asset / Drive URL</label>
-                    <input type="url" id="modal-file-link-input" required placeholder="https://drive.google.com/..." class="w-full notion-input px-3 py-2 rounded text-sm" />
-                </div>
-                <button type="submit" class="w-full py-2 rounded bg-[#2383E2] hover:bg-[#1B6EC2] text-white text-sm font-medium"> Save Link </button>
-            </form>
-        </div>
-    </div>
-
     <datalist id="editors-datalist"></datalist>
 
     <script>
@@ -559,7 +547,6 @@
             document.getElementById('edit-timer-id').value = t.id;
             document.getElementById('timer-project-name').value = t.project_name;
             
-            // Format deadline for datetime-local input
             if (t.deadline) {
                 const dt = new Date(t.deadline);
                 const tzOffset = dt.getTimezoneOffset() * 60000;
@@ -567,7 +554,6 @@
                 document.getElementById('timer-deadline').value = localISOTime;
             }
 
-            // Check matching editors
             const assignedArr = t.editor_name.split(',').map(s => s.trim());
             document.querySelectorAll('input[name="timer-editor-chk"]').forEach(chk => {
                 chk.checked = assignedArr.includes(chk.value);
@@ -592,7 +578,7 @@
             if (id) {
                 res = await db.from('active_timers').update({ project_name, editor_name, deadline }).eq('id', id);
             } else {
-                res = await db.from('active_timers').insert([{ project_name, editor_name, deadline, file_link: '' }]);
+                res = await db.from('active_timers').insert([{ project_name, editor_name, deadline }]);
             }
 
             if (res.error) {
@@ -616,10 +602,10 @@
             await fetchAllData();
         }
 
-        // ==================== WORK DETAILS & FILE LINK & COMMENTS ====================
+        // ==================== WORK DETAILS & FLOATING CHAT WINDOW ====================
         function renderWorkDetails() {
             if (!currentUser) {
-                document.getElementById('workdetails-list').innerHTML = `<div class="notion-card rounded-lg p-8 text-center text-gray-400 text-xs">Please login to view Work Details & Chat Hub.</div>`;
+                document.getElementById('workdetails-list').innerHTML = `<div class="notion-card rounded-lg p-8 text-center text-gray-400 text-xs">Please login to view Work Details & Floating Chat Hub.</div>`;
                 return;
             }
             const container = document.getElementById('workdetails-list');
@@ -641,54 +627,76 @@
             container.innerHTML = filteredTimers.map(t => {
                 const timerComments = commentsList.filter(c => c.timer_id === t.id);
                 return `
-                    <div class="notion-card rounded-xl p-5 space-y-4">
+                    <div class="notion-card rounded-xl p-5 space-y-4 shadow-xl">
+                        <!-- Project Header Info -->
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b notion-border pb-3">
                             <div>
                                 <span class="text-[11px] px-2 py-0.5 rounded bg-[#2F2F2F] text-emerald-400 font-medium">Assigned: ${t.editor_name}</span>
                                 <h3 class="text-base font-bold text-white mt-1">${t.project_name}</h3>
                                 <p class="text-[11px] text-gray-400">Deadline: ${new Date(t.deadline).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })}</p>
                             </div>
-                            <div class="flex items-center gap-3 flex-wrap">
-                                ${t.file_link ? `<a href="${t.file_link}" target="_blank" class="text-xs px-3 py-1.5 rounded bg-[#2383E2]/10 text-sky-400 hover:bg-[#2383E2]/20 border border-sky-500/20">📎 Open File Link</a>` : `<span class="text-xs text-gray-500 italic">No file link added</span>`}
-                                <button onclick="openFileLinkModal('${t.id}', '${t.file_link || ''}')" class="text-xs px-2.5 py-1.5 rounded notion-card hover:bg-[#2A2A2A] text-gray-300 border notion-border"> 🔗 ${t.file_link ? 'Edit Link' : 'Add Link'} </button>
+                            <div class="flex items-center gap-3">
                                 <span class="countdown-display font-mono text-xs font-bold text-emerald-400" data-deadline="${t.deadline}">Live</span>
                             </div>
                         </div>
 
-                        <!-- Messenger Style Comments & Chat Box -->
-                        <div class="space-y-3 pt-2">
-                            <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider">💬 Work Discussion & Updates (${timerComments.length})</div>
-                            <div class="max-h-72 overflow-y-auto space-y-2.5 pr-2" id="comments-box-${t.id}">
-                                ${timerComments.length === 0 ? `<p class="text-xs text-gray-500 italic">No comments yet. Start the conversation below.</p>` : timerComments.map(c => {
+                        <!-- Floating Messenger Chat Window -->
+                        <div class="messenger-chat-bg rounded-xl border notion-border overflow-hidden flex flex-col h-96 shadow-inner">
+                            <!-- Chat Header Bar -->
+                            <div class="bg-[#202020] px-4 py-2.5 border-b notion-border flex items-center justify-between text-xs">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                    <span class="font-semibold text-white">Live Discussion Window (${timerComments.length} messages)</span>
+                                </div>
+                                <span class="text-[10px] text-gray-400">Links can be pasted directly in chat</span>
+                            </div>
+
+                            <!-- Messages Area -->
+                            <div class="flex-1 overflow-y-auto p-4 space-y-3" id="comments-box-${t.id}">
+                                ${timerComments.length === 0 ? `
+                                    <div class="h-full flex items-center justify-center text-center text-xs text-gray-500 italic">
+                                        No messages yet. Send a message, link or photo below to start collaborating.
+                                    </div>
+                                ` : timerComments.map(c => {
                                     const readersList = c.read_by ? JSON.parse(c.read_by) : [];
-                                    const isReadByOthers = readersList.length > 0;
+                                    const isSelf = c.author_name.trim().toLowerCase() === currentUser.name.trim().toLowerCase();
+                                    
+                                    // Parse links in message text automatically
+                                    let formattedMsg = escapeHtml(c.message);
+                                    const urlRegex = /(https?:\/\/[^\s]+)/g;
+                                    formattedMsg = formattedMsg.replace(urlRegex, (url) => `<a href="${url}" target="_blank" class="text-sky-400 underline break-all">${url}</a>`);
+
                                     return `
-                                        <div class="bg-[#191919] p-3 rounded-lg border notion-border space-y-1.5">
-                                            <div class="flex items-center justify-between">
-                                                <span class="text-xs font-semibold text-emerald-400">👤 ${c.author_name}</span>
-                                                <span class="text-[10px] text-gray-500">${new Date(c.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                                        <div class="flex flex-col ${isSelf ? 'items-end' : 'items-start'} space-y-1">
+                                            <div class="max-w-[85%] sm:max-w-[70%] rounded-2xl px-4 py-2.5 text-xs shadow-md ${isSelf ? 'bg-[#005c4b] text-white rounded-br-none' : 'bg-[#202020] text-gray-200 border notion-border rounded-bl-none'}">
+                                                <div class="flex items-center justify-between gap-4 mb-1 text-[10px] opacity-75">
+                                                    <span class="font-semibold ${isSelf ? 'text-emerald-300' : 'text-emerald-400'}">${c.author_name}</span>
+                                                    <span>${new Date(c.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                                                </div>
+                                                <p class="leading-relaxed whitespace-pre-wrap">${formattedMsg}</p>
+                                                ${c.image_url ? `<img src="${c.image_url}" class="max-h-52 rounded-lg mt-2 border notion-border object-cover cursor-pointer" onclick="window.open('${c.image_url}', '_blank')" />` : ''}
                                             </div>
-                                            <p class="text-xs text-gray-200 leading-relaxed">${c.message}</p>
-                                            ${c.image_url ? `<img src="${c.image_url}" class="max-h-48 rounded mt-2 border notion-border object-cover cursor-pointer" onclick="window.open('${c.image_url}', '_blank')" />` : ''}
-                                            <div class="flex items-center justify-between pt-1 border-t notion-border mt-2 text-[10px] text-gray-400">
-                                                <span>Read status: ${isReadByOthers ? `✅ Read by ${readersList.join(', ')}` : '⏳ Unread'}</span>
-                                                ${!readersList.includes(currentUser.name) ? `<button onclick="markCommentRead('${c.id}')" class="text-sky-400 hover:underline">Mark as Read</button>` : ''}
+                                            <!-- Read Status & Action Bar -->
+                                            <div class="flex items-center gap-2 text-[10px] text-gray-400 px-1">
+                                                <span>${readersList.length > 0 ? `✓ Seen by ${readersList.join(', ')}` : 'Sent'}</span>
+                                                ${!readersList.includes(currentUser.name) ? `<button onclick="markCommentRead('${c.id}')" class="text-sky-400 hover:underline">Mark Read</button>` : ''}
                                             </div>
                                         </div>
                                     `;
                                 }).join('')}
                             </div>
 
-                            <!-- New Comment Input Form -->
-                            <form onsubmit="postComment(event, '${t.id}')" class="flex flex-col sm:flex-row gap-2 pt-2">
-                                <input type="text" id="comment-input-${t.id}" required placeholder="Write a message or reply..." class="flex-1 notion-input px-3 py-2 rounded text-xs" />
-                                <div class="flex items-center gap-2">
-                                    <input type="file" id="comment-file-${t.id}" accept="image/*" class="hidden" onchange="previewImageName(this, '${t.id}')" />
-                                    <label for="comment-file-${t.id}" class="cursor-pointer px-3 py-2 rounded notion-card hover:bg-[#2A2A2A] text-xs text-gray-300 flex items-center gap-1">
-                                        <span>📷</span> <span id="file-label-${t.id}" class="hidden sm:inline">Photo</span>
-                                    </label>
-                                    <button type="submit" class="px-4 py-2 rounded bg-[#2383E2] hover:bg-[#1B6EC2] text-white text-xs font-medium">Send</button>
-                                </div>
+                            <!-- Chat Input Box -->
+                            <form onsubmit="postComment(event, '${t.id}')" class="bg-[#202020] p-3 border-t notion-border flex items-center gap-2">
+                                <input type="file" id="comment-file-${t.id}" accept="image/*" class="hidden" onchange="previewImageName(this, '${t.id}')" />
+                                <label for="comment-file-${t.id}" class="cursor-pointer p-2 rounded-lg notion-card hover:bg-[#2A2A2A] text-gray-300 transition text-sm flex items-center justify-center" title="Attach Image">
+                                    <span>📷</span>
+                                </label>
+                                <input type="text" id="comment-input-${t.id}" required placeholder="Type a message, reply or paste link..." class="flex-1 notion-input px-3 py-2 rounded-lg text-xs" />
+                                <span id="file-label-${t.id}" class="hidden text-[10px] text-emerald-400 bg-[#191919] px-2 py-1 rounded truncate max-w-[100px]"></span>
+                                <button type="submit" class="px-4 py-2 rounded-lg bg-[#2383E2] hover:bg-[#1B6EC2] text-white text-xs font-medium transition flex items-center gap-1">
+                                    <span>Send</span> ✈️
+                                </button>
                             </form>
                         </div>
                     </div>
@@ -697,23 +705,9 @@
             updateCountdownDisplays();
         }
 
-        function openFileLinkModal(timerId, currentLink) {
-            document.getElementById('link-timer-id').value = timerId;
-            document.getElementById('modal-file-link-input').value = currentLink === 'null' ? '' : currentLink;
-            document.getElementById('filelink-modal').classList.remove('hidden');
-        }
-
-        async function saveFileLink(e) {
-            e.preventDefault();
-            const id = document.getElementById('link-timer-id').value;
-            const file_link = document.getElementById('modal-file-link-input').value.trim();
-            const { error } = await db.from('active_timers').update({ file_link }).eq('id', id);
-            if (error) {
-                alert('Error updating file link: ' + error.message);
-                return;
-            }
-            closeModal('filelink-modal');
-            await fetchAllData();
+        function escapeHtml(text) {
+            if (!text) return '';
+            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
         }
 
         function previewImageName(input, timerId) {
@@ -755,7 +749,8 @@
             }
             msgInput.value = '';
             fileInput.value = '';
-            document.getElementById(`file-label-${timerId}`).classList.add('hidden');
+            const fileLbl = document.getElementById(`file-label-${timerId}`);
+            if(fileLbl) fileLbl.classList.add('hidden');
             await fetchAllData();
         }
 
