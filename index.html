@@ -126,7 +126,7 @@
             <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b notion-border pb-5">
                 <div>
                     <h2 class="text-2xl font-bold text-white flex items-center gap-2">
-                        <span>💰</span> <span id="dashboard-title">Editor Cashflow</span>
+                        <span>$</span> <span id="dashboard-title">Editor Cashflow</span>
                     </h2>
                     <p class="text-xs text-gray-400 mt-1" id="dashboard-subtitle">Private ledger: USD input converted & summarized in BDT (৳)</p>
                 </div>
@@ -137,7 +137,7 @@
                         <span class="text-gray-400">BDT</span>
                     </div>
                     <button id="btn-manage-editors" onclick="openEditorManagerModal()" class="hidden px-3 py-1.5 rounded notion-card hover:bg-[#2A2A2A] text-xs font-medium text-gray-200">
-                        👥 Manage Editors & Passwords
+                        Manage Editors & Passwords
                     </button>
                     <button id="btn-add-task" onclick="openTaskModal()" class="hidden px-3.5 py-1.5 rounded bg-[#2383E2] hover:bg-[#1B6EC2] text-white text-xs font-medium">
                         + New Cashflow Entry
@@ -175,9 +175,9 @@
                                     <tr class="border-b notion-border text-gray-400 bg-[#1D1D1D]">
                                         <th class="py-2.5 px-3 w-10 text-center">✓</th>
                                         <th class="py-2.5 px-3 font-medium">Aa Name</th>
-                                        <th class="py-2.5 px-3 font-medium">👥 Assignee</th>
-                                        <th class="py-2.5 px-3 font-medium">🏷️ TK Status</th>
-                                        <th class="py-2.5 px-3 font-medium">💵 Dollars ($)</th>
+                                        <th class="py-2.5 px-3 font-medium">Assignee</th>
+                                        <th class="py-2.5 px-3 font-medium">TK Status</th>
+                                        <th class="py-2.5 px-3 font-medium">Dollars ($)</th>
                                         <th class="py-2.5 px-3 font-medium text-center">Paid By</th>
                                         <th id="th-admin-actions" class="hidden py-2.5 px-3 font-medium text-right">Action</th>
                                     </tr>
@@ -534,7 +534,7 @@
                     <div>
                         <div class="flex items-start justify-between gap-2">
                             <span class="text-xs px-2.5 py-0.5 rounded-full bg-[#2F2F2F] text-gray-300 font-medium">
-                                👥 ${t.editor_name}
+                                ${t.editor_name}
                             </span>
                             <div class="flex items-center gap-1.5">
                                 ${canManage ? `<button onclick="openEditTimerModal('${t.id}')" class="text-xs px-2 py-0.5 rounded bg-[#2F2F2F] hover:bg-[#3A3A3A] text-gray-300 border notion-border"> Edit </button>` : ''}
@@ -742,12 +742,12 @@
                             <form onsubmit="postComment(event, '${t.id}')" class="bg-[#202020] p-3 border-t notion-border flex items-center gap-2">
                                 <input type="file" id="comment-file-${t.id}" accept="image/*" class="hidden" onchange="previewImageName(this, '${t.id}')" />
                                 <label for="comment-file-${t.id}" class="cursor-pointer p-2 rounded-lg notion-card hover:bg-[#2A2A2A] text-gray-300 transition text-sm flex items-center justify-center" title="Attach Image">
-                                    <span>📷</span>
+                                    <span>🌄</span>
                                 </label>
                                 <input type="text" id="comment-input-${t.id}" placeholder="Type a message, reply or paste link..." class="flex-1 notion-input px-3 py-2 rounded-lg text-xs" />
                                 <span id="file-label-${t.id}" class="hidden text-[10px] text-emerald-400 bg-[#191919] px-2 py-1 rounded truncate max-w-[100px]"></span>
                                 <button type="submit" class="px-4 py-2 rounded-lg bg-[#2383E2] hover:bg-[#1B6EC2] text-white text-xs font-medium transition flex items-center gap-1">
-                                    <span>Send</span> ✈️
+                                    <span>Send</span> ➤
                                 </button>
                             </form>
                         </div>
@@ -772,7 +772,7 @@
                 card.style.zIndex = '9999';
                 card.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.7)';
                 chatBox.style.height = '320px';
-                btn.textContent = '📌 Dock Back';
+                btn.textContent = '⤡';
                 btn.className = 'text-[11px] px-2.5 py-1 rounded bg-[#2383E2] text-white font-medium transition';
             } else {
                 card.classList.remove('is-floating');
@@ -784,7 +784,7 @@
                 card.style.zIndex = '';
                 card.style.boxShadow = '';
                 chatBox.style.height = '384px';
-                btn.textContent = '🪟 Pop Out Floating';
+                btn.textContent = '🗗';
                 btn.className = 'text-[11px] px-2.5 py-1 rounded bg-[#2F2F2F] hover:bg-[#3A3A3A] text-gray-300 border notion-border transition';
             }
         }
@@ -805,7 +805,7 @@
                 card.style.flexDirection = 'column';
                 chatBox.style.flex = '1';
                 chatBox.style.height = 'auto';
-                btn.textContent = '✕ Exit Fullscreen';
+                btn.textContent = '✕';
                 btn.className = 'text-[11px] px-2.5 py-1 rounded bg-rose-600 text-white font-medium transition';
             } else {
                 card.classList.remove('is-fullscreen');
@@ -818,7 +818,7 @@
                 card.style.flexDirection = '';
                 chatBox.style.flex = '';
                 chatBox.style.height = '384px';
-                btn.textContent = '⛶ Fullscreen';
+                btn.textContent = '⛶';
                 btn.className = 'text-[11px] px-2.5 py-1 rounded bg-[#2F2F2F] hover:bg-[#3A3A3A] text-gray-300 border notion-border transition';
             }
         }
