@@ -145,6 +145,30 @@
                 </div>
             </div>
 
+            <!-- ADMIN-ONLY ESTIMATE INCOME SECTION -->
+            <div id="admin-estimate-section" class="hidden notion-card rounded-xl p-5 border border-amber-500/30 bg-[#22201c] space-y-4">
+                <div class="flex items-center justify-between border-b border-amber-500/20 pb-3">
+                    <h3 class="text-sm font-bold text-amber-400 flex items-center gap-2">
+                        <span>🔒 Estimate Income (Admin Only View)</span>
+                    </h3>
+                    <span class="text-[11px] px-2.5 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/20">Private Admin Panel</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-400 mb-1">Input Dollar ($)</label>
+                        <input type="number" step="any" id="estimate-usd-input" placeholder="Enter amount in USD" class="w-full notion-input px-3 py-2 rounded text-sm font-mono" oninput="calculateEstimateIncome()" />
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-400 mb-1">Conversion Rate (BDT per $1)</label>
+                        <input type="number" step="any" id="estimate-rate-input" value="120" class="w-full notion-input px-3 py-2 rounded text-sm font-mono" oninput="calculateEstimateIncome()" />
+                    </div>
+                    <div class="bg-[#191919] p-3 rounded border notion-border">
+                        <div class="text-[11px] text-gray-400">Converted Tk (Full Amount):</div>
+                        <div id="estimate-result-tk" class="text-xl font-bold text-emerald-400 font-mono mt-0.5">৳ 0.00</div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Layout: Left Table + Right Summary -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
                 <div class="lg:col-span-8 space-y-4">
@@ -485,12 +509,26 @@
             document.getElementById('th-admin-actions').classList.toggle('hidden', !canManage);
             document.getElementById('usd-rate-input').disabled = !isAdmin;
 
+            // Admin-only Estimate Income Section visibility check
+            const adminEstimateSection = document.getElementById('admin-estimate-section');
+            if (adminEstimateSection) {
+                adminEstimateSection.classList.toggle('hidden', !isAdmin);
+            }
+
             if (isLoggedIn) {
                 document.getElementById('logged-user-name').textContent = `${currentUser.name} (${currentUser.role.toUpperCase()})`;
                 document.getElementById('dashboard-title').textContent = isAdmin ? 'Master Agency Cashflow' : `${currentUser.name} — Cashflow`;
             }
             renderTimers();
             renderWorkDetails();
+        }
+
+        // Estimate Income calculation function (No percentage, direct Tk conversion)
+        function calculateEstimateIncome() {
+            const usd = parseFloat(document.getElementById('estimate-usd-input').value) || 0;
+            const rate = parseFloat(document.getElementById('estimate-rate-input').value) || 120;
+            const totalTk = usd * rate;
+            document.getElementById('estimate-result-tk').innerText = '৳ ' + totalTk.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
 
         function switchView(view) {
