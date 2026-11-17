@@ -145,30 +145,6 @@
                 </div>
             </div>
 
-            <!-- ADMIN-ONLY ESTIMATE INCOME SECTION -->
-            <div id="admin-estimate-section" class="hidden notion-card rounded-xl p-5 border border-amber-500/30 bg-[#22201c] space-y-4">
-                <div class="flex items-center justify-between border-b border-amber-500/20 pb-3">
-                    <h3 class="text-sm font-bold text-amber-400 flex items-center gap-2">
-                        <span>🔒 Estimate Income (Admin Only View)</span>
-                    </h3>
-                    <span class="text-[11px] px-2.5 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/20">Private Admin Panel</span>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
-                    <div>
-                        <label class="block text-xs font-medium text-gray-400 mb-1">Input Dollar ($)</label>
-                        <input type="number" step="any" id="estimate-usd-input" placeholder="Enter amount in USD" class="w-full notion-input px-3 py-2 rounded text-sm font-mono" oninput="calculateEstimateIncome()" />
-                    </div>
-                    <div>
-                        <label class="block text-xs font-medium text-gray-400 mb-1">Conversion Rate (BDT per $1)</label>
-                        <input type="number" step="any" id="estimate-rate-input" value="120" class="w-full notion-input px-3 py-2 rounded text-sm font-mono" oninput="calculateEstimateIncome()" />
-                    </div>
-                    <div class="bg-[#191919] p-3 rounded border notion-border">
-                        <div class="text-[11px] text-gray-400">Converted Tk (Full Amount):</div>
-                        <div id="estimate-result-tk" class="text-xl font-bold text-emerald-400 font-mono mt-0.5">৳ 0.00</div>
-                    </div>
-                </div>
-            </div>
-
             <!-- Layout: Left Table + Right Summary -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
                 <div class="lg:col-span-8 space-y-4">
@@ -244,6 +220,21 @@
                             <div class="border-t notion-border pt-2 flex justify-between items-center">
                                 <span class="text-gray-400 font-medium">Est. Grand Total (BDT):</span>
                                 <span id="sum-grand-bdt" class="font-mono font-bold text-emerald-400 text-sm">৳ 0</span>
+                            </div>
+                            <!-- ADMIN-ONLY ESTIMATE INCOME SECTION (Right under Est. Grand Total) -->
+                            <div id="admin-estimate-section" class="hidden pt-3 border-t notion-border space-y-1.5 bg-[#22201c] -mx-4 -mb-4 p-4 rounded-b-lg border-amber-500/30">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xs font-bold text-amber-400">🔒 Estimate Income</span>
+                                    <span class="text-[10px] bg-amber-500/10 text-amber-300 px-1.5 py-0.5 rounded border border-amber-500/20">Admin Only</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-[11px] text-gray-400">Total Input Dollars ($):</span>
+                                    <span id="estimate-input-usd" class="font-mono text-amber-300 font-semibold">$ 0.00</span>
+                                </div>
+                                <div class="flex justify-between items-center pt-1">
+                                    <span class="text-xs font-medium text-white">Estimate Total (BDT):</span>
+                                    <span id="estimate-result-tk" class="font-mono font-bold text-emerald-400 text-sm">৳ 0.00</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -521,14 +512,6 @@
             }
             renderTimers();
             renderWorkDetails();
-        }
-
-        // Estimate Income calculation function (No percentage, direct Tk conversion)
-        function calculateEstimateIncome() {
-            const usd = parseFloat(document.getElementById('estimate-usd-input').value) || 0;
-            const rate = parseFloat(document.getElementById('estimate-rate-input').value) || 120;
-            const totalTk = usd * rate;
-            document.getElementById('estimate-result-tk').innerText = '৳ ' + totalTk.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
 
         function switchView(view) {
@@ -1048,12 +1031,17 @@
         function calculateSummaries(tasks, tabName) {
             let totalUsd16 = 0, totalTipsUsd = 0;
             let dueBdt = 0, paidBdt = 0;
+            let totalInputRawUsd = 0; // Pure sum of all dollar inputs without percentage
             const perEditor = {};
 
             tasks.forEach(t => {
                 const inputUsd = Number(t.amount_bdt) || 0;
                 const calc16Usd = inputUsd * 0.16;
                 const tipsUsd = Number(t.amount_usd) || 0;
+                
+                // Pure input dollar accumulation (Amount in Dollar + Tips in Dollar)
+                totalInputRawUsd += (inputUsd + tipsUsd);
+
                 const combinedUsd = calc16Usd + tipsUsd;
                 const combinedBdt = combinedUsd * usdRate;
 
@@ -1082,12 +1070,19 @@
             const grandTotalUsd = totalUsd16 + totalTipsUsd;
             const grandTotalBdt = grandTotalUsd * usdRate;
 
+            // Calculate Estimate Income directly from raw input dollars * usdRate (no percentage)
+            const estimateIncomeBdt = totalInputRawUsd * usdRate;
+
             document.getElementById('summary-header-title').textContent = `Auto Summary (${tabName.toUpperCase()})`;
             document.getElementById('sum-total-usd-16').textContent = `$ ${totalUsd16.toFixed(2)}`;
             document.getElementById('sum-total-tips').textContent = `$ ${totalTipsUsd.toFixed(2)}`;
             document.getElementById('sum-due-bdt').textContent = `৳ ${dueBdt.toLocaleString(undefined, {maximumFractionDigits: 2})}`;
             document.getElementById('sum-paid-bdt').textContent = `৳ ${paidBdt.toLocaleString(undefined, {maximumFractionDigits: 2})}`;
             document.getElementById('sum-grand-bdt').textContent = `৳ ${grandTotalBdt.toLocaleString(undefined, {maximumFractionDigits: 2})}`;
+
+            // Update Estimate Income values
+            document.getElementById('estimate-input-usd').textContent = `$ ${totalInputRawUsd.toFixed(2)}`;
+            document.getElementById('estimate-result-tk').textContent = `৳ ${estimateIncomeBdt.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
 
             const breakdownBox = document.getElementById('editor-breakdown-list');
             const editorNames = Object.keys(perEditor);
