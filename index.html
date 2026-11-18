@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tosrec Studios — Agency Workspace & Cashflow</title>
+    <title>Tosrec Studios — Enterprise Agency Workspace & Cashflow</title>
     <!-- Favicon / Browser Tab Icon -->
     <link rel="icon" type="image/jpeg" href="thelogo.png">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -15,12 +15,13 @@
             theme: {
                 extend: {
                     colors: {
-                        pathao: {
-                            dark: '#0B0F19',
-                            card: '#131C2E',
-                            border: '#1E293B',
-                            accent: '#10B981',
-                            hover: '#1F2937'
+                        erp: {
+                            bg: '#0A0605',
+                            card: '#14100E',
+                            border: '#27201D',
+                            accent: '#D95325',
+                            accentHover: '#B53E17',
+                            muted: '#897973'
                         }
                     }
                 }
@@ -28,47 +29,47 @@
         }
     </script>
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #0B0F19; color: #F3F4F6; min-height: 100vh; }
+        body { font-family: 'Inter', sans-serif; background-color: #0A0605; color: #F3F1F0; min-height: 100vh; }
         .font-mono { font-family: 'JetBrains Mono', monospace; }
-        .pathao-card { background-color: #131C2E; border: 1px solid #1E293B; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .pathao-card:hover { border-color: rgba(16, 185, 129, 0.4); transform: translateY(-2px); }
-        .pathao-input { background-color: #090D16; border: 1px solid #1E293B; color: #F3F4F6; transition: all 0.2s ease; }
-        .pathao-input:focus { outline: none; border-color: #10B981; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15); }
+        .erp-card { background-color: #14100E; border: 1px solid #27201D; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .erp-card:hover { border-color: rgba(217, 83, 37, 0.4); transform: translateY(-2px); }
+        .erp-input { background-color: #0F0A08; border: 1px solid #27201D; color: #F3F1F0; transition: all 0.2s ease; }
+        .erp-input:focus { outline: none; border-color: #D95325; box-shadow: 0 0 0 3px rgba(217, 83, 37, 0.2); }
         input[type="datetime-local"]::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; }
-        .messenger-chat-bg { background-color: #0B0F19; background-image: radial-gradient(#1E293B 1px, transparent 1px); background-size: 24px 24px; }
+        .messenger-chat-bg { background-color: #0A0605; background-image: radial-gradient(#27201D 1px, transparent 1px); background-size: 24px 24px; }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #0B0F19; }
-        ::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #10B981; }
+        ::-webkit-scrollbar-track { background: #0A0605; }
+        ::-webkit-scrollbar-thumb { background: #27201D; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #D95325; }
     </style>
 </head>
-<body class="flex flex-col selection:bg-emerald-500 selection:text-white justify-between">
+<body class="flex flex-col selection:bg-erp-accent selection:text-white justify-between">
 
     <!-- Top Navigation Header -->
-    <header class="w-full border-b border-[#1E293B] backdrop-blur-xl sticky top-0 z-40 bg-[#0B0F19]/90">
+    <header class="w-full border-b border-erp-border backdrop-blur-xl sticky top-0 z-40 bg-[#0A0605]/90">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
             <div class="flex items-center gap-3 cursor-pointer group" onclick="switchView('home')">
-                <img src="thelogo.png" alt="Tosrec Studios Logo" class="w-10 h-10 rounded-2xl object-cover shadow-lg group-hover:scale-105 transition border border-emerald-500/30">
+                <img src="thelogo.png" alt="Tosrec Studios Logo" class="w-10 h-10 rounded-2xl object-cover shadow-lg group-hover:scale-105 transition border border-erp-accent/30">
                 <div>
                     <span class="font-bold tracking-tight text-white text-base sm:text-lg">Tosrec Studios</span>
-                    <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-bold hidden sm:inline ml-1.5 border border-emerald-500/20">Pay OS</span>
+                    <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-erp-accent/10 text-erp-accent font-bold hidden sm:inline ml-1.5 border border-erp-accent/20">Enterprise ERP</span>
                 </div>
             </div>
             <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
-                <button onclick="switchView('home')" id="nav-home-btn" class="text-xs sm:text-sm px-4 py-2 rounded-xl hover:bg-[#1E293B] text-gray-300 transition font-semibold">
+                <button onclick="switchView('home')" id="nav-home-btn" class="text-xs sm:text-sm px-4 py-2 rounded-xl hover:bg-erp-border text-gray-300 transition font-semibold">
                     Live Timers
                 </button>
-                <button onclick="switchView('workdetails')" id="nav-workdetails-btn" class="hidden text-xs sm:text-sm px-4 py-2 rounded-xl hover:bg-[#1E293B] text-gray-300 transition font-semibold">
+                <button onclick="switchView('workdetails')" id="nav-workdetails-btn" class="hidden text-xs sm:text-sm px-4 py-2 rounded-xl hover:bg-erp-border text-gray-300 transition font-semibold">
                     Work Details
                 </button>
-                <button id="nav-dashboard-btn" onclick="switchView('dashboard')" class="hidden text-xs sm:text-sm px-4 py-2 rounded-xl bg-[#1E293B] text-white font-semibold hover:bg-[#2A374F] border border-[#2A374F] transition shadow-sm">
+                <button id="nav-dashboard-btn" onclick="switchView('dashboard')" class="hidden text-xs sm:text-sm px-4 py-2 rounded-xl bg-erp-border text-white font-semibold hover:bg-[#352B27] border border-[#352B27] transition shadow-sm">
                     Cashflow Dashboard
                 </button>
-                <button id="login-open-btn" onclick="openLoginModal()" class="text-xs sm:text-sm px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold shadow-lg shadow-emerald-600/20 transition">
+                <button id="login-open-btn" onclick="openLoginModal()" class="text-xs sm:text-sm px-4 py-2 rounded-xl bg-erp-accent hover:bg-erp-accentHover text-white font-bold shadow-lg shadow-erp-accent/20 transition">
                     Editor / Admin Login
                 </button>
                 <div id="user-badge" class="hidden flex items-center gap-2.5">
-                    <span id="logged-user-name" class="text-xs font-semibold px-3.5 py-1.5 rounded-xl bg-[#131C2E] border border-[#1E293B] text-emerald-400 shadow-sm"></span>
+                    <span id="logged-user-name" class="text-xs font-semibold px-3.5 py-1.5 rounded-xl bg-erp-card border border-erp-border text-erp-accent shadow-sm"></span>
                     <button onclick="logout()" class="text-xs px-3.5 py-1.5 rounded-xl bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 border border-rose-500/20 transition font-semibold">
                         Logout
                     </button>
@@ -82,40 +83,40 @@
 
         <!-- ==================== VIEW 1: PUBLIC HOME PAGE & TIMERS ==================== -->
         <section id="view-home" class="space-y-8 animate-fadeIn">
-            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#1E293B] pb-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-erp-border pb-6">
                 <div>
-                    <div class="text-[11px] uppercase tracking-wider text-emerald-400 font-bold mb-1">Production Tracker</div>
+                    <div class="text-[11px] uppercase tracking-wider text-erp-accent font-bold mb-1">Enterprise Operations</div>
                     <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight flex items-center gap-2.5">
                         <span>Active Projects & Deadlines</span>
                     </h1>
-                    <p class="text-sm text-gray-400 mt-1">Real-time delivery countdown for currently running video editing projects.</p>
+                    <p class="text-sm text-gray-400 mt-1">Real-time precision delivery tracking for current production cycles.</p>
                 </div>
                 <div id="admin-timer-controls" class="hidden">
-                    <button onclick="openTimerModal()" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-bold shadow-lg shadow-emerald-600/20 transition flex items-center gap-2">
+                    <button onclick="openTimerModal()" class="px-5 py-2.5 rounded-xl bg-erp-accent hover:bg-erp-accentHover text-white text-sm font-bold shadow-lg shadow-erp-accent/20 transition flex items-center gap-2">
                         <span>+ Add Running Project</span>
                     </button>
                 </div>
             </div>
 
             <div id="timers-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-            <div id="timers-empty" class="hidden pathao-card rounded-3xl p-12 text-center">
+            <div id="timers-empty" class="hidden erp-card rounded-3xl p-12 text-center">
                 <p class="text-gray-400 text-sm font-medium">No active projects running right now.</p>
             </div>
 
             <!-- Company Details Section -->
-            <div class="pathao-card rounded-3xl p-6 sm:p-8 mt-12 space-y-4 relative overflow-hidden">
-                <div class="absolute top-0 right-0 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="erp-card rounded-3xl p-6 sm:p-8 mt-12 space-y-4 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-erp-accent/5 rounded-full blur-3xl pointer-events-none"></div>
                 <div class="flex items-center gap-3">
-                    <img src="thelogo.png" alt="Tosrec Studios" class="w-12 h-12 rounded-2xl object-cover shadow-md border border-[#1E293B]">
+                    <img src="thelogo.png" alt="Tosrec Studios" class="w-12 h-12 rounded-2xl object-cover shadow-md border border-erp-border">
                     <div>
-                        <h2 class="text-lg font-bold text-white">Tosrec Studios Agency</h2>
+                        <h2 class="text-lg font-bold text-white">Tosrec Studios ERP</h2>
                         <p class="text-xs text-gray-400 font-medium">High-End Video Post-Production & Media Solutions</p>
                     </div>
                 </div>
                 <p class="text-xs sm:text-sm text-gray-300 leading-relaxed font-normal">
                     Tosrec Studios is a premier video post-production agency specializing in travel vlogs, real estate showcases, commercial promos, talking-head videos, and cinematic edits. We leverage cutting-edge workflows across DaVinci Resolve, Adobe Premiere Pro, and After Effects to deliver elite visual output for global creators and brands.
                 </p>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 text-xs text-gray-400 border-t border-[#1E293B]">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 text-xs text-gray-400 border-t border-erp-border">
                     <div><span class="text-white font-semibold">Core Focus:</span> S-Log Grading, Commercials & Vlogs</div>
                     <div><span class="text-white font-semibold">Operations:</span> Global Remote Team & Dashboard Workflow</div>
                     <div><span class="text-white font-semibold">Support Contact:</span> support@tosrec.com</div>
@@ -125,27 +126,27 @@
 
         <!-- ==================== VIEW 2: WORK DETAILS PAGE ==================== -->
         <section id="view-workdetails" class="hidden space-y-6 animate-fadeIn">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#1E293B] pb-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-erp-border pb-5">
                 <div>
                     <h2 class="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
                         <span>Work Details</span>
                     </h2>
-                    <p class="text-xs text-gray-400 mt-1">Project collaboration chat & direct link sharing styled like messenger. You can pop out chat boxes as floating windows or expand them to full screen.</p>
+                    <p class="text-xs text-gray-400 mt-1">Project collaboration chat & direct link sharing styled like enterprise messenger. Pop out or expand to fullscreen.</p>
                 </div>
                 <div class="flex items-center gap-2">
-                    <input type="text" id="work-search" oninput="renderWorkDetails()" placeholder="Search work item..." class="pathao-input text-xs px-4 py-2.5 rounded-xl w-56" />
+                    <input type="text" id="work-search" oninput="renderWorkDetails()" placeholder="Search work item..." class="erp-input text-xs px-4 py-2.5 rounded-xl w-56" />
                 </div>
             </div>
 
             <div id="workdetails-list" class="space-y-6"></div>
-            <div id="workdetails-empty" class="hidden pathao-card rounded-3xl p-12 text-center">
+            <div id="workdetails-empty" class="hidden erp-card rounded-3xl p-12 text-center">
                 <p class="text-gray-400 text-sm font-medium">No work items found. Add an active timer to generate work controls.</p>
             </div>
         </section>
 
         <!-- ==================== VIEW 3: PRIVATE CASHFLOW DASHBOARD ==================== -->
         <section id="view-dashboard" class="hidden space-y-6 animate-fadeIn">
-            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-[#1E293B] pb-5">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-erp-border pb-5">
                 <div>
                     <h2 class="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
                         <span id="dashboard-title">Editor Cashflow</span>
@@ -153,15 +154,15 @@
                     <p class="text-xs text-gray-400 mt-1" id="dashboard-subtitle">Private ledger: USD input converted & summarized in BDT (৳)</p>
                 </div>
                 <div class="flex flex-wrap items-center gap-3">
-                    <div class="pathao-card px-3.5 py-2 rounded-xl flex items-center gap-2 text-xs text-gray-300">
+                    <div class="erp-card px-3.5 py-2 rounded-xl flex items-center gap-2 text-xs text-gray-300">
                         <span class="text-gray-400 font-medium">1 USD =</span>
-                        <input type="number" id="usd-rate-input" value="120" class="w-16 pathao-input px-2.5 py-1 rounded-lg text-right font-mono font-bold text-emerald-400" onchange="updateUsdRate()" />
+                        <input type="number" id="usd-rate-input" value="120" class="w-16 erp-input px-2.5 py-1 rounded-lg text-right font-mono font-bold text-erp-accent" onchange="updateUsdRate()" />
                         <span class="text-gray-400 font-medium">BDT</span>
                     </div>
-                    <button id="btn-manage-editors" onclick="openEditorManagerModal()" class="hidden px-4 py-2 rounded-xl pathao-card hover:bg-[#1A233A] text-xs font-semibold text-gray-200 transition">
+                    <button id="btn-manage-editors" onclick="openEditorManagerModal()" class="hidden px-4 py-2 rounded-xl erp-card hover:bg-[#201815] text-xs font-semibold text-gray-200 transition">
                         Manage Editors & Passwords
                     </button>
-                    <button id="btn-add-task" onclick="openTaskModal()" class="hidden px-4.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-lg shadow-emerald-600/20 transition">
+                    <button id="btn-add-task" onclick="openTaskModal()" class="hidden px-4.5 py-2 rounded-xl bg-erp-accent hover:bg-erp-accentHover text-white text-xs font-bold shadow-lg shadow-erp-accent/20 transition">
                         + New Cashflow Entry
                     </button>
                 </div>
@@ -171,9 +172,9 @@
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
                 <div class="lg:col-span-8 space-y-4">
                     <div class="flex flex-wrap items-center justify-between gap-3">
-                        <div class="flex items-center gap-1.5 bg-[#131C2E] p-1.5 rounded-2xl border border-[#1E293B]">
-                            <button onclick="setTaskTab('uncomplete')" id="tab-uncomplete" class="px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 text-white flex items-center gap-2 shadow-sm transition">
-                                <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span> Uncomplete <span id="count-uncomplete" class="text-emerald-200 font-mono">(0)</span>
+                        <div class="flex items-center gap-1.5 bg-erp-card p-1.5 rounded-2xl border border-erp-border">
+                            <button onclick="setTaskTab('uncomplete')" id="tab-uncomplete" class="px-4 py-2 rounded-xl text-xs font-bold bg-erp-accent text-white flex items-center gap-2 shadow-sm transition">
+                                <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span> Uncomplete <span id="count-uncomplete" class="text-orange-200 font-mono">(0)</span>
                             </button>
                             <button onclick="setTaskTab('completed')" id="tab-completed" class="px-4 py-2 rounded-xl text-xs font-bold text-gray-400 hover:text-white flex items-center gap-2 transition">
                                 <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span> Completed <span id="count-completed" class="text-gray-500 font-mono">(0)</span>
@@ -183,18 +184,18 @@
                             </button>
                         </div>
                         <div class="flex items-center gap-2">
-                            <select id="admin-editor-filter" onchange="renderDashboard()" class="hidden pathao-input text-xs px-3.5 py-2.5 rounded-xl font-medium">
+                            <select id="admin-editor-filter" onchange="renderDashboard()" class="hidden erp-input text-xs px-3.5 py-2.5 rounded-xl font-medium">
                                 <option value="ALL">All Editors</option>
                             </select>
-                            <input type="text" id="task-search" oninput="renderDashboard()" placeholder="Search task..." class="pathao-input text-xs px-4 py-2.5 rounded-xl w-48 font-medium" />
+                            <input type="text" id="task-search" oninput="renderDashboard()" placeholder="Search task..." class="erp-input text-xs px-4 py-2.5 rounded-xl w-48 font-medium" />
                         </div>
                     </div>
 
-                    <div class="pathao-card rounded-3xl overflow-hidden">
+                    <div class="erp-card rounded-3xl overflow-hidden">
                         <div class="overflow-x-auto">
                             <table class="w-full text-left border-collapse text-xs">
                                 <thead>
-                                    <tr class="border-b border-[#1E293B] text-gray-400 bg-[#0B0F19]/50 font-semibold">
+                                    <tr class="border-b border-erp-border text-gray-400 bg-[#0F0A08]/50 font-semibold">
                                         <th class="py-3.5 px-4 w-10 text-center">✓</th>
                                         <th class="py-3.5 px-4">Aa Name</th>
                                         <th class="py-3.5 px-4">Assignee</th>
@@ -204,7 +205,7 @@
                                         <th id="th-admin-actions" class="hidden py-3.5 px-4 text-right">Action</th>
                                     </tr>
                                 </thead>
-                                <tbody id="cashflow-tbody" class="divide-y divide-[#1E293B]"></tbody>
+                                <tbody id="cashflow-tbody" class="divide-y divide-erp-border"></tbody>
                             </table>
                         </div>
                         <div id="tasks-empty" class="hidden p-12 text-center text-gray-500 text-xs font-medium">
@@ -215,22 +216,22 @@
 
                 <!-- RIGHT: Dynamic Summary Panel -->
                 <div class="lg:col-span-4 space-y-4">
-                    <div class="pathao-card rounded-3xl p-6 space-y-4">
-                        <div class="flex items-center justify-between border-b border-[#1E293B] pb-3.5">
+                    <div class="erp-card rounded-3xl p-6 space-y-4">
+                        <div class="flex items-center justify-between border-b border-erp-border pb-3.5">
                             <span class="text-xs font-bold uppercase tracking-wider text-gray-400" id="summary-header-title">Auto Summary (Uncomplete)</span>
-                            <span class="text-[10px] text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded-full font-bold">Live Sync</span>
+                            <span class="text-[10px] text-erp-accent bg-erp-accent/10 border border-erp-accent/20 px-2.5 py-0.5 rounded-full font-bold">Live Sync</span>
                         </div>
                         <div class="grid grid-cols-2 gap-3.5">
-                            <div class="bg-[#090D16] p-4 rounded-2xl border border-[#1E293B]">
+                            <div class="bg-[#0F0A08] p-4 rounded-2xl border border-erp-border">
                                 <div class="text-[11px] text-gray-400 font-medium">16% USD Total ($)</div>
-                                <div id="sum-total-usd-16" class="text-base font-extrabold font-mono text-emerald-400 mt-1">$ 0</div>
+                                <div id="sum-total-usd-16" class="text-base font-extrabold font-mono text-erp-accent mt-1">$ 0</div>
                             </div>
-                            <div class="bg-[#090D16] p-4 rounded-2xl border border-[#1E293B]">
+                            <div class="bg-[#0F0A08] p-4 rounded-2xl border border-erp-border">
                                 <div class="text-[11px] text-gray-400 font-medium">Tips USD Total ($)</div>
                                 <div id="sum-total-tips" class="text-base font-extrabold font-mono text-amber-400 mt-1">$ 0</div>
                             </div>
                         </div>
-                        <div class="bg-[#090D16] p-4 rounded-2xl border border-[#1E293B] space-y-3 text-xs">
+                        <div class="bg-[#0F0A08] p-4 rounded-2xl border border-erp-border space-y-3 text-xs">
                             <div class="flex justify-between font-medium">
                                 <span class="text-rose-400">● Section Due (BDT):</span>
                                 <span id="sum-due-bdt" class="font-mono text-gray-200 font-bold">৳ 0</span>
@@ -239,9 +240,9 @@
                                 <span class="text-emerald-400">● Section Paid (BDT):</span>
                                 <span id="sum-paid-bdt" class="font-mono text-gray-200 font-bold">৳ 0</span>
                             </div>
-                            <div class="border-t border-[#1E293B] pt-3 flex justify-between items-center">
+                            <div class="border-t border-erp-border pt-3 flex justify-between items-center">
                                 <span class="text-gray-400 font-semibold">Est. Grand Total (BDT):</span>
-                                <span id="sum-grand-bdt" class="font-mono font-extrabold text-emerald-400 text-sm">৳ 0</span>
+                                <span id="sum-grand-bdt" class="font-mono font-extrabold text-erp-accent text-sm">৳ 0</span>
                             </div>
                             <!-- ADMIN-ONLY ESTIMATE INCOME SECTION -->
                             <div id="admin-estimate-section" class="hidden pt-3.5 border-t border-amber-500/20 space-y-2.5 bg-amber-500/5 -mx-4 -mb-4 p-4 rounded-b-3xl">
@@ -255,14 +256,14 @@
                                 </div>
                                 <div class="flex justify-between items-center pt-1.5 border-t border-amber-500/10">
                                     <span class="text-xs font-semibold text-white">Estimate Total (BDT):</span>
-                                    <span id="estimate-result-tk" class="font-mono font-extrabold text-emerald-400 text-sm">৳ 0.00</span>
+                                    <span id="estimate-result-tk" class="font-mono font-extrabold text-erp-accent text-sm">৳ 0.00</span>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="pathao-card rounded-3xl p-6 space-y-3.5">
-                        <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400 border-b border-[#1E293B] pb-3.5 flex items-center gap-2">
+                    <div class="erp-card rounded-3xl p-6 space-y-3.5">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400 border-b border-erp-border pb-3.5 flex items-center gap-2">
                             📊 Editor-Wise Breakdown (BDT)
                         </h3>
                         <div id="editor-breakdown-list" class="space-y-3"></div>
@@ -274,17 +275,17 @@
     </main>
 
     <!-- ==================== MODERN FOOTER ==================== -->
-    <footer class="w-full border-t border-[#1E293B] bg-[#090D16] mt-20 py-8">
+    <footer class="w-full border-t border-erp-border bg-[#0F0A08] mt-20 py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-400">
             <div class="flex items-center gap-2">
-                <span class="font-bold text-white">Tosrec Studios Workspace OS</span>
-                <span>— Secure Financial & Project Management</span>
+                <span class="font-bold text-white">Tosrec Studios ERP OS</span>
+                <span>— Enterprise Financial & Production Management</span>
             </div>
             <div class="flex items-center gap-6">
-                <a href="#" onclick="switchView('home')" class="hover:text-emerald-400 transition">Timers</a>
-                <a href="#" onclick="switchView('workdetails')" class="hover:text-emerald-400 transition">Collaborations</a>
-                <a href="#" onclick="switchView('dashboard')" class="hover:text-emerald-400 transition">Cashflow</a>
-                <span class="text-emerald-400 font-mono">v3.5 Pathao Edition</span>
+                <a href="#" onclick="switchView('home')" class="hover:text-erp-accent transition">Timers</a>
+                <a href="#" onclick="switchView('workdetails')" class="hover:text-erp-accent transition">Collaborations</a>
+                <a href="#" onclick="switchView('dashboard')" class="hover:text-erp-accent transition">Cashflow</a>
+                <span class="text-erp-accent font-mono">v4.0 ERP Edition</span>
             </div>
         </div>
     </footer>
@@ -293,22 +294,22 @@
 
     <!-- 1. Login Modal -->
     <div id="login-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
-        <div class="pathao-card w-full max-w-sm rounded-3xl p-7 space-y-5 shadow-2xl">
-            <div class="flex justify-between items-center border-b border-[#1E293B] pb-3.5">
+        <div class="erp-card w-full max-w-sm rounded-3xl p-7 space-y-5 shadow-2xl">
+            <div class="flex justify-between items-center border-b border-erp-border pb-3.5">
                 <h3 class="text-lg font-bold text-white">Workspace Login</h3>
                 <button onclick="closeModal('login-modal')" class="text-gray-400 hover:text-white transition font-bold">✕</button>
             </div>
             <form onsubmit="handleLogin(event)" class="space-y-4">
                 <div>
                     <label class="block text-xs text-gray-400 mb-1.5 font-semibold">Profile / Editor Name</label>
-                    <input type="text" id="login-username" required placeholder="e.g. admin or Mr Toolkit" class="w-full pathao-input px-4 py-3 rounded-2xl text-sm font-medium" />
+                    <input type="text" id="login-username" required placeholder="e.g. admin or Mr Toolkit" class="w-full erp-input px-4 py-3 rounded-2xl text-sm font-medium" />
                 </div>
                 <div>
                     <label class="block text-xs text-gray-400 mb-1.5 font-semibold">Password</label>
-                    <input type="password" id="login-password" required placeholder="••••••••" class="w-full pathao-input px-4 py-3 rounded-2xl text-sm font-medium" />
+                    <input type="password" id="login-password" required placeholder="••••••••" class="w-full erp-input px-4 py-3 rounded-2xl text-sm font-medium" />
                 </div>
                 <p id="login-error" class="hidden text-xs text-rose-400 bg-rose-500/10 p-3 rounded-xl border border-rose-500/20 font-medium">Invalid name or password. Please try again.</p>
-                <button type="submit" class="w-full py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-bold shadow-lg shadow-emerald-600/20 transition">
+                <button type="submit" class="w-full py-3 rounded-2xl bg-erp-accent hover:bg-erp-accentHover text-white text-sm font-bold shadow-lg shadow-erp-accent/20 transition">
                     Access Cashflow
                 </button>
             </form>
@@ -317,8 +318,8 @@
 
     <!-- 2. Add / Edit Active Timer Modal -->
     <div id="timer-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
-        <div class="pathao-card w-full max-w-md rounded-3xl p-7 space-y-5 shadow-2xl">
-            <div class="flex justify-between items-center border-b border-[#1E293B] pb-3.5">
+        <div class="erp-card w-full max-w-md rounded-3xl p-7 space-y-5 shadow-2xl">
+            <div class="flex justify-between items-center border-b border-erp-border pb-3.5">
                 <h3 id="timer-modal-title" class="text-lg font-bold text-white">Add Running Project Timer</h3>
                 <button onclick="closeModal('timer-modal')" class="text-gray-400 hover:text-white transition font-bold">✕</button>
             </div>
@@ -326,17 +327,17 @@
                 <input type="hidden" id="edit-timer-id" />
                 <div>
                     <label class="block text-xs text-gray-400 mb-1.5 font-semibold">Project / Video Name</label>
-                    <input type="text" id="timer-project-name" required placeholder="e.g. Travel Vlog Ep 04" class="w-full pathao-input px-4 py-3 rounded-2xl text-sm font-medium" />
+                    <input type="text" id="timer-project-name" required placeholder="e.g. Travel Vlog Ep 04" class="w-full erp-input px-4 py-3 rounded-2xl text-sm font-medium" />
                 </div>
                 <div>
                     <label class="block text-xs text-gray-400 mb-1.5 font-semibold">Assign To Editors (Select Multiple)</label>
-                    <div id="timer-editors-checkboxes" class="max-h-36 overflow-y-auto space-y-2.5 pathao-input p-3.5 rounded-2xl text-xs font-medium"></div>
+                    <div id="timer-editors-checkboxes" class="max-h-36 overflow-y-auto space-y-2.5 erp-input p-3.5 rounded-2xl text-xs font-medium"></div>
                 </div>
                 <div>
                     <label class="block text-xs text-gray-400 mb-1.5 font-semibold">Submission Deadline</label>
-                    <input type="datetime-local" id="timer-deadline" required class="w-full pathao-input px-4 py-3 rounded-2xl text-sm font-medium" />
+                    <input type="datetime-local" id="timer-deadline" required class="w-full erp-input px-4 py-3 rounded-2xl text-sm font-medium" />
                 </div>
-                <button type="submit" class="w-full py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-bold shadow-lg shadow-emerald-600/20 transition">
+                <button type="submit" class="w-full py-3 rounded-2xl bg-erp-accent hover:bg-erp-accentHover text-white text-sm font-bold shadow-lg shadow-erp-accent/20 transition">
                     Save Project Timer
                 </button>
             </form>
@@ -345,8 +346,8 @@
 
     <!-- 3. Add / Edit Cashflow Entry Modal -->
     <div id="task-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
-        <div class="pathao-card w-full max-w-md rounded-3xl p-7 space-y-5 shadow-2xl">
-            <div class="flex justify-between items-center border-b border-[#1E293B] pb-3.5">
+        <div class="erp-card w-full max-w-md rounded-3xl p-7 space-y-5 shadow-2xl">
+            <div class="flex justify-between items-center border-b border-erp-border pb-3.5">
                 <h3 id="task-modal-title" class="text-lg font-bold text-white">New Cashflow Entry</h3>
                 <button onclick="closeModal('task-modal')" class="text-gray-400 hover:text-white transition font-bold">✕</button>
             </div>
@@ -354,16 +355,16 @@
                 <input type="hidden" id="edit-task-id" />
                 <div>
                     <label class="block text-xs text-gray-400 mb-1.5 font-semibold">Task / Client Name</label>
-                    <input type="text" id="task-name" required placeholder="e.g. Brandominguez3" class="w-full pathao-input px-4 py-3 rounded-2xl text-sm font-medium" />
+                    <input type="text" id="task-name" required placeholder="e.g. Brandominguez3" class="w-full erp-input px-4 py-3 rounded-2xl text-sm font-medium" />
                 </div>
                 <div class="grid grid-cols-2 gap-3.5">
                     <div>
                         <label class="block text-xs text-gray-400 mb-1.5 font-semibold">Assignee (Editor)</label>
-                        <input type="text" id="task-assignee" list="editors-datalist" required placeholder="Editor name" class="w-full pathao-input px-4 py-3 rounded-2xl text-sm font-medium" />
+                        <input type="text" id="task-assignee" list="editors-datalist" required placeholder="Editor name" class="w-full erp-input px-4 py-3 rounded-2xl text-sm font-medium" />
                     </div>
                     <div>
                         <label class="block text-xs text-gray-400 mb-1.5 font-semibold">TK Status</label>
-                        <select id="task-status" onchange="checkStatusChange()" class="w-full pathao-input px-4 py-3 rounded-2xl text-sm font-medium">
+                        <select id="task-status" onchange="checkStatusChange()" class="w-full erp-input px-4 py-3 rounded-2xl text-sm font-medium">
                             <option value="Due">Due</option>
                             <option value="Paid">Paid</option>
                             <option value="Partial">Partial</option>
@@ -373,21 +374,21 @@
                 <div class="grid grid-cols-2 gap-3.5">
                     <div>
                         <label class="block text-xs text-gray-400 mb-1.5 font-semibold">Amount in Dollar ($)</label>
-                        <input type="number" step="any" id="task-bdt" value="0" class="w-full pathao-input px-4 py-3 rounded-2xl text-sm font-mono font-bold" />
+                        <input type="number" step="any" id="task-bdt" value="0" class="w-full erp-input px-4 py-3 rounded-2xl text-sm font-mono font-bold" />
                     </div>
                     <div>
                         <label class="block text-xs text-gray-400 mb-1.5 font-semibold">Tips in Dollar ($)</label>
-                        <input type="number" step="any" id="task-usd" value="0" class="w-full pathao-input px-4 py-3 rounded-2xl text-sm font-mono font-bold" />
+                        <input type="number" step="any" id="task-usd" value="0" class="w-full erp-input px-4 py-3 rounded-2xl text-sm font-mono font-bold" />
                     </div>
                 </div>
                 <div id="paid-by-container" class="hidden">
                     <label class="block text-xs text-gray-400 mb-1.5 font-semibold">Paid By</label>
-                    <select id="task-paid-by" class="w-full pathao-input px-4 py-3 rounded-2xl text-sm font-medium">
+                    <select id="task-paid-by" class="w-full erp-input px-4 py-3 rounded-2xl text-sm font-medium">
                         <option value="Bkash">Bkash</option>
                         <option value="Bank">Bank</option>
                     </select>
                 </div>
-                <button type="submit" class="w-full py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-bold shadow-lg shadow-emerald-600/20 transition">
+                <button type="submit" class="w-full py-3 rounded-2xl bg-erp-accent hover:bg-erp-accentHover text-white text-sm font-bold shadow-lg shadow-erp-accent/20 transition">
                     Save Entry
                 </button>
             </form>
@@ -396,17 +397,17 @@
 
     <!-- 4. Manage Editors Modal -->
     <div id="editors-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
-        <div class="pathao-card w-full max-w-md rounded-3xl p-7 space-y-5 shadow-2xl">
-            <div class="flex justify-between items-center border-b border-[#1E293B] pb-3.5">
+        <div class="erp-card w-full max-w-md rounded-3xl p-7 space-y-5 shadow-2xl">
+            <div class="flex justify-between items-center border-b border-erp-border pb-3.5">
                 <h3 class="text-lg font-bold text-white">Manage Editors & Passwords</h3>
                 <button onclick="closeModal('editors-modal')" class="text-gray-400 hover:text-white transition font-bold">✕</button>
             </div>
             <form onsubmit="addNewEditor(event)" class="flex gap-2.5">
-                <input type="text" id="new-editor-name" required placeholder="Editor Name" class="flex-1 pathao-input px-3.5 py-2.5 rounded-xl text-xs font-medium" />
-                <input type="text" id="new-editor-pass" required placeholder="Password" class="w-32 pathao-input px-3.5 py-2.5 rounded-xl text-xs font-medium" />
-                <button type="submit" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-sm transition">Add</button>
+                <input type="text" id="new-editor-name" required placeholder="Editor Name" class="flex-1 erp-input px-3.5 py-2.5 rounded-xl text-xs font-medium" />
+                <input type="text" id="new-editor-pass" required placeholder="Password" class="w-32 erp-input px-3.5 py-2.5 rounded-xl text-xs font-medium" />
+                <button type="submit" class="px-4 py-2.5 rounded-xl bg-erp-accent hover:bg-erp-accentHover text-white text-xs font-bold shadow-sm transition">Add</button>
             </form>
-            <div id="editors-manage-list" class="max-h-60 overflow-y-auto divide-y divide-[#1E293B] border border-[#1E293B] rounded-2xl"></div>
+            <div id="editors-manage-list" class="max-h-60 overflow-y-auto divide-y divide-erp-border border border-erp-border rounded-2xl"></div>
         </div>
     </div>
 
@@ -480,7 +481,7 @@
             if (chkContainer) {
                 chkContainer.innerHTML = uniqueNames.map(name => `
                     <label class="flex items-center gap-2.5 cursor-pointer text-gray-300 hover:text-white transition">
-                        <input type="checkbox" name="timer-editor-chk" value="${name}" class="rounded accent-emerald-500 w-4 h-4" />
+                        <input type="checkbox" name="timer-editor-chk" value="${name}" class="rounded accent-erp-accent w-4 h-4" />
                         <span>${name}</span>
                     </label>
                 `).join('');
@@ -556,15 +557,15 @@
             document.getElementById('view-workdetails').classList.toggle('hidden', view !== 'workdetails');
             document.getElementById('view-dashboard').classList.toggle('hidden', view !== 'dashboard');
 
-            document.getElementById('nav-home-btn').className = view === 'home' ? 'text-xs sm:text-sm px-4 py-2 rounded-xl bg-[#1E293B] text-white font-bold transition shadow-sm' : 'text-xs sm:text-sm px-4 py-2 rounded-xl hover:bg-[#1E293B] text-gray-300 transition font-semibold';
+            document.getElementById('nav-home-btn').className = view === 'home' ? 'text-xs sm:text-sm px-4 py-2 rounded-xl bg-erp-border text-white font-bold transition shadow-sm' : 'text-xs sm:text-sm px-4 py-2 rounded-xl hover:bg-erp-border text-gray-300 transition font-semibold';
             
             const workBtn = document.getElementById('nav-workdetails-btn');
             if (workBtn && !workBtn.classList.contains('hidden')) {
-                workBtn.className = view === 'workdetails' ? 'text-xs sm:text-sm px-4 py-2 rounded-xl bg-[#1E293B] text-white font-bold transition shadow-sm' : 'text-xs sm:text-sm px-4 py-2 rounded-xl hover:bg-[#1E293B] text-gray-300 transition font-semibold';
+                workBtn.className = view === 'workdetails' ? 'text-xs sm:text-sm px-4 py-2 rounded-xl bg-erp-border text-white font-bold transition shadow-sm' : 'text-xs sm:text-sm px-4 py-2 rounded-xl hover:bg-erp-border text-gray-300 transition font-semibold';
             }
             const dashBtn = document.getElementById('nav-dashboard-btn');
             if (dashBtn && !dashBtn.classList.contains('hidden')) {
-                dashBtn.className = view === 'dashboard' ? 'text-xs sm:text-sm px-4 py-2 rounded-xl bg-[#1E293B] text-white font-bold transition shadow-sm border border-emerald-500/30' : 'text-xs sm:text-sm px-4 py-2 rounded-xl bg-[#1E293B] text-white font-semibold hover:bg-[#2A374F] transition';
+                dashBtn.className = view === 'dashboard' ? 'text-xs sm:text-sm px-4 py-2 rounded-xl bg-erp-border text-white font-bold transition shadow-sm border border-erp-accent/30' : 'text-xs sm:text-sm px-4 py-2 rounded-xl bg-erp-border text-white font-semibold hover:bg-[#352B27] transition';
             }
 
             if (view === 'dashboard' && currentUser) renderDashboard();
@@ -588,22 +589,22 @@
             empty.classList.add('hidden');
 
             grid.innerHTML = timersList.map(t => `
-                <div class="pathao-card rounded-3xl p-6 flex flex-col justify-between gap-5 relative group">
+                <div class="erp-card rounded-3xl p-6 flex flex-col justify-between gap-5 relative group">
                     <div>
                         <div class="flex items-start justify-between gap-2">
-                            <span class="text-xs px-3.5 py-1.5 rounded-full bg-emerald-500/10 text-emerald-400 font-bold border border-emerald-500/20 shadow-sm">
+                            <span class="text-xs px-3.5 py-1.5 rounded-full bg-erp-accent/10 text-erp-accent font-bold border border-erp-accent/20 shadow-sm">
                                 ${t.editor_name}
                             </span>
                             <div class="flex items-center gap-1.5">
-                                ${canManage ? `<button onclick="openEditTimerModal('${t.id}')" class="text-xs px-3 py-1.5 rounded-xl bg-[#1E293B] hover:bg-[#2A374F] text-gray-300 font-semibold transition"> Edit </button>` : ''}
-                                ${canManage ? `<button onclick="deleteTimer('${t.id}')" class="text-xs px-3 py-1.5 rounded-xl bg-emerald-600 text-white hover:bg-emerald-500 font-semibold transition shadow-sm"> ✓ Done </button>` : ''}
+                                ${canManage ? `<button onclick="openEditTimerModal('${t.id}')" class="text-xs px-3 py-1.5 rounded-xl bg-erp-border hover:bg-[#352B27] text-gray-300 font-semibold transition"> Edit </button>` : ''}
+                                ${canManage ? `<button onclick="deleteTimer('${t.id}')" class="text-xs px-3 py-1.5 rounded-xl bg-erp-accent text-white hover:bg-erp-accentHover font-semibold transition shadow-sm"> ✓ Done </button>` : ''}
                             </div>
                         </div>
                         <h3 class="text-lg font-bold text-white mt-4 tracking-tight">${t.project_name}</h3>
                         <p class="text-xs text-gray-400 font-medium mt-1">Due: ${new Date(t.deadline).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })}</p>
                     </div>
-                    <div class="bg-[#090D16] text-white rounded-2xl p-4 border border-[#1E293B] shadow-inner">
-                        <div class="text-[10px] uppercase tracking-wider text-emerald-400 mb-1 font-bold">Time Remaining</div>
+                    <div class="bg-[#0F0A08] text-white rounded-2xl p-4 border border-erp-border shadow-inner">
+                        <div class="text-[10px] uppercase tracking-wider text-erp-accent mb-1 font-bold">Time Remaining</div>
                         <div class="countdown-display font-mono text-base font-bold text-amber-400" data-deadline="${t.deadline}">
                             Calculating...
                         </div>
@@ -702,7 +703,7 @@
         // ==================== WORK DETAILS & FLOATING CHAT WINDOW ====================
         function renderWorkDetails() {
             if (!currentUser) {
-                document.getElementById('workdetails-list').innerHTML = `<div class="pathao-card rounded-3xl p-8 text-center text-gray-400 text-xs font-semibold">Please login to view Work Details & Floating Chat Hub.</div>`;
+                document.getElementById('workdetails-list').innerHTML = `<div class="erp-card rounded-3xl p-8 text-center text-gray-400 text-xs font-semibold">Please login to view Work Details & Floating Chat Hub.</div>`;
                 return;
             }
 
@@ -725,21 +726,21 @@
             container.innerHTML = filteredTimers.map(t => {
                 const timerComments = commentsList.filter(c => c.timer_id === t.id);
                 return `
-                    <div id="chat-card-${t.id}" class="pathao-card rounded-3xl p-6 space-y-4 shadow-xl">
+                    <div id="chat-card-${t.id}" class="erp-card rounded-3xl p-6 space-y-4 shadow-xl">
                         <!-- Project Header Info -->
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#1E293B] pb-4">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-erp-border pb-4">
                             <div>
-                                <span class="text-xs px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 font-bold border border-emerald-500/20">Assigned: ${t.editor_name}</span>
+                                <span class="text-xs px-3 py-1 rounded-full bg-erp-accent/10 text-erp-accent font-bold border border-erp-accent/20">Assigned: ${t.editor_name}</span>
                                 <h3 class="text-lg font-bold text-white mt-2.5 tracking-tight">${t.project_name}</h3>
                                 <p class="text-xs text-gray-400 font-medium mt-0.5">Deadline: ${new Date(t.deadline).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })}</p>
                             </div>
                             <div class="flex items-center gap-3 flex-wrap">
-                                <span class="countdown-display font-mono text-xs font-bold text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-lg border border-emerald-500/20" data-deadline="${t.deadline}">Live</span>
+                                <span class="countdown-display font-mono text-xs font-bold text-erp-accent bg-erp-accent/10 px-3 py-1 rounded-lg border border-erp-accent/20" data-deadline="${t.deadline}">Live</span>
                                 <div class="flex items-center gap-2">
-                                    <button onclick="toggleFloating('${t.id}')" id="float-btn-${t.id}" class="text-xs px-3.5 py-2 rounded-xl bg-[#1E293B] hover:bg-[#2A374F] text-gray-300 font-semibold transition">
+                                    <button onclick="toggleFloating('${t.id}')" id="float-btn-${t.id}" class="text-xs px-3.5 py-2 rounded-xl bg-erp-border hover:bg-[#352B27] text-gray-300 font-semibold transition">
                                         🗗 Popout
                                     </button>
-                                    <button onclick="toggleFullscreen('${t.id}')" id="fullscreen-btn-${t.id}" class="text-xs px-3.5 py-2 rounded-xl bg-[#1E293B] hover:bg-[#2A374F] text-gray-300 font-semibold transition">
+                                    <button onclick="toggleFullscreen('${t.id}')" id="fullscreen-btn-${t.id}" class="text-xs px-3.5 py-2 rounded-xl bg-erp-border hover:bg-[#352B27] text-gray-300 font-semibold transition">
                                         ⛶ Fullscreen
                                     </button>
                                 </div>
@@ -747,11 +748,11 @@
                         </div>
 
                         <!-- Floating Messenger Chat Window -->
-                        <div id="chat-box-container-${t.id}" class="messenger-chat-bg rounded-2xl border border-[#1E293B] overflow-hidden flex flex-col h-96 shadow-inner">
+                        <div id="chat-box-container-${t.id}" class="messenger-chat-bg rounded-2xl border border-erp-border overflow-hidden flex flex-col h-96 shadow-inner">
                             <!-- Chat Header Bar -->
-                            <div class="bg-[#131C2E] px-4 py-3 border-b border-[#1E293B] flex items-center justify-between text-xs">
+                            <div class="bg-erp-card px-4 py-3 border-b border-erp-border flex items-center justify-between text-xs">
                                 <div class="flex items-center gap-2">
-                                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                    <span class="w-2.5 h-2.5 rounded-full bg-erp-accent animate-pulse"></span>
                                     <span class="font-bold text-white">Live Discussion Window (${timerComments.length} messages)</span>
                                 </div>
                                 <span class="text-[10px] text-gray-400 font-medium">Links or photos can be sent without text</span>
@@ -771,25 +772,25 @@
 
                                     let formattedMsg = escapeHtml(c.message);
                                     const urlRegex = /(https?:\/\/[^\s]+)/g;
-                                    formattedMsg = formattedMsg.replace(urlRegex, (url) => `<a href="${url}" target="_blank" class="text-emerald-400 underline break-all">${url}</a>`);
+                                    formattedMsg = formattedMsg.replace(urlRegex, (url) => `<a href="${url}" target="_blank" class="text-erp-accent underline break-all">${url}</a>`);
 
                                     return `
                                         <div class="flex flex-col ${isSelf ? 'items-end' : 'items-start'} space-y-1">
-                                            <div class="max-w-[85%] sm:max-w-[70%] rounded-2xl px-4 py-3 text-xs shadow-md relative ${isSelf ? 'bg-emerald-600 text-white rounded-br-none' : 'bg-[#1A233A] text-gray-200 border border-[#1E293B] rounded-bl-none'}">
+                                            <div class="max-w-[85%] sm:max-w-[70%] rounded-2xl px-4 py-3 text-xs shadow-md relative ${isSelf ? 'bg-erp-accent text-white rounded-br-none' : 'bg-[#201815] text-gray-200 border border-erp-border rounded-bl-none'}">
                                                 <div class="flex items-center justify-between gap-4 mb-1 text-[10px] opacity-80">
-                                                    <span class="font-bold ${isSelf ? 'text-emerald-200' : 'text-emerald-400'}">${c.author_name}</span>
+                                                    <span class="font-bold ${isSelf ? 'text-orange-100' : 'text-erp-accent'}">${c.author_name}</span>
                                                     <div class="flex items-center gap-2">
                                                         <span>${new Date(c.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                                                         ${canDelete ? `<button onclick="deleteComment('${c.id}')" class="text-rose-300 hover:text-white font-bold" title="Delete Message">✕</button>` : ''}
                                                     </div>
                                                 </div>
                                                 ${c.message ? `<p class="leading-relaxed whitespace-pre-wrap font-medium">${formattedMsg}</p>` : ''}
-                                                ${c.image_url ? `<img src="${c.image_url}" class="max-h-52 rounded-xl mt-2 border border-[#1E293B] object-cover cursor-pointer" onclick="window.open('${c.image_url}', '_blank')" />` : ''}
+                                                ${c.image_url ? `<img src="${c.image_url}" class="max-h-52 rounded-xl mt-2 border border-erp-border object-cover cursor-pointer" onclick="window.open('${c.image_url}', '_blank')" />` : ''}
                                             </div>
                                             <!-- Read Status & Action Bar -->
                                             <div class="flex items-center gap-2 text-[10px] text-gray-400 px-1 font-medium">
                                                 <span>${readersList.length > 0 ? `✓ Seen by ${readersList.join(', ')}` : 'Sent'}</span>
-                                                ${!readersList.includes(currentUser.name) ? `<button onclick="markCommentRead('${c.id}')" class="text-emerald-400 hover:underline font-bold">Mark Read</button>` : ''}
+                                                ${!readersList.includes(currentUser.name) ? `<button onclick="markCommentRead('${c.id}')" class="text-erp-accent hover:underline font-bold">Mark Read</button>` : ''}
                                             </div>
                                         </div>
                                     `;
@@ -797,14 +798,14 @@
                             </div>
 
                             <!-- Chat Input Box -->
-                            <form onsubmit="postComment(event, '${t.id}')" class="bg-[#131C2E] p-3.5 border-t border-[#1E293B] flex items-center gap-2.5">
+                            <form onsubmit="postComment(event, '${t.id}')" class="bg-erp-card p-3.5 border-t border-erp-border flex items-center gap-2.5">
                                 <input type="file" id="comment-file-${t.id}" accept="image/*" class="hidden" onchange="previewImageName(this, '${t.id}')" />
-                                <label for="comment-file-${t.id}" class="cursor-pointer p-2.5 rounded-xl bg-[#1E293B] hover:bg-[#2A374F] text-gray-300 transition text-sm flex items-center justify-center font-semibold" title="Attach Image">
+                                <label for="comment-file-${t.id}" class="cursor-pointer p-2.5 rounded-xl bg-erp-border hover:bg-[#352B27] text-gray-300 transition text-sm flex items-center justify-center font-semibold" title="Attach Image">
                                     <span>🌄</span>
                                 </label>
-                                <input type="text" id="comment-input-${t.id}" placeholder="Type a message, reply or paste link..." class="flex-1 pathao-input px-4 py-2.5 rounded-xl text-xs font-medium" />
-                                <span id="file-label-${t.id}" class="hidden text-[10px] text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1.5 rounded-lg truncate max-w-[100px] font-bold"></span>
-                                <button type="submit" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-md transition flex items-center gap-1">
+                                <input type="text" id="comment-input-${t.id}" placeholder="Type a message, reply or paste link..." class="flex-1 erp-input px-4 py-2.5 rounded-xl text-xs font-medium" />
+                                <span id="file-label-${t.id}" class="hidden text-[10px] text-erp-accent bg-erp-accent/10 border border-erp-accent/20 px-2.5 py-1.5 rounded-lg truncate max-w-[100px] font-bold"></span>
+                                <button type="submit" class="px-5 py-2.5 rounded-xl bg-erp-accent hover:bg-erp-accentHover text-white text-xs font-bold shadow-md transition flex items-center gap-1">
                                     <span>Send</span> ➤
                                 </button>
                             </form>
@@ -831,7 +832,7 @@
                 card.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.8)';
                 chatBox.style.height = '320px';
                 btn.textContent = '⤡ Dock';
-                btn.className = 'text-xs px-3.5 py-2 rounded-xl bg-emerald-600 text-white font-bold transition shadow-sm';
+                btn.className = 'text-xs px-3.5 py-2 rounded-xl bg-erp-accent text-white font-bold transition shadow-sm';
             } else {
                 card.classList.remove('is-floating');
                 card.style.position = '';
@@ -843,7 +844,7 @@
                 card.style.boxShadow = '';
                 chatBox.style.height = '384px';
                 btn.textContent = '🗗 Popout';
-                btn.className = 'text-xs px-3.5 py-2 rounded-xl bg-[#1E293B] hover:bg-[#2A374F] text-gray-300 font-semibold transition';
+                btn.className = 'text-xs px-3.5 py-2 rounded-xl bg-erp-border hover:bg-[#352B27] text-gray-300 font-semibold transition';
             }
         }
 
@@ -877,7 +878,7 @@
                 chatBox.style.flex = '';
                 chatBox.style.height = '384px';
                 btn.textContent = '⛶ Fullscreen';
-                btn.className = 'text-xs px-3.5 py-2 rounded-xl bg-[#1E293B] hover:bg-[#2A374F] text-gray-300 font-semibold transition';
+                btn.className = 'text-xs px-3.5 py-2 rounded-xl bg-erp-border hover:bg-[#352B27] text-gray-300 font-semibold transition';
             }
         }
 
@@ -965,7 +966,7 @@
             ['uncomplete', 'completed', 'all'].forEach(t => {
                 const btn = document.getElementById(`tab-${t}`);
                 if (t === tab) {
-                    btn.className = 'px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 text-white flex items-center gap-2 shadow-sm transition';
+                    btn.className = 'px-4 py-2 rounded-xl text-xs font-bold bg-erp-accent text-white flex items-center gap-2 shadow-sm transition';
                 } else {
                     btn.className = 'px-4 py-2 rounded-xl text-xs font-bold text-gray-400 hover:text-white flex items-center gap-2 transition';
                 }
@@ -1012,24 +1013,24 @@
                     const calc16Usd = inputUsd * 0.16;
                     const tipsUsd = Number(t.amount_usd) || 0;
 
-                    let dollarDisplay = `<span class="text-emerald-400 font-bold">$${calc16Usd.toFixed(2)}</span>`;
+                    let dollarDisplay = `<span class="text-erp-accent font-bold">$${calc16Usd.toFixed(2)}</span>`;
                     if (tipsUsd > 0) {
                         dollarDisplay += ` + <span class="text-amber-400 font-bold">$${tipsUsd.toFixed(2)}</span>`;
                     }
 
-                    const paidByBadge = t.tk_status === 'Paid' && t.delivery_tag ? `<span class="px-3 py-1 rounded-full text-[11px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">${t.delivery_tag}</span>` : `<span class="text-gray-500 font-medium">—</span>`;
+                    const paidByBadge = t.tk_status === 'Paid' && t.delivery_tag ? `<span class="px-3 py-1 rounded-full text-[11px] font-bold bg-erp-accent/10 text-erp-accent border border-erp-accent/20">${t.delivery_tag}</span>` : `<span class="text-gray-500 font-medium">—</span>`;
 
                     return `
-                        <tr class="hover:bg-[#1A233A]/50 transition">
+                        <tr class="hover:bg-[#201815]/50 transition">
                             <td class="py-3.5 px-4 text-center">
-                                <input type="checkbox" ${t.is_completed ? 'checked' : ''} onchange="toggleTaskComplete('${t.id}', this.checked)" class="w-4 h-4 rounded accent-emerald-500 cursor-pointer" />
+                                <input type="checkbox" ${t.is_completed ? 'checked' : ''} onchange="toggleTaskComplete('${t.id}', this.checked)" class="w-4 h-4 rounded accent-erp-accent cursor-pointer" />
                             </td>
                             <td class="py-3.5 px-4 font-semibold ${t.is_completed ? 'line-through text-gray-500' : 'text-white'}">
                                 ${t.task_name}
                             </td>
                             <td class="py-3.5 px-4">
                                 <span class="inline-flex items-center gap-2.5 text-gray-300 font-medium">
-                                    <span class="w-6 h-6 rounded-full bg-[#1E293B] text-emerald-400 text-xs flex items-center justify-center font-bold border border-[#2A374F] shadow-sm">
+                                    <span class="w-6 h-6 rounded-full bg-erp-border text-erp-accent text-xs flex items-center justify-center font-bold border border-[#352B27] shadow-sm">
                                         ${t.assignee.charAt(0).toUpperCase()}
                                     </span>
                                     ${t.assignee}
@@ -1048,7 +1049,7 @@
                             </td>
                             ${isAdminOrManager ? `
                                 <td class="py-3.5 px-4 text-right space-x-2">
-                                    <button onclick='openEditTaskModal(${JSON.stringify(t)})' class="text-gray-400 hover:text-emerald-400 px-2.5 py-1 rounded-lg hover:bg-[#1E293B] transition font-semibold">Edit</button>
+                                    <button onclick='openEditTaskModal(${JSON.stringify(t)})' class="text-gray-400 hover:text-erp-accent px-2.5 py-1 rounded-lg hover:bg-erp-border transition font-semibold">Edit</button>
                                     <button onclick="deleteTask('${t.id}')" class="text-rose-400 hover:text-rose-300 px-2.5 py-1 rounded-lg hover:bg-rose-500/10 transition font-semibold">Del</button>
                                 </td>
                             ` : ''}
@@ -1126,10 +1127,10 @@
             breakdownBox.innerHTML = editorNames.map(name => {
                 const d = perEditor[name];
                 return `
-                    <div class="bg-[#090D16] p-3.5 rounded-2xl border border-[#1E293B] space-y-1.5">
+                    <div class="bg-[#0F0A08] p-3.5 rounded-2xl border border-erp-border space-y-1.5">
                         <div class="flex justify-between items-center">
                             <span class="text-xs font-bold text-white">👤 ${name}</span>
-                            <span class="text-xs font-mono font-extrabold text-emerald-400">৳${d.totalBdt.toLocaleString(undefined, {maximumFractionDigits: 2})}</span>
+                            <span class="text-xs font-mono font-extrabold text-erp-accent">৳${d.totalBdt.toLocaleString(undefined, {maximumFractionDigits: 2})}</span>
                         </div>
                         <div class="flex justify-between text-[11px] text-gray-400 font-mono font-medium">
                             <span>16%($${d.usd16.toFixed(1)}) + Tips($${d.usdTips.toFixed(1)})</span>
@@ -1246,14 +1247,14 @@
                 const isSelf = ed.name.trim().toLowerCase() === currentUser.name.trim().toLowerCase();
                 const canDeleteThis = (isAdmin || (currentUser?.role === 'manager' && ed.role === 'editor')) && !isSelf && !String(ed.id).startsWith('def-');
                 return `
-                    <div class="p-3.5 flex items-center justify-between text-xs bg-[#090D16]">
+                    <div class="p-3.5 flex items-center justify-between text-xs bg-[#0F0A08]">
                         <div>
                             <span class="font-bold text-white">${ed.name}</span>
                             <span class="ml-2.5 text-gray-400 font-mono font-medium">
                                 Pass: ${showPassword ? ed.password : '••••••••'}
                             </span>
                         </div>
-                        ${canDeleteThis ? `<button onclick="removeEditor('${ed.id}')" class="text-rose-400 hover:underline font-bold">Remove</button>` : `<span class="text-[10px] text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded-md">${ed.role.toUpperCase()}${isSelf ? ' (You)' : ''}</span>`}
+                        ${canDeleteThis ? `<button onclick="removeEditor('${ed.id}')" class="text-rose-400 hover:underline font-bold">Remove</button>` : `<span class="text-[10px] text-erp-accent font-bold bg-erp-accent/10 px-2 py-0.5 rounded-md">${ed.role.toUpperCase()}${isSelf ? ' (You)' : ''}</span>`}
                     </div>
                 `;
             }).join('');
