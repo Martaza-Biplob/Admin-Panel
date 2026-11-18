@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,49 +10,49 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: #ededed; }
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #059669 0%, #047857 100%); color: #1f2937; min-height: 100vh; }
         .font-mono { font-family: 'JetBrains Mono', monospace; }
-        .notion-card { background-color: #141414; border: 1px solid #222222; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
-        .notion-row:hover { background-color: #1a1a1a; }
-        .notion-border { border-color: #222222; }
-        .notion-input { background-color: #0d0d0d; border: 1px solid #2b2b2b; color: #ededed; transition: all 0.2s ease; }
-        .notion-input:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2); }
-        input[type="datetime-local"]::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; }
+        .fintech-card { background-color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); }
+        .fintech-card-glass { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.4); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); }
+        .fintech-row:hover { background-color: #f8fafc; }
+        .fintech-input { background-color: #f1f5f9; border: 1px solid #cbd5e1; color: #0f172a; transition: all 0.2s ease; }
+        .fintech-input:focus { outline: none; border-color: #059669; box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15); background-color: #ffffff; }
+        input[type="datetime-local"]::-webkit-calendar-picker-indicator { cursor: pointer; }
         /* Messenger Style Chat Background */
-        .messenger-chat-bg { background-color: #0b141a; background-image: radial-gradient(#1f2c34 1px, transparent 1px); background-size: 20px 20px; }
+        .messenger-chat-bg { background-color: #f8fafc; background-image: radial-gradient(#cbd5e1 1px, transparent 1px); background-size: 20px 20px; }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #0a0a0a; }
-        ::-webkit-scrollbar-thumb { background: #2b2b2b; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
+        ::-webkit-scrollbar-track { background: #047857; }
+        ::-webkit-scrollbar-thumb { background: #059669; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #065f46; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col selection:bg-blue-500 selection:text-white">
+<body class="flex flex-col selection:bg-emerald-500 selection:text-white">
 
     <!-- Top Navigation -->
-    <header class="max-w-7xl w-full mx-auto px-4 sm:px-6 py-4 flex items-center justify-between border-b notion-border backdrop-blur-md sticky top-0 z-40 bg-[#0a0a0a]/80">
+    <header class="max-w-7xl w-full mx-auto px-4 sm:px-6 py-4 flex items-center justify-between border-b border-emerald-600/30 backdrop-blur-md sticky top-0 z-40 bg-[#059669]/90 text-white">
         <div class="flex items-center gap-3 cursor-pointer group" onclick="switchView('home')">
-            <img src="thelogo.png" alt="Tosrec Studios Logo" class="w-8 h-8 rounded-lg object-cover flex-shrink-0 shadow-md group-hover:scale-105 transition">
+            <img src="thelogo.png" alt="Tosrec Studios Logo" class="w-9 h-9 rounded-xl object-cover flex-shrink-0 shadow-md group-hover:scale-105 transition border-2 border-white/20">
             <div>
-                <span class="font-bold tracking-tight text-white text-sm sm:text-base">Tosrec Studios</span>
-                <span class="text-[10px] px-2 py-0.5 rounded-full bg-[#1f1f1f] text-blue-400 font-medium hidden sm:inline ml-1.5 border border-blue-500/20">Workspace</span>
+                <span class="font-bold tracking-tight text-white text-base sm:text-lg">Tosrec Studios</span>
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-800/60 text-emerald-200 font-medium hidden sm:inline ml-1.5 border border-emerald-400/30">Workspace</span>
             </div>
         </div>
         <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
-            <button onclick="switchView('home')" id="nav-home-btn" class="text-xs sm:text-sm px-3.5 py-1.5 rounded-lg hover:bg-[#1a1a1a] text-gray-300 transition font-medium">
+            <button onclick="switchView('home')" id="nav-home-btn" class="text-xs sm:text-sm px-4 py-2 rounded-xl hover:bg-emerald-700/50 text-white transition font-medium">
                 Live Timers
             </button>
-            <button onclick="switchView('workdetails')" id="nav-workdetails-btn" class="hidden text-xs sm:text-sm px-3.5 py-1.5 rounded-lg hover:bg-[#1a1a1a] text-gray-300 transition font-medium">
+            <button onclick="switchView('workdetails')" id="nav-workdetails-btn" class="hidden text-xs sm:text-sm px-4 py-2 rounded-xl hover:bg-emerald-700/50 text-white transition font-medium">
                 Work Details
             </button>
-            <button id="nav-dashboard-btn" onclick="switchView('dashboard')" class="hidden text-xs sm:text-sm px-3.5 py-1.5 rounded-lg bg-[#1f1f1f] text-white font-medium hover:bg-[#2a2a2a] border notion-border transition">
+            <button id="nav-dashboard-btn" onclick="switchView('dashboard')" class="hidden text-xs sm:text-sm px-4 py-2 rounded-xl bg-emerald-800 text-white font-medium hover:bg-emerald-900 border border-emerald-500/30 transition shadow-sm">
                 Cashflow Dashboard
             </button>
-            <button id="login-open-btn" onclick="openLoginModal()" class="text-xs sm:text-sm px-4 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-medium shadow-lg shadow-blue-600/20 transition">
+            <button id="login-open-btn" onclick="openLoginModal()" class="text-xs sm:text-sm px-4 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-gray-900 font-bold shadow-lg shadow-amber-500/20 transition">
                 Editor / Admin Login
             </button>
             <div id="user-badge" class="hidden flex items-center gap-2.5">
-                <span id="logged-user-name" class="text-xs font-medium px-3 py-1 rounded-lg bg-[#141414] border notion-border text-emerald-400"></span>
-                <button onclick="logout()" class="text-xs px-3 py-1 rounded-lg bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 border border-rose-500/20 transition">
+                <span id="logged-user-name" class="text-xs font-semibold px-3.5 py-1.5 rounded-xl bg-white text-emerald-800 shadow-sm"></span>
+                <button onclick="logout()" class="text-xs px-3.5 py-1.5 rounded-xl bg-rose-500/20 text-rose-100 hover:bg-rose-500/30 border border-rose-400/30 transition font-medium">
                     Logout
                 </button>
             </div>
@@ -64,86 +64,86 @@
 
         <!-- ==================== VIEW 1: PUBLIC HOME PAGE & TIMERS ==================== -->
         <section id="view-home" class="space-y-8">
-            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b notion-border pb-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-emerald-600/30 pb-6 text-white">
                 <div>
-                    <div class="text-[11px] uppercase tracking-wider text-blue-400 font-semibold mb-1">Production Tracker</div>
-                    <h1 class="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-2.5">
+                    <div class="text-[11px] uppercase tracking-wider text-amber-300 font-bold mb-1">Production Tracker</div>
+                    <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight flex items-center gap-2.5">
                         <span>Active Projects & Deadlines</span>
                     </h1>
-                    <p class="text-sm text-gray-400 mt-1">Real-time delivery countdown for currently running video editing projects.</p>
+                    <p class="text-sm text-emerald-100 mt-1">Real-time delivery countdown for currently running video editing projects.</p>
                 </div>
                 <div id="admin-timer-controls" class="hidden">
-                    <button onclick="openTimerModal()" class="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium shadow-lg shadow-blue-600/20 transition flex items-center gap-2">
+                    <button onclick="openTimerModal()" class="px-4.5 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-gray-900 text-sm font-bold shadow-lg shadow-amber-500/20 transition flex items-center gap-2">
                         <span>+ Add Running Project</span>
                     </button>
                 </div>
             </div>
 
-            <div id="timers-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
-            <div id="timers-empty" class="hidden notion-card rounded-2xl p-12 text-center">
-                <p class="text-gray-400 text-sm">No active projects running right now.</p>
+            <div id="timers-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            <div id="timers-empty" class="hidden fintech-card-glass rounded-3xl p-12 text-center">
+                <p class="text-gray-500 text-sm font-medium">No active projects running right now.</p>
             </div>
 
             <!-- Company Details Section -->
-            <div class="notion-card rounded-2xl p-6 sm:p-8 mt-12 space-y-4 border notion-border relative overflow-hidden">
-                <div class="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="fintech-card-glass rounded-3xl p-6 sm:p-8 mt-12 space-y-4 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-amber-400/10 rounded-full blur-3xl pointer-events-none"></div>
                 <div class="flex items-center gap-3">
-                    <img src="thelogo.png" alt="Tosrec Studios" class="w-10 h-10 rounded-xl object-cover shadow-md">
+                    <img src="thelogo.png" alt="Tosrec Studios" class="w-12 h-12 rounded-2xl object-cover shadow-md">
                     <div>
-                        <h2 class="text-lg font-bold text-white">Tosrec Studios Agency</h2>
-                        <p class="text-xs text-gray-400">High-End Video Post-Production & Media Solutions</p>
+                        <h2 class="text-lg font-bold text-gray-900">Tosrec Studios Agency</h2>
+                        <p class="text-xs text-gray-500 font-medium">High-End Video Post-Production & Media Solutions</p>
                     </div>
                 </div>
-                <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
+                <p class="text-xs sm:text-sm text-gray-700 leading-relaxed font-normal">
                     Tosrec Studios is a premier video post-production agency specializing in travel vlogs, real estate showcases, commercial promos, talking-head videos, and cinematic edits. We leverage cutting-edge workflows across DaVinci Resolve, Adobe Premiere Pro, and After Effects to deliver elite visual output for global creators and brands.
                 </p>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-3 text-xs text-gray-400 border-t notion-border">
-                    <div><span class="text-white font-medium">Core Focus:</span> S-Log Grading, Commercials & Vlogs</div>
-                    <div><span class="text-white font-medium">Operations:</span> Global Remote Team & Dashboard Workflow</div>
-                    <div><span class="text-white font-medium">Support Contact:</span> support@tosrec.com</div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 text-xs text-gray-600 border-t border-gray-200">
+                    <div><span class="text-gray-900 font-semibold">Core Focus:</span> S-Log Grading, Commercials & Vlogs</div>
+                    <div><span class="text-gray-900 font-semibold">Operations:</span> Global Remote Team & Dashboard Workflow</div>
+                    <div><span class="text-gray-900 font-semibold">Support Contact:</span> support@tosrec.com</div>
                 </div>
             </div>
         </section>
 
         <!-- ==================== VIEW 2: WORK DETAILS PAGE ==================== -->
         <section id="view-workdetails" class="hidden space-y-6">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b notion-border pb-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-emerald-600/30 pb-5 text-white">
                 <div>
-                    <h2 class="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
+                    <h2 class="text-2xl font-bold tracking-tight flex items-center gap-2">
                         <span>Work Details</span>
                     </h2>
-                    <p class="text-xs text-gray-400 mt-1">Project collaboration chat & direct link sharing styled like messenger. You can pop out chat boxes as floating windows or expand them to full screen.</p>
+                    <p class="text-xs text-emerald-100 mt-1">Project collaboration chat & direct link sharing styled like messenger. You can pop out chat boxes as floating windows or expand them to full screen.</p>
                 </div>
                 <div class="flex items-center gap-2">
-                    <input type="text" id="work-search" oninput="renderWorkDetails()" placeholder="Search work item..." class="notion-input text-xs px-3.5 py-2 rounded-lg w-52" />
+                    <input type="text" id="work-search" oninput="renderWorkDetails()" placeholder="Search work item..." class="fintech-input text-xs px-4 py-2.5 rounded-xl w-56" />
                 </div>
             </div>
 
             <div id="workdetails-list" class="space-y-6"></div>
-            <div id="workdetails-empty" class="hidden notion-card rounded-2xl p-12 text-center">
-                <p class="text-gray-400 text-sm">No work items found. Add an active timer to generate work controls.</p>
+            <div id="workdetails-empty" class="hidden fintech-card-glass rounded-3xl p-12 text-center">
+                <p class="text-gray-500 text-sm font-medium">No work items found. Add an active timer to generate work controls.</p>
             </div>
         </section>
 
         <!-- ==================== VIEW 3: PRIVATE CASHFLOW DASHBOARD ==================== -->
         <section id="view-dashboard" class="hidden space-y-6">
-            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b notion-border pb-5">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-emerald-600/30 pb-5 text-white">
                 <div>
-                    <h2 class="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
+                    <h2 class="text-2xl font-bold tracking-tight flex items-center gap-2">
                         <span id="dashboard-title">Editor Cashflow</span>
                     </h2>
-                    <p class="text-xs text-gray-400 mt-1" id="dashboard-subtitle">Private ledger: USD input converted & summarized in BDT (৳)</p>
+                    <p class="text-xs text-emerald-100 mt-1" id="dashboard-subtitle">Private ledger: USD input converted & summarized in BDT (৳)</p>
                 </div>
                 <div class="flex flex-wrap items-center gap-3">
-                    <div class="notion-card px-3 py-1.5 rounded-lg flex items-center gap-2 text-xs">
-                        <span class="text-gray-400">1 USD =</span>
-                        <input type="number" id="usd-rate-input" value="120" class="w-16 notion-input px-2 py-1 rounded text-right font-mono" onchange="updateUsdRate()" />
-                        <span class="text-gray-400">BDT</span>
+                    <div class="fintech-card px-3.5 py-2 rounded-xl flex items-center gap-2 text-xs text-gray-800">
+                        <span class="text-gray-500 font-medium">1 USD =</span>
+                        <input type="number" id="usd-rate-input" value="120" class="w-16 fintech-input px-2.5 py-1 rounded-lg text-right font-mono font-bold text-emerald-700" onchange="updateUsdRate()" />
+                        <span class="text-gray-500 font-medium">BDT</span>
                     </div>
-                    <button id="btn-manage-editors" onclick="openEditorManagerModal()" class="hidden px-3.5 py-1.5 rounded-lg notion-card hover:bg-[#1f1f1f] text-xs font-medium text-gray-200 transition">
+                    <button id="btn-manage-editors" onclick="openEditorManagerModal()" class="hidden px-4 py-2 rounded-xl fintech-card hover:bg-gray-50 text-xs font-semibold text-gray-800 transition">
                         Manage Editors & Passwords
                     </button>
-                    <button id="btn-add-task" onclick="openTaskModal()" class="hidden px-4 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-medium shadow-lg shadow-blue-600/20 transition">
+                    <button id="btn-add-task" onclick="openTaskModal()" class="hidden px-4.5 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-gray-900 text-xs font-bold shadow-lg shadow-amber-500/20 transition">
                         + New Cashflow Entry
                     </button>
                 </div>
@@ -153,43 +153,43 @@
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
                 <div class="lg:col-span-8 space-y-4">
                     <div class="flex flex-wrap items-center justify-between gap-3">
-                        <div class="flex items-center gap-1.5 bg-[#141414] p-1 rounded-xl border notion-border">
-                            <button onclick="setTaskTab('uncomplete')" id="tab-uncomplete" class="px-3.5 py-1.5 rounded-lg text-xs font-medium bg-[#222222] text-white flex items-center gap-1.5 transition">
-                                <span class="w-2 h-2 rounded-full bg-amber-400"></span> Uncomplete <span id="count-uncomplete" class="text-gray-400">(0)</span>
+                        <div class="flex items-center gap-1.5 bg-emerald-800/40 p-1.5 rounded-2xl border border-emerald-500/30">
+                            <button onclick="setTaskTab('uncomplete')" id="tab-uncomplete" class="px-4 py-2 rounded-xl text-xs font-bold bg-white text-emerald-900 flex items-center gap-2 shadow-sm transition">
+                                <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> Uncomplete <span id="count-uncomplete" class="text-emerald-700 font-mono">(0)</span>
                             </button>
-                            <button onclick="setTaskTab('completed')" id="tab-completed" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-gray-400 hover:text-white flex items-center gap-1.5 transition">
-                                <span class="w-2 h-2 rounded-full bg-emerald-400"></span> Completed <span id="count-completed" class="text-gray-500">(0)</span>
+                            <button onclick="setTaskTab('completed')" id="tab-completed" class="px-4 py-2 rounded-xl text-xs font-bold text-emerald-100 hover:text-white flex items-center gap-2 transition">
+                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span> Completed <span id="count-emerald-200" class="text-emerald-200 font-mono">(0)</span>
                             </button>
-                            <button onclick="setTaskTab('all')" id="tab-all" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-gray-400 hover:text-white transition">
-                                All Tasks <span id="count-all" class="text-gray-500">(0)</span>
+                            <button onclick="setTaskTab('all')" id="tab-all" class="px-4 py-2 rounded-xl text-xs font-bold text-emerald-100 hover:text-white transition">
+                                All Tasks <span id="count-all" class="text-emerald-200 font-mono">(0)</span>
                             </button>
                         </div>
                         <div class="flex items-center gap-2">
-                            <select id="admin-editor-filter" onchange="renderDashboard()" class="hidden notion-input text-xs px-3 py-2 rounded-lg">
+                            <select id="admin-editor-filter" onchange="renderDashboard()" class="hidden fintech-input text-xs px-3.5 py-2.5 rounded-xl font-medium">
                                 <option value="ALL">All Editors</option>
                             </select>
-                            <input type="text" id="task-search" oninput="renderDashboard()" placeholder="Search task..." class="notion-input text-xs px-3.5 py-2 rounded-lg w-44" />
+                            <input type="text" id="task-search" oninput="renderDashboard()" placeholder="Search task..." class="fintech-input text-xs px-4 py-2.5 rounded-xl w-48 font-medium" />
                         </div>
                     </div>
 
-                    <div class="notion-card rounded-2xl overflow-hidden">
+                    <div class="fintech-card rounded-3xl overflow-hidden">
                         <div class="overflow-x-auto">
                             <table class="w-full text-left border-collapse text-xs">
                                 <thead>
-                                    <tr class="border-b notion-border text-gray-400 bg-[#161616]">
-                                        <th class="py-3 px-3.5 w-10 text-center">✓</th>
-                                        <th class="py-3 px-3.5 font-medium">Aa Name</th>
-                                        <th class="py-3 px-3.5 font-medium">Assignee</th>
-                                        <th class="py-3 px-3.5 font-medium">TK Status</th>
-                                        <th class="py-3 px-3.5 font-medium">Dollars ($)</th>
-                                        <th class="py-3 px-3.5 font-medium text-center">Paid By</th>
-                                        <th id="th-admin-actions" class="hidden py-3 px-3.5 font-medium text-right">Action</th>
+                                    <tr class="border-b border-gray-100 text-gray-500 bg-gray-50/80 font-semibold">
+                                        <th class="py-3.5 px-4 w-10 text-center">✓</th>
+                                        <th class="py-3.5 px-4">Aa Name</th>
+                                        <th class="py-3.5 px-4">Assignee</th>
+                                        <th class="py-3.5 px-4">TK Status</th>
+                                        <th class="py-3.5 px-4">Dollars ($)</th>
+                                        <th class="py-3.5 px-4 text-center">Paid By</th>
+                                        <th id="th-admin-actions" class="hidden py-3.5 px-4 text-right">Action</th>
                                     </tr>
                                 </thead>
-                                <tbody id="cashflow-tbody" class="divide-y notion-border"></tbody>
+                                <tbody id="cashflow-tbody" class="divide-y divide-gray-100"></tbody>
                             </table>
                         </div>
-                        <div id="tasks-empty" class="hidden p-12 text-center text-gray-500 text-xs">
+                        <div id="tasks-empty" class="hidden p-12 text-center text-gray-400 text-xs font-medium">
                             No entries found in this view.
                         </div>
                     </div>
@@ -197,57 +197,57 @@
 
                 <!-- RIGHT: Dynamic Summary Panel -->
                 <div class="lg:col-span-4 space-y-4">
-                    <div class="notion-card rounded-2xl p-5 space-y-4">
-                        <div class="flex items-center justify-between border-b notion-border pb-3">
-                            <span class="text-xs font-semibold uppercase tracking-wider text-gray-400" id="summary-header-title">Auto Summary (Uncomplete)</span>
-                            <span class="text-[10px] text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full font-medium">Live Sync</span>
+                    <div class="fintech-card rounded-3xl p-6 space-y-4">
+                        <div class="flex items-center justify-between border-b border-gray-100 pb-3.5">
+                            <span class="text-xs font-bold uppercase tracking-wider text-gray-500" id="summary-header-title">Auto Summary (Uncomplete)</span>
+                            <span class="text-[10px] text-emerald-700 bg-emerald-100 border border-emerald-200 px-2.5 py-0.5 rounded-full font-bold">Live Sync</span>
                         </div>
-                        <div class="grid grid-cols-2 gap-3">
-                            <div class="bg-[#0d0d0d] p-3.5 rounded-xl border notion-border">
-                                <div class="text-[11px] text-gray-400">16% USD Total ($)</div>
-                                <div id="sum-total-usd-16" class="text-base font-bold font-mono text-sky-400 mt-0.5">$ 0</div>
+                        <div class="grid grid-cols-2 gap-3.5">
+                            <div class="bg-emerald-50/60 p-4 rounded-2xl border border-emerald-100">
+                                <div class="text-[11px] text-gray-500 font-medium">16% USD Total ($)</div>
+                                <div id="sum-total-usd-16" class="text-base font-extrabold font-mono text-emerald-700 mt-1">$ 0</div>
                             </div>
-                            <div class="bg-[#0d0d0d] p-3.5 rounded-xl border notion-border">
-                                <div class="text-[11px] text-gray-400">Tips USD Total ($)</div>
-                                <div id="sum-total-tips" class="text-base font-bold font-mono text-amber-400 mt-0.5">$ 0</div>
+                            <div class="bg-amber-50/60 p-4 rounded-2xl border border-amber-100">
+                                <div class="text-[11px] text-gray-500 font-medium">Tips USD Total ($)</div>
+                                <div id="sum-total-tips" class="text-base font-extrabold font-mono text-amber-600 mt-1">$ 0</div>
                             </div>
                         </div>
-                        <div class="bg-[#0d0d0d] p-3.5 rounded-xl border notion-border space-y-2.5 text-xs">
-                            <div class="flex justify-between">
-                                <span class="text-rose-400 font-medium">● Section Due (BDT):</span>
-                                <span id="sum-due-bdt" class="font-mono text-gray-200">৳ 0</span>
+                        <div class="bg-gray-50 p-4 rounded-2xl border border-gray-100 space-y-3 text-xs">
+                            <div class="flex justify-between font-medium">
+                                <span class="text-rose-600">● Section Due (BDT):</span>
+                                <span id="sum-due-bdt" class="font-mono text-gray-800 font-bold">৳ 0</span>
                             </div>
-                            <div class="flex justify-between">
-                                <span class="text-emerald-400 font-medium">● Section Paid (BDT):</span>
-                                <span id="sum-paid-bdt" class="font-mono text-gray-200">৳ 0</span>
+                            <div class="flex justify-between font-medium">
+                                <span class="text-emerald-600">● Section Paid (BDT):</span>
+                                <span id="sum-paid-bdt" class="font-mono text-gray-800 font-bold">৳ 0</span>
                             </div>
-                            <div class="border-t notion-border pt-2.5 flex justify-between items-center">
-                                <span class="text-gray-400 font-medium">Est. Grand Total (BDT):</span>
-                                <span id="sum-grand-bdt" class="font-mono font-bold text-emerald-400 text-sm">৳ 0</span>
+                            <div class="border-t border-gray-200 pt-3 flex justify-between items-center">
+                                <span class="text-gray-600 font-semibold">Est. Grand Total (BDT):</span>
+                                <span id="sum-grand-bdt" class="font-mono font-extrabold text-emerald-700 text-sm">৳ 0</span>
                             </div>
                             <!-- ADMIN-ONLY ESTIMATE INCOME SECTION -->
-                            <div id="admin-estimate-section" class="hidden pt-3 border-t notion-border space-y-2 bg-[#171510] -mx-3.5 -mb-3.5 p-4 rounded-b-xl border-amber-500/30">
+                            <div id="admin-estimate-section" class="hidden pt-3.5 border-t border-amber-200 space-y-2.5 bg-amber-50/80 -mx-4 -mb-4 p-4 rounded-b-3xl">
                                 <div class="flex justify-between items-center">
-                                    <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5">🔒 Estimate Income</span>
-                                    <span class="text-[10px] bg-amber-500/10 text-amber-300 px-2 py-0.5 rounded-full border border-amber-500/20 font-medium">Admin Only</span>
+                                    <span class="text-xs font-bold text-amber-800 flex items-center gap-1.5">🔒 Estimate Income</span>
+                                    <span class="text-[10px] bg-amber-200 text-amber-900 px-2 py-0.5 rounded-full font-bold">Admin Only</span>
                                 </div>
                                 <div class="flex justify-between items-center">
-                                    <span class="text-[11px] text-gray-400">Total Input Dollars ($):</span>
-                                    <span id="estimate-input-usd" class="font-mono text-amber-300 font-semibold">$ 0.00</span>
+                                    <span class="text-[11px] text-gray-600">Total Input Dollars ($):</span>
+                                    <span id="estimate-input-usd" class="font-mono text-amber-700 font-bold">$ 0.00</span>
                                 </div>
-                                <div class="flex justify-between items-center pt-1 border-t border-amber-500/10">
-                                    <span class="text-xs font-medium text-white">Estimate Total (BDT):</span>
-                                    <span id="estimate-result-tk" class="font-mono font-bold text-emerald-400 text-sm">৳ 0.00</span>
+                                <div class="flex justify-between items-center pt-1.5 border-t border-amber-200/60">
+                                    <span class="text-xs font-semibold text-gray-900">Estimate Total (BDT):</span>
+                                    <span id="estimate-result-tk" class="font-mono font-extrabold text-emerald-700 text-sm">৳ 0.00</span>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="notion-card rounded-2xl p-5 space-y-3">
-                        <h3 class="text-xs font-semibold uppercase tracking-wider text-gray-400 border-b notion-border pb-3 flex items-center gap-2">
+                    <div class="fintech-card rounded-3xl p-6 space-y-3.5">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-gray-500 border-b border-gray-100 pb-3.5 flex items-center gap-2">
                             📊 Editor-Wise Breakdown (BDT)
                         </h3>
-                        <div id="editor-breakdown-list" class="space-y-2.5"></div>
+                        <div id="editor-breakdown-list" class="space-y-3"></div>
                     </div>
                 </div>
             </div>
@@ -258,23 +258,23 @@
     <!-- ==================== MODALS ==================== -->
 
     <!-- 1. Login Modal -->
-    <div id="login-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
-        <div class="notion-card w-full max-w-sm rounded-2xl p-6 space-y-4 shadow-2xl">
-            <div class="flex justify-between items-center border-b notion-border pb-3">
-                <h3 class="text-base font-bold text-white">Workspace Login</h3>
-                <button onclick="closeModal('login-modal')" class="text-gray-400 hover:text-white transition">✕</button>
+    <div id="login-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="fintech-card w-full max-w-sm rounded-3xl p-7 space-y-5 shadow-2xl bg-white">
+            <div class="flex justify-between items-center border-b border-gray-100 pb-3.5">
+                <h3 class="text-lg font-bold text-gray-900">Workspace Login</h3>
+                <button onclick="closeModal('login-modal')" class="text-gray-400 hover:text-gray-700 transition font-bold">✕</button>
             </div>
-            <form onsubmit="handleLogin(event)" class="space-y-3.5">
+            <form onsubmit="handleLogin(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs text-gray-400 mb-1.5 font-medium">Profile / Editor Name</label>
-                    <input type="text" id="login-username" required placeholder="e.g. admin or Mr Toolkit" class="w-full notion-input px-3.5 py-2 rounded-xl text-sm" />
+                    <label class="block text-xs text-gray-600 mb-1.5 font-semibold">Profile / Editor Name</label>
+                    <input type="text" id="login-username" required placeholder="e.g. admin or Mr Toolkit" class="w-full fintech-input px-4 py-3 rounded-2xl text-sm font-medium" />
                 </div>
                 <div>
-                    <label class="block text-xs text-gray-400 mb-1.5 font-medium">Password</label>
-                    <input type="password" id="login-password" required placeholder="••••••••" class="w-full notion-input px-3.5 py-2 rounded-xl text-sm" />
+                    <label class="block text-xs text-gray-600 mb-1.5 font-semibold">Password</label>
+                    <input type="password" id="login-password" required placeholder="••••••••" class="w-full fintech-input px-4 py-3 rounded-2xl text-sm font-medium" />
                 </div>
-                <p id="login-error" class="hidden text-xs text-rose-400 bg-rose-500/10 p-2.5 rounded-lg border border-rose-500/20">Invalid name or password. Please try again.</p>
-                <button type="submit" class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium shadow-lg shadow-blue-600/20 transition">
+                <p id="login-error" class="hidden text-xs text-rose-600 bg-rose-50 p-3 rounded-xl border border-rose-200 font-medium">Invalid name or password. Please try again.</p>
+                <button type="submit" class="w-full py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold shadow-lg shadow-emerald-600/20 transition">
                     Access Cashflow
                 </button>
             </form>
@@ -282,27 +282,27 @@
     </div>
 
     <!-- 2. Add / Edit Active Timer Modal -->
-    <div id="timer-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
-        <div class="notion-card w-full max-w-md rounded-2xl p-6 space-y-4 shadow-2xl">
-            <div class="flex justify-between items-center border-b notion-border pb-3">
-                <h3 id="timer-modal-title" class="text-base font-bold text-white">Add Running Project Timer</h3>
-                <button onclick="closeModal('timer-modal')" class="text-gray-400 hover:text-white transition">✕</button>
+    <div id="timer-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="fintech-card w-full max-w-md rounded-3xl p-7 space-y-5 shadow-2xl bg-white">
+            <div class="flex justify-between items-center border-b border-gray-100 pb-3.5">
+                <h3 id="timer-modal-title" class="text-lg font-bold text-gray-900">Add Running Project Timer</h3>
+                <button onclick="closeModal('timer-modal')" class="text-gray-400 hover:text-gray-700 transition font-bold">✕</button>
             </div>
-            <form onsubmit="saveTimer(event)" class="space-y-3.5">
+            <form onsubmit="saveTimer(event)" class="space-y-4">
                 <input type="hidden" id="edit-timer-id" />
                 <div>
-                    <label class="block text-xs text-gray-400 mb-1.5 font-medium">Project / Video Name</label>
-                    <input type="text" id="timer-project-name" required placeholder="e.g. Travel Vlog Ep 04" class="w-full notion-input px-3.5 py-2 rounded-xl text-sm" />
+                    <label class="block text-xs text-gray-600 mb-1.5 font-semibold">Project / Video Name</label>
+                    <input type="text" id="timer-project-name" required placeholder="e.g. Travel Vlog Ep 04" class="w-full fintech-input px-4 py-3 rounded-2xl text-sm font-medium" />
                 </div>
                 <div>
-                    <label class="block text-xs text-gray-400 mb-1.5 font-medium">Assign To Editors (Select Multiple)</label>
-                    <div id="timer-editors-checkboxes" class="max-h-36 overflow-y-auto space-y-2 notion-input p-3 rounded-xl text-xs"></div>
+                    <label class="block text-xs text-gray-600 mb-1.5 font-semibold">Assign To Editors (Select Multiple)</label>
+                    <div id="timer-editors-checkboxes" class="max-h-36 overflow-y-auto space-y-2.5 fintech-input p-3.5 rounded-2xl text-xs font-medium"></div>
                 </div>
                 <div>
-                    <label class="block text-xs text-gray-400 mb-1.5 font-medium">Submission Deadline</label>
-                    <input type="datetime-local" id="timer-deadline" required class="w-full notion-input px-3.5 py-2 rounded-xl text-sm" />
+                    <label class="block text-xs text-gray-600 mb-1.5 font-semibold">Submission Deadline</label>
+                    <input type="datetime-local" id="timer-deadline" required class="w-full fintech-input px-4 py-3 rounded-2xl text-sm font-medium" />
                 </div>
-                <button type="submit" class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium shadow-lg shadow-blue-600/20 transition">
+                <button type="submit" class="w-full py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold shadow-lg shadow-emerald-600/20 transition">
                     Save Project Timer
                 </button>
             </form>
@@ -310,50 +310,50 @@
     </div>
 
     <!-- 3. Add / Edit Cashflow Entry Modal -->
-    <div id="task-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
-        <div class="notion-card w-full max-w-md rounded-2xl p-6 space-y-4 shadow-2xl">
-            <div class="flex justify-between items-center border-b notion-border pb-3">
-                <h3 id="task-modal-title" class="text-base font-bold text-white">New Cashflow Entry</h3>
-                <button onclick="closeModal('task-modal')" class="text-gray-400 hover:text-white transition">✕</button>
+    <div id="task-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="fintech-card w-full max-w-md rounded-3xl p-7 space-y-5 shadow-2xl bg-white">
+            <div class="flex justify-between items-center border-b border-gray-100 pb-3.5">
+                <h3 id="task-modal-title" class="text-lg font-bold text-gray-900">New Cashflow Entry</h3>
+                <button onclick="closeModal('task-modal')" class="text-gray-400 hover:text-gray-700 transition font-bold">✕</button>
             </div>
-            <form onsubmit="saveTask(event)" class="space-y-3.5">
+            <form onsubmit="saveTask(event)" class="space-y-4">
                 <input type="hidden" id="edit-task-id" />
                 <div>
-                    <label class="block text-xs text-gray-400 mb-1.5 font-medium">Task / Client Name</label>
-                    <input type="text" id="task-name" required placeholder="e.g. Brandominguez3" class="w-full notion-input px-3.5 py-2 rounded-xl text-sm" />
+                    <label class="block text-xs text-gray-600 mb-1.5 font-semibold">Task / Client Name</label>
+                    <input type="text" id="task-name" required placeholder="e.g. Brandominguez3" class="w-full fintech-input px-4 py-3 rounded-2xl text-sm font-medium" />
                 </div>
-                <div class="grid grid-cols-2 gap-3">
+                <div class="grid grid-cols-2 gap-3.5">
                     <div>
-                        <label class="block text-xs text-gray-400 mb-1.5 font-medium">Assignee (Editor)</label>
-                        <input type="text" id="task-assignee" list="editors-datalist" required placeholder="Editor name" class="w-full notion-input px-3.5 py-2 rounded-xl text-sm" />
+                        <label class="block text-xs text-gray-600 mb-1.5 font-semibold">Assignee (Editor)</label>
+                        <input type="text" id="task-assignee" list="editors-datalist" required placeholder="Editor name" class="w-full fintech-input px-4 py-3 rounded-2xl text-sm font-medium" />
                     </div>
                     <div>
-                        <label class="block text-xs text-gray-400 mb-1.5 font-medium">TK Status</label>
-                        <select id="task-status" onchange="checkStatusChange()" class="w-full notion-input px-3.5 py-2 rounded-xl text-sm">
+                        <label class="block text-xs text-gray-600 mb-1.5 font-semibold">TK Status</label>
+                        <select id="task-status" onchange="checkStatusChange()" class="w-full fintech-input px-4 py-3 rounded-2xl text-sm font-medium">
                             <option value="Due">Due</option>
                             <option value="Paid">Paid</option>
                             <option value="Partial">Partial</option>
                         </select>
                     </div>
                 </div>
-                <div class="grid grid-cols-2 gap-3">
+                <div class="grid grid-cols-2 gap-3.5">
                     <div>
-                        <label class="block text-xs text-gray-400 mb-1.5 font-medium">Amount in Dollar ($)</label>
-                        <input type="number" step="any" id="task-bdt" value="0" class="w-full notion-input px-3.5 py-2 rounded-xl text-sm font-mono" />
+                        <label class="block text-xs text-gray-600 mb-1.5 font-semibold">Amount in Dollar ($)</label>
+                        <input type="number" step="any" id="task-bdt" value="0" class="w-full fintech-input px-4 py-3 rounded-2xl text-sm font-mono font-bold" />
                     </div>
                     <div>
-                        <label class="block text-xs text-gray-400 mb-1.5 font-medium">Tips in Dollar ($)</label>
-                        <input type="number" step="any" id="task-usd" value="0" class="w-full notion-input px-3.5 py-2 rounded-xl text-sm font-mono" />
+                        <label class="block text-xs text-gray-600 mb-1.5 font-semibold">Tips in Dollar ($)</label>
+                        <input type="number" step="any" id="task-usd" value="0" class="w-full fintech-input px-4 py-3 rounded-2xl text-sm font-mono font-bold" />
                     </div>
                 </div>
                 <div id="paid-by-container" class="hidden">
-                    <label class="block text-xs text-gray-400 mb-1.5 font-medium">Paid By</label>
-                    <select id="task-paid-by" class="w-full notion-input px-3.5 py-2 rounded-xl text-sm">
+                    <label class="block text-xs text-gray-600 mb-1.5 font-semibold">Paid By</label>
+                    <select id="task-paid-by" class="w-full fintech-input px-4 py-3 rounded-2xl text-sm font-medium">
                         <option value="Bkash">Bkash</option>
                         <option value="Bank">Bank</option>
                     </select>
                 </div>
-                <button type="submit" class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium shadow-lg shadow-blue-600/20 transition">
+                <button type="submit" class="w-full py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold shadow-lg shadow-emerald-600/20 transition">
                     Save Entry
                 </button>
             </form>
@@ -361,18 +361,18 @@
     </div>
 
     <!-- 4. Manage Editors Modal -->
-    <div id="editors-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
-        <div class="notion-card w-full max-w-md rounded-2xl p-6 space-y-4 shadow-2xl">
-            <div class="flex justify-between items-center border-b notion-border pb-3">
-                <h3 class="text-base font-bold text-white">Manage Editors & Passwords</h3>
-                <button onclick="closeModal('editors-modal')" class="text-gray-400 hover:text-white transition">✕</button>
+    <div id="editors-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="fintech-card w-full max-w-md rounded-3xl p-7 space-y-5 shadow-2xl bg-white">
+            <div class="flex justify-between items-center border-b border-gray-100 pb-3.5">
+                <h3 class="text-lg font-bold text-gray-900">Manage Editors & Passwords</h3>
+                <button onclick="closeModal('editors-modal')" class="text-gray-400 hover:text-gray-700 transition font-bold">✕</button>
             </div>
-            <form onsubmit="addNewEditor(event)" class="flex gap-2">
-                <input type="text" id="new-editor-name" required placeholder="Editor Name" class="flex-1 notion-input px-3 py-2 rounded-xl text-xs" />
-                <input type="text" id="new-editor-pass" required placeholder="Password" class="w-32 notion-input px-3 py-2 rounded-xl text-xs" />
-                <button type="submit" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-medium shadow-lg shadow-emerald-600/20 transition">Add</button>
+            <form onsubmit="addNewEditor(event)" class="flex gap-2.5">
+                <input type="text" id="new-editor-name" required placeholder="Editor Name" class="flex-1 fintech-input px-3.5 py-2.5 rounded-xl text-xs font-medium" />
+                <input type="text" id="new-editor-pass" required placeholder="Password" class="w-32 fintech-input px-3.5 py-2.5 rounded-xl text-xs font-medium" />
+                <button type="submit" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-sm transition">Add</button>
             </form>
-            <div id="editors-manage-list" class="max-h-60 overflow-y-auto divide-y notion-border border notion-border rounded-xl"></div>
+            <div id="editors-manage-list" class="max-h-60 overflow-y-auto divide-y divide-gray-100 border border-gray-200 rounded-2xl"></div>
         </div>
     </div>
 
@@ -445,8 +445,8 @@
             const chkContainer = document.getElementById('timer-editors-checkboxes');
             if (chkContainer) {
                 chkContainer.innerHTML = uniqueNames.map(name => `
-                    <label class="flex items-center gap-2.5 cursor-pointer text-gray-300 hover:text-white transition">
-                        <input type="checkbox" name="timer-editor-chk" value="${name}" class="rounded accent-blue-600 w-4 h-4" />
+                    <label class="flex items-center gap-2.5 cursor-pointer text-gray-700 hover:text-gray-900 transition">
+                        <input type="checkbox" name="timer-editor-chk" value="${name}" class="rounded accent-emerald-600 w-4 h-4" />
                         <span>${name}</span>
                     </label>
                 `).join('');
@@ -522,15 +522,15 @@
             document.getElementById('view-workdetails').classList.toggle('hidden', view !== 'workdetails');
             document.getElementById('view-dashboard').classList.toggle('hidden', view !== 'dashboard');
 
-            document.getElementById('nav-home-btn').className = view === 'home' ? 'text-xs sm:text-sm px-3.5 py-1.5 rounded-lg bg-[#1f1f1f] text-white font-medium transition border notion-border' : 'text-xs sm:text-sm px-3.5 py-1.5 rounded-lg hover:bg-[#1a1a1a] text-gray-300 transition font-medium';
+            document.getElementById('nav-home-btn').className = view === 'home' ? 'text-xs sm:text-sm px-4 py-2 rounded-xl bg-emerald-700 text-white font-bold transition shadow-sm' : 'text-xs sm:text-sm px-4 py-2 rounded-xl hover:bg-emerald-700/50 text-white transition font-medium';
             
             const workBtn = document.getElementById('nav-workdetails-btn');
             if (workBtn && !workBtn.classList.contains('hidden')) {
-                workBtn.className = view === 'workdetails' ? 'text-xs sm:text-sm px-3.5 py-1.5 rounded-lg bg-[#1f1f1f] text-white font-medium transition border notion-border' : 'text-xs sm:text-sm px-3.5 py-1.5 rounded-lg hover:bg-[#1a1a1a] text-gray-300 transition font-medium';
+                workBtn.className = view === 'workdetails' ? 'text-xs sm:text-sm px-4 py-2 rounded-xl bg-emerald-700 text-white font-bold transition shadow-sm' : 'text-xs sm:text-sm px-4 py-2 rounded-xl hover:bg-emerald-700/50 text-white transition font-medium';
             }
             const dashBtn = document.getElementById('nav-dashboard-btn');
             if (dashBtn && !dashBtn.classList.contains('hidden')) {
-                dashBtn.className = view === 'dashboard' ? 'text-xs sm:text-sm px-3.5 py-1.5 rounded-lg bg-[#1f1f1f] text-white font-medium transition border notion-border' : 'text-xs sm:text-sm px-3.5 py-1.5 rounded-lg hover:bg-[#1a1a1a] text-gray-300 transition font-medium';
+                dashBtn.className = view === 'dashboard' ? 'text-xs sm:text-sm px-4 py-2 rounded-xl bg-emerald-800 text-white font-bold transition shadow-sm border border-emerald-500/30' : 'text-xs sm:text-sm px-4 py-2 rounded-xl bg-emerald-800 text-white font-medium hover:bg-emerald-900 transition';
             }
 
             if (view === 'dashboard' && currentUser) renderDashboard();
@@ -554,23 +554,23 @@
             empty.classList.add('hidden');
 
             grid.innerHTML = timersList.map(t => `
-                <div class="notion-card rounded-2xl p-5 flex flex-col justify-between gap-4 relative group hover:border-blue-500/30 transition">
+                <div class="fintech-card-glass rounded-3xl p-6 flex flex-col justify-between gap-5 relative group hover:shadow-xl transition-all duration-300">
                     <div>
                         <div class="flex items-start justify-between gap-2">
-                            <span class="text-xs px-3 py-1 rounded-full bg-[#1f1f1f] text-gray-300 font-medium border notion-border">
+                            <span class="text-xs px-3.5 py-1.5 rounded-full bg-emerald-100 text-emerald-800 font-bold border border-emerald-200 shadow-sm">
                                 ${t.editor_name}
                             </span>
                             <div class="flex items-center gap-1.5">
-                                ${canManage ? `<button onclick="openEditTimerModal('${t.id}')" class="text-xs px-2.5 py-1 rounded-lg bg-[#1f1f1f] hover:bg-[#2a2a2a] text-gray-300 border notion-border transition"> Edit </button>` : ''}
-                                ${canManage ? `<button onclick="deleteTimer('${t.id}')" class="text-xs px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 border border-emerald-500/20 transition"> ✓ Done </button>` : ''}
+                                ${canManage ? `<button onclick="openEditTimerModal('${t.id}')" class="text-xs px-3 py-1.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold transition"> Edit </button>` : ''}
+                                ${canManage ? `<button onclick="deleteTimer('${t.id}')" class="text-xs px-3 py-1.5 rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 font-semibold transition shadow-sm"> ✓ Done </button>` : ''}
                             </div>
                         </div>
-                        <h3 class="text-base font-semibold text-white mt-3.5 tracking-tight">${t.project_name}</h3>
-                        <p class="text-[11px] text-gray-500 mt-1">Due: ${new Date(t.deadline).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })}</p>
+                        <h3 class="text-lg font-bold text-gray-900 mt-4 tracking-tight">${t.project_name}</h3>
+                        <p class="text-xs text-gray-500 font-medium mt-1">Due: ${new Date(t.deadline).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })}</p>
                     </div>
-                    <div class="bg-[#0d0d0d] border notion-border rounded-xl p-3.5">
-                        <div class="text-[10px] uppercase tracking-wider text-gray-500 mb-1 font-semibold">Time Remaining</div>
-                        <div class="countdown-display font-mono text-base font-bold text-emerald-400" data-deadline="${t.deadline}">
+                    <div class="bg-gray-900 text-white rounded-2xl p-4 shadow-inner">
+                        <div class="text-[10px] uppercase tracking-wider text-emerald-400 mb-1 font-bold">Time Remaining</div>
+                        <div class="countdown-display font-mono text-base font-bold text-amber-300" data-deadline="${t.deadline}">
                             Calculating...
                         </div>
                     </div>
@@ -586,7 +586,7 @@
                 const diff = target - now;
                 if (diff <= 0) {
                     el.textContent = '00d : 00h : 00m : 00s (OVERDUE)';
-                    el.className = 'countdown-display font-mono text-xs font-bold text-rose-500';
+                    el.className = 'countdown-display font-mono text-xs font-bold text-rose-400';
                     return;
                 }
                 const days = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -668,7 +668,7 @@
         // ==================== WORK DETAILS & FLOATING CHAT WINDOW ====================
         function renderWorkDetails() {
             if (!currentUser) {
-                document.getElementById('workdetails-list').innerHTML = `<div class="notion-card rounded-2xl p-8 text-center text-gray-400 text-xs">Please login to view Work Details & Floating Chat Hub.</div>`;
+                document.getElementById('workdetails-list').innerHTML = `<div class="fintech-card-glass rounded-3xl p-8 text-center text-gray-600 text-xs font-semibold">Please login to view Work Details & Floating Chat Hub.</div>`;
                 return;
             }
 
@@ -691,21 +691,21 @@
             container.innerHTML = filteredTimers.map(t => {
                 const timerComments = commentsList.filter(c => c.timer_id === t.id);
                 return `
-                    <div id="chat-card-${t.id}" class="notion-card rounded-2xl p-5 space-y-4 shadow-2xl transition-all duration-300">
+                    <div id="chat-card-${t.id}" class="fintech-card-glass rounded-3xl p-6 space-y-4 shadow-xl transition-all duration-300">
                         <!-- Project Header Info -->
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b notion-border pb-3.5">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-gray-200 pb-4">
                             <div>
-                                <span class="text-[11px] px-3 py-1 rounded-full bg-[#1f1f1f] text-emerald-400 font-medium border notion-border">Assigned: ${t.editor_name}</span>
-                                <h3 class="text-base font-bold text-white mt-2 tracking-tight">${t.project_name}</h3>
-                                <p class="text-[11px] text-gray-400 mt-0.5">Deadline: ${new Date(t.deadline).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })}</p>
+                                <span class="text-xs px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 font-bold border border-emerald-200">Assigned: ${t.editor_name}</span>
+                                <h3 class="text-lg font-bold text-gray-900 mt-2.5 tracking-tight">${t.project_name}</h3>
+                                <p class="text-xs text-gray-500 font-medium mt-0.5">Deadline: ${new Date(t.deadline).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })}</p>
                             </div>
                             <div class="flex items-center gap-3 flex-wrap">
-                                <span class="countdown-display font-mono text-xs font-bold text-emerald-400" data-deadline="${t.deadline}">Live</span>
-                                <div class="flex items-center gap-1.5">
-                                    <button onclick="toggleFloating('${t.id}')" id="float-btn-${t.id}" class="text-[11px] px-3 py-1.5 rounded-lg bg-[#1f1f1f] hover:bg-[#2a2a2a] text-gray-300 border notion-border transition">
+                                <span class="countdown-display font-mono text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-200" data-deadline="${t.deadline}">Live</span>
+                                <div class="flex items-center gap-2">
+                                    <button onclick="toggleFloating('${t.id}')" id="float-btn-${t.id}" class="text-xs px-3.5 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold transition">
                                         🗗 Popout
                                     </button>
-                                    <button onclick="toggleFullscreen('${t.id}')" id="fullscreen-btn-${t.id}" class="text-[11px] px-3 py-1.5 rounded-lg bg-[#1f1f1f] hover:bg-[#2a2a2a] text-gray-300 border notion-border transition">
+                                    <button onclick="toggleFullscreen('${t.id}')" id="fullscreen-btn-${t.id}" class="text-xs px-3.5 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold transition">
                                         ⛶ Fullscreen
                                     </button>
                                 </div>
@@ -713,20 +713,20 @@
                         </div>
 
                         <!-- Floating Messenger Chat Window -->
-                        <div id="chat-box-container-${t.id}" class="messenger-chat-bg rounded-2xl border notion-border overflow-hidden flex flex-col h-96 shadow-inner transition-all duration-300">
+                        <div id="chat-box-container-${t.id}" class="messenger-chat-bg rounded-2xl border border-gray-200 overflow-hidden flex flex-col h-96 shadow-inner transition-all duration-300">
                             <!-- Chat Header Bar -->
-                            <div class="bg-[#141414] px-4 py-3 border-b notion-border flex items-center justify-between text-xs">
+                            <div class="bg-white px-4 py-3 border-b border-gray-200 flex items-center justify-between text-xs">
                                 <div class="flex items-center gap-2">
                                     <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                                    <span class="font-semibold text-white">Live Discussion Window (${timerComments.length} messages)</span>
+                                    <span class="font-bold text-gray-900">Live Discussion Window (${timerComments.length} messages)</span>
                                 </div>
-                                <span class="text-[10px] text-gray-400">Links or photos can be sent without text</span>
+                                <span class="text-[10px] text-gray-500 font-medium">Links or photos can be sent without text</span>
                             </div>
 
                             <!-- Messages Area -->
                             <div class="flex-1 overflow-y-auto p-4 space-y-3.5" id="comments-box-${t.id}">
                                 ${timerComments.length === 0 ? `
-                                    <div class="h-full flex items-center justify-center text-center text-xs text-gray-500 italic">
+                                    <div class="h-full flex items-center justify-center text-center text-xs text-gray-400 font-medium italic">
                                         No messages yet. Send a message, link or photo below to start collaborating.
                                     </div>
                                 ` : timerComments.map(c => {
@@ -737,25 +737,25 @@
 
                                     let formattedMsg = escapeHtml(c.message);
                                     const urlRegex = /(https?:\/\/[^\s]+)/g;
-                                    formattedMsg = formattedMsg.replace(urlRegex, (url) => `<a href="${url}" target="_blank" class="text-sky-400 underline break-all">${url}</a>`);
+                                    formattedMsg = formattedMsg.replace(urlRegex, (url) => `<a href="${url}" target="_blank" class="text-blue-600 underline break-all">${url}</a>`);
 
                                     return `
-                                        <div class="flex flex-col ${isSelf ? 'items-end' : 'items-start'} space-y-1 group/msg">
-                                            <div class="max-w-[85%] sm:max-w-[70%] rounded-2xl px-4 py-3 text-xs shadow-md relative ${isSelf ? 'bg-blue-600 text-white rounded-br-none' : 'bg-[#1b1b1b] text-gray-200 border notion-border rounded-bl-none'}">
-                                                <div class="flex items-center justify-between gap-4 mb-1 text-[10px] opacity-75">
-                                                    <span class="font-semibold ${isSelf ? 'text-blue-200' : 'text-emerald-400'}">${c.author_name}</span>
+                                        <div class="flex flex-col ${isSelf ? 'items-end' : 'items-start'} space-y-1">
+                                            <div class="max-w-[85%] sm:max-w-[70%] rounded-2xl px-4 py-3 text-xs shadow-md relative ${isSelf ? 'bg-emerald-600 text-white rounded-br-none' : 'bg-white text-gray-800 border border-gray-200 rounded-bl-none'}">
+                                                <div class="flex items-center justify-between gap-4 mb-1 text-[10px] opacity-80">
+                                                    <span class="font-bold ${isSelf ? 'text-emerald-100' : 'text-emerald-700'}">${c.author_name}</span>
                                                     <div class="flex items-center gap-2">
                                                         <span>${new Date(c.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
-                                                        ${canDelete ? `<button onclick="deleteComment('${c.id}')" class="text-rose-300 hover:text-rose-100 opacity-80 hover:opacity-100 font-bold" title="Delete Message">✕</button>` : ''}
+                                                        ${canDelete ? `<button onclick="deleteComment('${c.id}')" class="text-rose-200 hover:text-white font-bold" title="Delete Message">✕</button>` : ''}
                                                     </div>
                                                 </div>
-                                                ${c.message ? `<p class="leading-relaxed whitespace-pre-wrap">${formattedMsg}</p>` : ''}
-                                                ${c.image_url ? `<img src="${c.image_url}" class="max-h-52 rounded-xl mt-2 border notion-border object-cover cursor-pointer" onclick="window.open('${c.image_url}', '_blank')" />` : ''}
+                                                ${c.message ? `<p class="leading-relaxed whitespace-pre-wrap font-medium">${formattedMsg}</p>` : ''}
+                                                ${c.image_url ? `<img src="${c.image_url}" class="max-h-52 rounded-xl mt-2 border border-gray-200 object-cover cursor-pointer" onclick="window.open('${c.image_url}', '_blank')" />` : ''}
                                             </div>
                                             <!-- Read Status & Action Bar -->
-                                            <div class="flex items-center gap-2 text-[10px] text-gray-400 px-1">
+                                            <div class="flex items-center gap-2 text-[10px] text-gray-500 px-1 font-medium">
                                                 <span>${readersList.length > 0 ? `✓ Seen by ${readersList.join(', ')}` : 'Sent'}</span>
-                                                ${!readersList.includes(currentUser.name) ? `<button onclick="markCommentRead('${c.id}')" class="text-sky-400 hover:underline">Mark Read</button>` : ''}
+                                                ${!readersList.includes(currentUser.name) ? `<button onclick="markCommentRead('${c.id}')" class="text-emerald-600 hover:underline font-bold">Mark Read</button>` : ''}
                                             </div>
                                         </div>
                                     `;
@@ -763,14 +763,14 @@
                             </div>
 
                             <!-- Chat Input Box -->
-                            <form onsubmit="postComment(event, '${t.id}')" class="bg-[#141414] p-3.5 border-t notion-border flex items-center gap-2.5">
+                            <form onsubmit="postComment(event, '${t.id}')" class="bg-white p-3.5 border-t border-gray-200 flex items-center gap-2.5">
                                 <input type="file" id="comment-file-${t.id}" accept="image/*" class="hidden" onchange="previewImageName(this, '${t.id}')" />
-                                <label for="comment-file-${t.id}" class="cursor-pointer p-2.5 rounded-xl notion-card hover:bg-[#1f1f1f] text-gray-300 transition text-sm flex items-center justify-center" title="Attach Image">
+                                <label for="comment-file-${t.id}" class="cursor-pointer p-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 transition text-sm flex items-center justify-center font-semibold" title="Attach Image">
                                     <span>🌄</span>
                                 </label>
-                                <input type="text" id="comment-input-${t.id}" placeholder="Type a message, reply or paste link..." class="flex-1 notion-input px-4 py-2.5 rounded-xl text-xs" />
-                                <span id="file-label-${t.id}" class="hidden text-[10px] text-emerald-400 bg-[#0d0d0d] px-2.5 py-1.5 rounded-lg truncate max-w-[100px]"></span>
-                                <button type="submit" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-medium shadow-lg shadow-blue-600/20 transition flex items-center gap-1">
+                                <input type="text" id="comment-input-${t.id}" placeholder="Type a message, reply or paste link..." class="flex-1 fintech-input px-4 py-2.5 rounded-xl text-xs font-medium" />
+                                <span id="file-label-${t.id}" class="hidden text-[10px] text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1.5 rounded-lg truncate max-w-[100px] font-bold"></span>
+                                <button type="submit" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-md transition flex items-center gap-1">
                                     <span>Send</span> ➤
                                 </button>
                             </form>
@@ -794,10 +794,10 @@
                 card.style.width = '420px';
                 card.style.maxHeight = '85vh';
                 card.style.zIndex = '9999';
-                card.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.8)';
+                card.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.3)';
                 chatBox.style.height = '320px';
                 btn.textContent = '⤡ Dock';
-                btn.className = 'text-[11px] px-3 py-1.5 rounded-lg bg-blue-600 text-white font-medium transition shadow-md';
+                btn.className = 'text-xs px-3.5 py-2 rounded-xl bg-emerald-600 text-white font-bold transition shadow-sm';
             } else {
                 card.classList.remove('is-floating');
                 card.style.position = '';
@@ -809,7 +809,7 @@
                 card.style.boxShadow = '';
                 chatBox.style.height = '384px';
                 btn.textContent = '🗗 Popout';
-                btn.className = 'text-[11px] px-3 py-1.5 rounded-lg bg-[#1f1f1f] hover:bg-[#2a2a2a] text-gray-300 border notion-border transition';
+                btn.className = 'text-xs px-3.5 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold transition';
             }
         }
 
@@ -830,7 +830,7 @@
                 chatBox.style.flex = '1';
                 chatBox.style.height = 'auto';
                 btn.textContent = '✕ Close';
-                btn.className = 'text-[11px] px-3 py-1.5 rounded-lg bg-rose-600 text-white font-medium transition shadow-md';
+                btn.className = 'text-xs px-3.5 py-2 rounded-xl bg-rose-600 text-white font-bold transition shadow-sm';
             } else {
                 card.classList.remove('is-fullscreen');
                 card.style.position = '';
@@ -843,7 +843,7 @@
                 chatBox.style.flex = '';
                 chatBox.style.height = '384px';
                 btn.textContent = '⛶ Fullscreen';
-                btn.className = 'text-[11px] px-3 py-1.5 rounded-lg bg-[#1f1f1f] hover:bg-[#2a2a2a] text-gray-300 border notion-border transition';
+                btn.className = 'text-xs px-3.5 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold transition';
             }
         }
 
@@ -931,9 +931,9 @@
             ['uncomplete', 'completed', 'all'].forEach(t => {
                 const btn = document.getElementById(`tab-${t}`);
                 if (t === tab) {
-                    btn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium bg-[#222222] text-white flex items-center gap-1.5 transition';
+                    btn.className = 'px-4 py-2 rounded-xl text-xs font-bold bg-white text-emerald-900 flex items-center gap-2 shadow-sm transition';
                 } else {
-                    btn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium text-gray-400 hover:text-white flex items-center gap-1.5 transition';
+                    btn.className = 'px-4 py-2 rounded-xl text-xs font-bold text-emerald-100 hover:text-white flex items-center gap-2 transition';
                 }
             });
             renderDashboard();
@@ -954,7 +954,7 @@
             const completedCount = accessibleTasks.filter(t => t.is_completed).length;
 
             document.getElementById('count-uncomplete').textContent = `(${uncompleteCount})`;
-            document.getElementById('count-completed').textContent = `(${completedCount})`;
+            document.getElementById('count-emerald-200').textContent = `(${completedCount})`;
             document.getElementById('count-all').textContent = `(${accessibleTasks.length})`;
 
             let visibleTasks = accessibleTasks.filter(t => {
@@ -973,49 +973,49 @@
             } else {
                 emptyBox.classList.add('hidden');
                 tbody.innerHTML = visibleTasks.map(t => {
-                    const statusColor = t.tk_status === 'Paid' ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30' : t.tk_status === 'Partial' ? 'bg-amber-500/15 text-amber-400 border-amber-500/30' : 'bg-rose-500/15 text-rose-400 border-rose-500/30';
+                    const statusColor = t.tk_status === 'Paid' ? 'bg-emerald-100 text-emerald-800 border-emerald-300' : t.tk_status === 'Partial' ? 'bg-amber-100 text-amber-800 border-amber-300' : 'bg-rose-100 text-rose-800 border-rose-300';
                     const inputUsd = Number(t.amount_bdt) || 0;
                     const calc16Usd = inputUsd * 0.16;
                     const tipsUsd = Number(t.amount_usd) || 0;
 
-                    let dollarDisplay = `<span class="text-sky-400">$${calc16Usd.toFixed(2)}</span>`;
+                    let dollarDisplay = `<span class="text-emerald-700 font-bold">$${calc16Usd.toFixed(2)}</span>`;
                     if (tipsUsd > 0) {
-                        dollarDisplay += ` + <span class="text-amber-400">$${tipsUsd.toFixed(2)}</span>`;
+                        dollarDisplay += ` + <span class="text-amber-600 font-bold">$${tipsUsd.toFixed(2)}</span>`;
                     }
 
-                    const paidByBadge = t.tk_status === 'Paid' && t.delivery_tag ? `<span class="px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-[#1f1f1f] text-emerald-400 border border-emerald-500/20">${t.delivery_tag}</span>` : `<span class="text-gray-600">—</span>`;
+                    const paidByBadge = t.tk_status === 'Paid' && t.delivery_tag ? `<span class="px-3 py-1 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">${t.delivery_tag}</span>` : `<span class="text-gray-400 font-medium">—</span>`;
 
                     return `
-                        <tr class="notion-row transition">
-                            <td class="py-3 px-3.5 text-center">
-                                <input type="checkbox" ${t.is_completed ? 'checked' : ''} onchange="toggleTaskComplete('${t.id}', this.checked)" class="w-4 h-4 rounded accent-blue-600 cursor-pointer" />
+                        <tr class="fintech-row transition">
+                            <td class="py-3.5 px-4 text-center">
+                                <input type="checkbox" ${t.is_completed ? 'checked' : ''} onchange="toggleTaskComplete('${t.id}', this.checked)" class="w-4 h-4 rounded accent-emerald-600 cursor-pointer" />
                             </td>
-                            <td class="py-3 px-3.5 font-medium ${t.is_completed ? 'line-through text-gray-500' : 'text-white'}">
+                            <td class="py-3.5 px-4 font-semibold ${t.is_completed ? 'line-through text-gray-400' : 'text-gray-900'}">
                                 ${t.task_name}
                             </td>
-                            <td class="py-3 px-3.5">
-                                <span class="inline-flex items-center gap-2 text-gray-300">
-                                    <span class="w-5 h-5 rounded-full bg-[#222] text-[10px] flex items-center justify-center font-bold text-gray-300 border notion-border">
+                            <td class="py-3.5 px-4">
+                                <span class="inline-flex items-center gap-2.5 text-gray-700 font-medium">
+                                    <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 text-xs flex items-center justify-center font-bold border border-emerald-200 shadow-sm">
                                         ${t.assignee.charAt(0).toUpperCase()}
                                     </span>
                                     ${t.assignee}
                                 </span>
                             </td>
-                            <td class="py-3 px-3.5">
-                                <span class="px-2.5 py-0.5 rounded-full border text-[11px] font-medium ${statusColor}">
+                            <td class="py-3.5 px-4">
+                                <span class="px-3 py-1 rounded-full border text-[11px] font-bold ${statusColor}">
                                     ${t.tk_status}
                                 </span>
                             </td>
-                            <td class="py-3 px-3.5 font-mono">
+                            <td class="py-3.5 px-4 font-mono font-semibold">
                                 ${dollarDisplay}
                             </td>
-                            <td class="py-3 px-3.5 text-center">
+                            <td class="py-3.5 px-4 text-center">
                                 ${paidByBadge}
                             </td>
                             ${isAdminOrManager ? `
-                                <td class="py-3 px-3.5 text-right space-x-1.5">
-                                    <button onclick='openEditTaskModal(${JSON.stringify(t)})' class="text-gray-400 hover:text-white px-2 py-1 rounded-lg hover:bg-[#222] transition">Edit</button>
-                                    <button onclick="deleteTask('${t.id}')" class="text-rose-400 hover:text-rose-300 px-2 py-1 rounded-lg hover:bg-rose-500/10 transition">Del</button>
+                                <td class="py-3.5 px-4 text-right space-x-2">
+                                    <button onclick='openEditTaskModal(${JSON.stringify(t)})' class="text-gray-600 hover:text-emerald-700 px-2.5 py-1 rounded-lg hover:bg-gray-100 transition font-semibold">Edit</button>
+                                    <button onclick="deleteTask('${t.id}')" class="text-rose-600 hover:text-rose-800 px-2.5 py-1 rounded-lg hover:bg-rose-50 transition font-semibold">Del</button>
                                 </td>
                             ` : ''}
                         </tr>
@@ -1085,21 +1085,21 @@
             const breakdownBox = document.getElementById('editor-breakdown-list');
             const editorNames = Object.keys(perEditor);
             if (editorNames.length === 0) {
-                breakdownBox.innerHTML = `<p class="text-xs text-gray-500">No calculations for this tab.</p>`;
+                breakdownBox.innerHTML = `<p class="text-xs text-gray-400 font-medium">No calculations for this tab.</p>`;
                 return;
             }
 
             breakdownBox.innerHTML = editorNames.map(name => {
                 const d = perEditor[name];
                 return `
-                    <div class="bg-[#0d0d0d] p-3.5 rounded-xl border notion-border space-y-1.5">
+                    <div class="bg-gray-50 p-3.5 rounded-2xl border border-gray-100 space-y-1.5">
                         <div class="flex justify-between items-center">
-                            <span class="text-xs font-semibold text-white">👤 ${name}</span>
-                            <span class="text-xs font-mono font-bold text-emerald-400">৳${d.totalBdt.toLocaleString(undefined, {maximumFractionDigits: 2})}</span>
+                            <span class="text-xs font-bold text-gray-900">👤 ${name}</span>
+                            <span class="text-xs font-mono font-extrabold text-emerald-700">৳${d.totalBdt.toLocaleString(undefined, {maximumFractionDigits: 2})}</span>
                         </div>
-                        <div class="flex justify-between text-[11px] text-gray-400 font-mono">
+                        <div class="flex justify-between text-[11px] text-gray-500 font-mono font-medium">
                             <span>16%($${d.usd16.toFixed(1)}) + Tips($${d.usdTips.toFixed(1)})</span>
-                            <span class="text-rose-400">Due: ৳${d.dueBdt.toLocaleString(undefined, {maximumFractionDigits: 2})}</span>
+                            <span class="text-rose-600 font-bold">Due: ৳${d.dueBdt.toLocaleString(undefined, {maximumFractionDigits: 2})}</span>
                         </div>
                     </div>
                 `;
@@ -1212,14 +1212,14 @@
                 const isSelf = ed.name.trim().toLowerCase() === currentUser.name.trim().toLowerCase();
                 const canDeleteThis = (isAdmin || (currentUser?.role === 'manager' && ed.role === 'editor')) && !isSelf && !String(ed.id).startsWith('def-');
                 return `
-                    <div class="p-3 flex items-center justify-between text-xs bg-[#0d0d0d]">
+                    <div class="p-3.5 flex items-center justify-between text-xs bg-gray-50">
                         <div>
-                            <span class="font-medium text-white">${ed.name}</span>
-                            <span class="ml-2 text-gray-500 font-mono">
+                            <span class="font-bold text-gray-900">${ed.name}</span>
+                            <span class="ml-2.5 text-gray-500 font-mono font-medium">
                                 Pass: ${showPassword ? ed.password : '••••••••'}
                             </span>
                         </div>
-                        ${canDeleteThis ? `<button onclick="removeEditor('${ed.id}')" class="text-rose-400 hover:underline">Remove</button>` : `<span class="text-[10px] text-amber-400 font-medium">${ed.role.toUpperCase()}${isSelf ? ' (You)' : ''}</span>`}
+                        ${canDeleteThis ? `<button onclick="removeEditor('${ed.id}')" class="text-rose-600 hover:underline font-bold">Remove</button>` : `<span class="text-[10px] text-emerald-700 font-bold bg-emerald-100 px-2 py-0.5 rounded-md">${ed.role.toUpperCase()}${isSelf ? ' (You)' : ''}</span>`}
                     </div>
                 `;
             }).join('');
