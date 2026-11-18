@@ -56,13 +56,13 @@
                 </div>
             </div>
             <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
-                <button onclick="switchView('home')" id="nav-home-btn" class="text-xs sm:text-sm px-4 py-2 rounded-xl hover:bg-erp-border text-gray-300 transition font-semibold">
+                <button onclick="switchView('home')" id="nav-home-btn" class="text-xs sm:text-sm px-4 py-2 rounded-xl bg-erp-border text-white font-bold transition shadow-sm">
                     Live Timers
                 </button>
                 <button onclick="switchView('workdetails')" id="nav-workdetails-btn" class="hidden text-xs sm:text-sm px-4 py-2 rounded-xl hover:bg-erp-border text-gray-300 transition font-semibold">
                     Work Details
                 </button>
-                <button id="nav-dashboard-btn" onclick="switchView('dashboard')" class="hidden text-xs sm:text-sm px-4 py-2 rounded-xl bg-erp-border text-white font-semibold hover:bg-[#352B27] border border-[#352B27] transition shadow-sm">
+                <button id="nav-dashboard-btn" onclick="switchView('dashboard')" class="hidden text-xs sm:text-sm px-4 py-2 rounded-xl hover:bg-erp-border text-gray-300 transition font-semibold">
                     Cashflow Dashboard
                 </button>
                 <button id="login-open-btn" onclick="openLoginModal()" class="text-xs sm:text-sm px-4 py-2 rounded-xl bg-erp-accent hover:bg-erp-accentHover text-white font-bold shadow-lg shadow-erp-accent/20 transition">
@@ -144,7 +144,7 @@
             </div>
         </section>
 
-        <!-- ==================== VIEW 3: PRIVATE CASHFLOW DASHBOARD ==================== -->
+        <!-- ==================== VIEW 3: PRIVATE CASHFLOW DASHBOARD (KEPT UNCHANGED) ==================== -->
         <section id="view-dashboard" class="hidden space-y-6 animate-fadeIn">
             <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-erp-border pb-5">
                 <div>
@@ -565,7 +565,7 @@
             }
             const dashBtn = document.getElementById('nav-dashboard-btn');
             if (dashBtn && !dashBtn.classList.contains('hidden')) {
-                dashBtn.className = view === 'dashboard' ? 'text-xs sm:text-sm px-4 py-2 rounded-xl bg-erp-border text-white font-bold transition shadow-sm border border-erp-accent/30' : 'text-xs sm:text-sm px-4 py-2 rounded-xl bg-erp-border text-white font-semibold hover:bg-[#352B27] transition';
+                dashBtn.className = view === 'dashboard' ? 'text-xs sm:text-sm px-4 py-2 rounded-xl bg-erp-border text-white font-bold transition shadow-sm border border-erp-accent/30' : 'text-xs sm:text-sm px-4 py-2 rounded-xl hover:bg-erp-border text-gray-300 transition font-semibold';
             }
 
             if (view === 'dashboard' && currentUser) renderDashboard();
@@ -960,7 +960,7 @@
             }
         }
 
-        // ==================== CASHFLOW & TASKS ====================
+        // ==================== CASHFLOW & TASKS (RETAINED EXACTLY AS IS) ====================
         function setTaskTab(tab) {
             currentTab = tab;
             ['uncomplete', 'completed', 'all'].forEach(t => {
